@@ -68,6 +68,7 @@ once its port is in `zig/patches`.
 
 ## Known limits (not the scripts')
 
+- Patch 0008 uses the captured five-chunk bucket for dense prompt `_merge`; its host regression passes, but GPU parity and served qualification are pending. See [coverage and qualification notes](zig-merge-bucket.md).
 - Wider decode `_select_split` cubins are in the AOT set (the long-context branch). Prompts past the captured buckets still fail with `MissingTritonVariant`.
 - TP=2 is what this project runs. The TP=3/4 control plane is in the engine; spark3 and spark4 are not in this project, and split prefill past two ranks stays unsplit.
 - Qual on this head (`zig-notes/r107-int.md`): 58 of 61 cases identical to Python. `tools_required` differs after the call opener. Decode at 8 streams is still under the Python engine.

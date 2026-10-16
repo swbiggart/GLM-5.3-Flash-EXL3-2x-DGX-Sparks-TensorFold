@@ -1,0 +1,151 @@
+TensorFold v1.0.7 plus zig/patches/0001-0007: captured five-chunk dense prompt attention.
+Apply from the checkout root with: git apply 0008-zig-glm-dense-merge-bucket.patch
+
+diff --git a/zig/src/families/glm_cuda/cuda_prefill.zig b/zig/src/families/glm_cuda/cuda_prefill.zig
+--- a/zig/src/families/glm_cuda/cuda_prefill.zig
++++ b/zig/src/families/glm_cuda/cuda_prefill.zig
+@@ -622,6 +622,29 @@
+         try e.tri.dense_chunks(.{ n, cdiv(h, hb), nch }, qa, lc, lc, pos, e.s.po, e.s.pm, e.s.pl, try ci(n), .{ .H = cz(h), .LW = 512, .CH = 512, .SCALE = grid.dense_scale, .HBT = cz(hb), .KTT = 32, .RS = 528, .FP8 = 1 });
+         try e.tri.merge(.{ n, h, 1 }, e.s.po, e.s.pm, e.s.pl, ol, e.s.dummy, try ci(n), .{ .H = cz(h), .LW = 512, .NCH = cz(nch), .SPARSE = 0 });
+     }
++    fn denseAttention(e: Engine, rows: usize, pos: usize, lc: u64) !void {
++        const h = e.g.heads;
++        const s = &e.s;
++        // Five chunks cover all dense keys; neutral partials preserve order and NCH=5 covers every captured R class.
++        const nch = cdiv(grid.sparse_from, grid.att_rows);
++        if (pos < grid.sparse_from) {
++            const dense = grid.denseRows(rows, pos);
++            const hb = grid.headBlock(rows);
++            if (dense <= grid.att_rows) {
++                try e.denseBlock(s.qa, lc, s.ol, dense, e.pos_dev, nch, hb);
++            } else {
++                var r0: usize = 0;
++                var block: usize = 0;
++                while (r0 < dense) {
++                    const n = @min(grid.att_rows, dense - r0);
++                    const at: u64 = if (r0 == 0) e.pos_dev else s.origins + block * 16;
++                    try e.denseBlock(s.qa + r0 * h * 512 * 2, lc, s.ol + r0 * h * 512 * 2, n, at, nch, hb);
++                    r0 += n;
++                    block += 1;
++                }
++            }
++        }
++    }
+     fn poolTokens(e: Engine, n: usize, pos: u64, tok: u64, cnt: u64) !void {
+         try e.tri.tokens(.{ n, 1, 1 }, e.s.pools_i, pos, tok, cnt, .{ .W = grid.tokens, .K = grid.topk_pools, .PL = grid.pool, .BLOCK = 1024 });
+     }
+@@ -706,24 +729,7 @@
+             try e.tri.pool_keys(.{ rows / 4 + 2, 1, 1 }, e.cache.keys[ai], e.cache.gates[ai], w.ape, pk, pk, e.pos_dev, try ci(rows), try ci(e.ring), .{ .D = 128, .RS = 144, .FP8 = 1 });
+         }
+         try e.tri.absorb_mma(.{ h, cdiv(rows, 64), 4 }, s.q, w.wk, s.qa, try ci(rows), .{ .H = cz(h), .D = 256, .LW = 512, .BM = 64, .BN = 128, .BK = 64 });
+-        const nch = grid.chunksFor(pos, rows);
+-        if (pos < grid.sparse_from) {
+-            const dense = if (sparse_rows) grid.denseRows(rows, pos) else rows;
+-            const hb = grid.headBlock(rows);
+-            if (dense <= grid.att_rows) {
+-                try e.denseBlock(s.qa, lc, s.ol, dense, e.pos_dev, nch, hb);
+-            } else {
+-                var r0: usize = 0;
+-                var block: usize = 0;
+-                while (r0 < dense) {
+-                    const n = @min(grid.att_rows, dense - r0);
+-                    const at: u64 = if (r0 == 0) e.pos_dev else s.origins + block * 16;
+-                    try e.denseBlock(s.qa + r0 * h * 512 * 2, lc, s.ol + r0 * h * 512 * 2, n, at, nch, hb);
+-                    r0 += n;
+-                    block += 1;
+-                }
+-            }
+-        }
++        try e.denseAttention(rows, pos, lc);
+         if (sparse_rows) {
+             if (own) try e.selectOwn(rows, pos, e.cache.capacity / 4, e.cache.pooled[ai]) else {
+                 try e.mat(s.qr, 1536, w.iqb, s.qi, rows, false);
+@@ -874,3 +880,88 @@
+         scratch.deinit();
+     }
+ }
++
++test "dense prompt attention finds captured kernels across chunk and row boundaries" {
++    const aot = cuda.aot;
++    const parsed = try std.json.parseFromSlice(aot.SetJson, std.testing.allocator, @embedFile("fixtures_aot_variants.json"), .{ .ignore_unknown_fields = true });
++    defer parsed.deinit();
++    const Case = struct { pos: usize, rows: usize };
++    // Real prompt chunks: a 64-aligned prefix, then its short tail in a separate call.
++    const cases = [_]Case{
++        .{ .pos = 0, .rows = 1152 }, // 1193-token prompt's prefix: formerly NCH=3, R=512.
++        .{ .pos = 1152, .rows = 41 },
++        .{ .pos = 0, .rows = 1 },
++        .{ .pos = 0, .rows = 15 },
++        .{ .pos = 0, .rows = 16 },
++        .{ .pos = 0, .rows = 63 },
++        .{ .pos = 0, .rows = 64 },
++        .{ .pos = 0, .rows = 448 },
++        .{ .pos = 448, .rows = 63 },
++        .{ .pos = 0, .rows = 512 },
++        .{ .pos = 512, .rows = 1 },
++        .{ .pos = 0, .rows = 1024 },
++        .{ .pos = 1024, .rows = 1 },
++        .{ .pos = 0, .rows = 1088 },
++        .{ .pos = 0, .rows = 1536 },
++        .{ .pos = 1536, .rows = 1 },
++        .{ .pos = 0, .rows = 1600 },
++        .{ .pos = 0, .rows = 2048 },
++        .{ .pos = 2048, .rows = 1 },
++        .{ .pos = 2048, .rows = 2 },
++        .{ .pos = 2048, .rows = 3 },
++        .{ .pos = 2048, .rows = 4 },
++        .{ .pos = 0, .rows = 2560 },
++        .{ .pos = 0, .rows = 3072 },
++        .{ .pos = 0, .rows = 3584 },
++        .{ .pos = 0, .rows = 4096 },
++        .{ .pos = 2048, .rows = 64 },
++        .{ .pos = 2048, .rows = 1024 },
++        .{ .pos = 2048, .rows = 1536 },
++        .{ .pos = 2048, .rows = 2048 },
++        .{ .pos = 2112, .rows = 2048 },
++        .{ .pos = 0, .rows = 16384 },
++        .{ .pos = 2048, .rows = 16384 },
++    };
++    for (cases) |c| {
++        var rec: @import("cuda_triton.zig").Recorder = .{};
++        var e: Engine = undefined;
++        e.g = try state.Geometry.init(2, 0);
++        e.tri = .{ .rec = &rec };
++        e.pos_dev = 4096;
++        e.s.nch = 5;
++        e.s.part_rows = grid.att_rows;
++        e.s.qa = 8192;
++        e.s.ol = 12288;
++        e.s.po = 16384;
++        e.s.pm = 20480;
++        e.s.pl = 24576;
++        e.s.dummy = 28672;
++        e.s.origins = 32768;
++        try e.denseAttention(c.rows, c.pos, 36864);
++        const dense = grid.denseRows(c.rows, c.pos);
++        try std.testing.expectEqual(2 * cdiv(dense, grid.att_rows), rec.n);
++        var written: usize = 0;
++        for (rec.launches[0..rec.n], 0..) |launch, i| {
++            const matched = for (parsed.value.kernels) |k| {
++                if (std.mem.eql(u8, k.@"fn", launch.name) and
++                    aot.matches(k, launch.args[0..launch.nargs], launch.consts[0..launch.nconsts])) break true;
++            } else false;
++            if (!matched) std.debug.print("uncaptured {s}: pos={d} rows={d}, grid={any}\n", .{ launch.name, c.pos, c.rows, launch.grid });
++            try std.testing.expect(matched);
++            const n = @min(grid.att_rows, dense - written);
++            try std.testing.expectEqual(n, launch.grid[0]);
++            if (i % 2 == 0) {
++                try std.testing.expectEqualStrings("_dense_chunks", launch.name);
++            } else {
++                try std.testing.expectEqualStrings("_merge", launch.name);
++                const nch = for (launch.consts[0..launch.nconsts]) |v| {
++                    if (std.mem.eql(u8, v.name, "NCH")) break v.int.?;
++                } else unreachable;
++                try std.testing.expectEqual(nch, rec.launches[i - 1].grid[2]);
++                try std.testing.expect(nch * 512 >= c.pos + written + n);
++                written += n;
++            }
++        }
++        try std.testing.expectEqual(dense, written);
++    }
++}
