@@ -40,8 +40,9 @@ from v0.6.0 plus this recipe's Python patches, has these properties:
   It still writes every partial: PO=0, PM=-infinity, PL=0.
 - `_merge` visits chunks in increasing order. For a zero-weight partial, its
   `active` condition is false, giving `a=1`, `b=0`, and leaving the maximum unchanged.
-  For finite accumulators the update is the numerical identity `o=o*1+0*0`,
-  `l=l*1+0*0`. The active chunks and their order remain unchanged.
+  For finite accumulators the update `o=o*1+0*0`, `l=l*1+0*0` is
+  value-identical up to the sign of an exact zero. The active chunks and their
+  order remain unchanged.
 - Both launches use the same NCH and R, so their partial-buffer strides agree.
   Prompt scratch already reserves at least five chunks: its minimum is
   `ceil((2048 + 1)/512)=5`. Allocation sizes are unchanged.
@@ -52,9 +53,12 @@ gate. Extra empty chunks also write partials, so short-prompt timing needs measu
 
 The change extracts the existing dense launch block into a private helper so its
 actual launches can be recorded in a host test. It does not change sparse attention,
-the reduction kernel, the AOT matcher or archive. MTP's separate dense-origin path
-in `cuda_forward.zig` is outside this patch; this is not a claim of complete AOT
-coverage or support for other geometries, arenas or contexts.
+the reduction kernel, the AOT matcher or archive. MTP head prompt absorption also
+calls this helper and is affected. MTP's separate step dense-origin path in
+`cuda_forward.zig` is outside this patch; source inspection suggests the same
+class of missing-NCH/R coverage there, but no device reproduction is claimed.
+This is not a claim of complete AOT coverage or support for other geometries,
+arenas or contexts.
 
 ## Offline checks
 
@@ -82,6 +86,11 @@ pos=0, rows=1152, grid={512,32,1}. With the fix it passes. The focused Zig invoc
 passes 30 tests (one regression plus imported compile checks). On the macOS host,
 the unchanged GLM suite has 192 passes, one skip and nine local-socket failures;
 the patched suite has 193 passes, one skip and the same nine failures.
+The broader `test-cuda-host` run reported 894/930 passes, six skips, 29 failures
+and one terminated test; remaining stalled tests were bounded after roughly five
+minutes. The all-host/golden build also failed, including a non-exhaustive switch
+in unchanged `lane_host_reuse_test.zig`. These broader checks are not green, and
+their failures have not all been classified.
 
 ## Device and model gates still required
 
@@ -101,9 +110,11 @@ It has not been run as part of the offline work.
 Build the candidate native image with the same pinned inputs and unchanged AOT
 archive. The coordinator must qualify the actual cubins and binary on TP=2 GB10:
 uncached native-token prompts around 1,024/1,536 and the dense/sparse seam; the
-original failing request; greedy drafted/plain token parity; solo/concurrent
-parity; tools, health and recovery afterward. Record actual native token counts,
-both-rank logs, image/source/archive hashes and before/after timings. Health alone
+original failing request; greedy drafted/plain token parity; MTP head prompt
+absorption with `DRAFTER=mtp`; solo/concurrent parity; tools, health and recovery
+afterward. Measure uncached 64–512-token TTFT as well as the failing boundaries.
+Record actual native token counts, both-rank logs, image/source/archive hashes
+and before/after timings. Health alone
 and the host matcher test do not establish numerical or served correctness.
 
 The recipe's `tools/make-zig-patches.sh` omits the original capture/reference tools
