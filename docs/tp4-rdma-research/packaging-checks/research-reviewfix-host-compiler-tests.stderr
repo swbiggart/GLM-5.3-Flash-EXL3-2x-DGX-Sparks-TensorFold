@@ -1,0 +1,14 @@
+Build Summary: 10/10 steps succeeded
+glm-transport-probe-host-build success
++- install tf-glm-transport-probe cached
+   +- compile exe tf-glm-transport-probe debug native cached 48ms MaxRSS:32M
+      +- options cached
+test-glm-transport-probe-host success
++- run test cached
+   +- compile test debug native cached 48ms MaxRSS:32M
+      +- options (reused)
+test-glm-transport-host success
++- run test cached
+   +- compile test debug native cached 48ms MaxRSS:32M
+      +- options (reused)
+

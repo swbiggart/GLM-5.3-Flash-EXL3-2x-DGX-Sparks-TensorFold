@@ -1,0 +1,13 @@
+test_actual_forwarding_functions_keep_all_rank_flags_and_local_rails (test_tp4_network.NetworkProfile) ... ok
+test_invalid_profiles_fail_before_discovery (test_tp4_network.NetworkProfile) ... ok
+test_local_file_and_environment_precedence (test_tp4_network.NetworkProfile) ... ok
+test_opt_in_defaults_and_explicit_tuning (test_tp4_network.NetworkProfile) ... ok
+test_prepare_rejects_invalid_profile_before_host_calls (test_tp4_network.NetworkProfile) ... ok
+test_start_guard_preserves_default_and_accepts_opt_in (test_tp4_network.NetworkProfile) ... ok
+test_stop_remains_usable_with_stale_or_missing_profile_settings (test_tp4_network.NetworkProfile) ... ok
+test_upstream_config_matches_pinned_recipe (test_tp4_network.NetworkProfile) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.113s
+
+OK
