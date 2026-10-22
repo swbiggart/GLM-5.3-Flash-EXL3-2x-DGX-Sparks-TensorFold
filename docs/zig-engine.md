@@ -15,7 +15,7 @@ yet. The Zig engine's greedy replies equal the Python engine's on two prompts at
 | --- | --- |
 | `tensorfold-native` and `tensorfold` | TensorFold v1.0.7 (`ZIG_TF_REF`, commit `e7c523eb`) plus `zig/patches/0001-0013` and research patch `0014`, built with Zig 0.17.0 and nvcc (sm_121 fatbins are embedded in the binary) |
 | captured Triton kernel set | `zig/aot/glm-aot-sm121.tar.xz` (aot.json and 311 cubins, captured from the Python engine on a GB10; pinned by its sha256), at `TENSORFOLD_CUDA_KERNELS` |
-| runtime libraries | `nvidia/cuda:13.0.2-runtime-ubuntu24.04` (cuBLAS, cuBLASLt), NCCL 2.30.7 (the pip wheel; the Python image runs the same), libibverbs and the mlx5 provider |
+| runtime libraries | `nvidia/cuda:13.0.2-runtime-ubuntu24.04` (cuBLAS, cuBLASLt), NCCL 2.30.7 (recipe build: stock pip wheel; TP4 research receipts used a locally patched build, below), libibverbs and the mlx5 provider |
 
 `zig/patches/0001-0013` is the existing Zig port against TensorFold v1.0.7. The original five groups cover the shared engine changes (lane host, native
 CUDA registry, server), the Flash Next Zig CUDA engine the GLM engine builds on, the GLM kernels, the GLM engine, and its
@@ -156,8 +156,10 @@ selector described below. The following checks describe the original NCCL config
 
 ### TP4 transport research (patch 0014)
 
-This branch packages the exact tested production source at `c8b5f94b24524fbf776181efc6ba4937c62c1c05`, plus only
-probe source updates through `44cd03144b1701be22449bea3d8f99bf44046056`. The production delta is against the local
+This branch packages the tested production source at `c8b5f94b24524fbf776181efc6ba4937c62c1c05`, plus only
+probe source updates through `44cd03144b1701be22449bea3d8f99bf44046056` and prominent Apache source/modification
+comment prefixes on the three imported transport files. Those annotated files have different hashes from the tested
+files; removing only the declared prefixes recovers the frozen tested bytes. The production delta is against the local
 frozen engine baseline `a628d29e4076e470f25fe40d65c1548f9f6cbfba`: Mia recipe
 `a6c7e08ae864239125d45fc15146d26ec74c7f6d`, TensorFold `e7c523ebfa16b8094cf9e35e3773a7d25befcc5b`, patches 0001-0013.
 The image build applies all patches in filename order; existing pins and NCCL launcher defaults are unchanged.
@@ -167,9 +169,9 @@ Qualification receipts and their limits are in [`docs/tp4-rdma-research/`](tp4-r
 | Selection | Launcher settings | Native behavior |
 | --- | --- | --- |
 | Existing NCCL | `COMM=nccl`, transport unset (or `TF_GLM_TRANSPORT=nccl`) | NCCL gathers; no RoCE memory/required overrides |
-| Allocated relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=allocated` | Required ring relay; CUDA-allocated mapped host region |
-| Registered relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=registered` | Same relay and wire protocol; mmap plus portable mapped CUDA host registration |
-| Neighbor candidate | `COMM=nccl TF_GLM_TRANSPORT=neighbor TF_GLM_NEIGHBOR_GID_INDEX=<qualified-index>` | Required registered-memory xor1 then xor3 gather; two rails per edge, PDL off |
+| Allocated relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=allocated TF_ROCE_MAX_KB=512` | Required ring relay; CUDA-allocated mapped host region |
+| Registered relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=registered TF_ROCE_MAX_KB=512` | Same relay and wire protocol; mmap plus portable mapped CUDA host registration |
+| Neighbor candidate | `COMM=nccl TF_GLM_TRANSPORT=neighbor TF_GLM_NEIGHBOR_GID_INDEX=3` | Required registered-memory xor1 then xor3 gather; two rails per edge, PDL off |
 
 Explicit custom selections require `ENGINE=zig TP=4 FABRIC_EXPECT=ring SPLIT=0`. Use only hardware qualified by the
 receipts; these settings do not establish hardware qualification. For example, after configuring workers in physical
@@ -184,13 +186,28 @@ SSH, Docker, preparation or stopping containers. It does not discover or validat
 memory-mode errors also stop ordinary starts/restarts before those operations. Runtime transport setup remains an
 all-rank native gate; all ranks must use identical binaries and profile settings.
 
-The launcher derives `TF_GLM_NEIGHBOR_FIRST` and `TF_GLM_NEIGHBOR_SECOND` separately for each rank from the existing
+The launcher rejects neighbor GIDs other than the exact supported value `3` before preparation, SSH, or stopping
+containers, including ordinary starts and restarts. The launcher derives `TF_GLM_NEIGHBOR_FIRST` and
+`TF_GLM_NEIGHBOR_SECOND` separately for each rank from the existing
 discovered `TOWARD[rank, rank xor 1]` and `TOWARD[rank, rank xor 3]` lists. Common manual FIRST/SECOND overrides are
 refused. The lists must contain two distinct devices each and have no overlap; one-rail neighbor configurations fail
 before containers are stopped. Relay supports qualified one- and two-rail configurations. `TF_ROCE_HCA`, the NCCL
 HCA/graph assignments and GID discovery retain the existing dynamic mapping. No host addresses, GID or ports are
 chosen by the research launcher. Native neighbor validation in this frozen research source accepts only GID3;
 other GIDs and neighbor topologies remain unqualified. Registered relay retains the existing dynamic GID handling.
+
+The dated TP4 fleet receipts used **locally patched NCCL 2.30.7**, including the existing switchless-ring routing
+changes and per-rank graph/HCA assignments. They do not qualify the stock NCCL pip wheel installed by the ordinary
+`zig/Dockerfile`; matching the version number alone does not reproduce that tested runtime. Reproducing the fleet
+requires the exact patched NCCL artifact recorded in the research receipts. No dependency or image pin is changed here.
+The relay selection rows pin the served 512 KiB cutoff. Probe04 also has a separately checked 1024 KiB relay size plan;
+that source/probe coverage does not change serving defaults or qualify arbitrary cutoffs, shapes, hardware or GIDs.
+Neighbor retains its fixed 512 KiB cutoff, two rails per edge, GID3 and single CUDA execution-stream requirement.
+Source reconstruction and host compilation of the annotation-only update do not constitute fresh NVCC/GPU, model,
+performance, fault-recovery, reboot or long-duration qualification. The recipe's Zig defaults remain
+`CONTEXT=131072 PARALLEL=8`; the captured arena and kernel shapes constrain other
+settings, which can fail with `MissingTritonVariant`. `--prompt-cache-gib 0` remains the launcher default unless
+explicitly overridden. These notices and selectors extend neither shape coverage nor the default serving profile.
 
 Custom setup failures are collective errors for explicit profiles. Neighbor uses NCCL for unsupported sizes/layouts
 before custom enqueue (512 KiB cutoff, positive 16-byte-aligned disjoint buffers); it never retries NCCL after a
@@ -223,7 +240,8 @@ cd /tmp/glm-research-source
 zig build test-glm-transport-host test-glm-transport-probe-host glm-transport-probe-host-build --summary all
 ```
 
-The verifier checks all baseline file blobs, the exact production source bytes, the probe-only delta, imported provenance
+The verifier checks all baseline file blobs, the production source bytes after removing only the three exact declared
+comment prefixes, the before/after/header hashes, the probe-only delta, imported provenance
 and all changed paths. It records six executable-mode differences in the original frozen-baseline reconstruction;
 shipping patches preserve upstream modes. Host-only test/build artifacts contain no CUDA blobs and must not be
 used as GPU qualification. A real Linux/NVCC build and the receipt-defined fleet gates remain necessary.

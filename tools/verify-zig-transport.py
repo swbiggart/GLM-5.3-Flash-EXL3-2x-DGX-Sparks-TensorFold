@@ -43,6 +43,11 @@ def main():
     probe = meta['probe']['commit']
     probe_path = meta['probe']['path']
     paths = set(meta['production']['source_paths'])
+    annotations = meta['source_annotations']
+    check(set(annotations) == {'zig/kernels/cuda/glm_neighbor_rdma.cu',
+                               'zig/src/families/glm_cuda/neighbor_rdma.zig',
+                               'zig/src/families/glm_cuda/neighbor_rdma_seq.zig'},
+          'Unexpected annotated source paths')
     omitted = meta['packaging']['omitted_operations_note']
     changed = set(git(args.production_repo, 'diff', '--name-only', base, prod).decode().splitlines())
     check(changed == paths | {omitted}, 'Production changed-path set differs from provenance')
@@ -99,13 +104,32 @@ def main():
             expected_prod = git(args.production_repo, 'show', prod + ':' + path)
             check(hashlib.sha256(expected_prod).hexdigest() == meta['production']['sha256'][path], 'Production source hash differs: ' + path)
             expected = git(args.probe_repo, 'show', probe + ':' + path) if path == probe_path else expected_prod
-            check((tree / path).read_bytes() == expected, 'Reconstructed source differs: ' + path)
+            actual = (tree / path).read_bytes()
+            if path in annotations:
+                notice = annotations[path]
+                prefix = notice['prefix_utf8'].encode()
+                check(prefix.startswith(b'// SPDX-License-Identifier: Apache-2.0\n') and
+                      all(not line or line.startswith(b'//') for line in prefix.splitlines()) and
+                      b'\\' not in prefix, 'Source notice is not a pure comment prefix: ' + path)
+                check(hashlib.sha256(prefix).hexdigest() == notice['prefix_sha256'], 'Notice prefix hash differs: ' + path)
+                check(notice['source_commit'] == protocol['commit'] and notice['source_path'] in protocol['sha256'],
+                      'Source notice provenance differs: ' + path)
+                check(hashlib.sha256(expected).hexdigest() == notice['tested_sha256'], 'Pre-notice source hash differs: ' + path)
+                check(actual.startswith(prefix) and actual[len(prefix):] == expected,
+                      'Source differs beyond the declared notice prefix: ' + path)
+                check(hashlib.sha256(actual).hexdigest() == notice['annotated_sha256'], 'Annotated source hash differs: ' + path)
+            else:
+                check(actual == expected, 'Reconstructed source differs: ' + path)
         check(hashlib.sha256((tree / probe_path).read_bytes()).hexdigest() == meta['probe']['sha256'], 'Probe04 source hash differs')
         result_tree = git(tree, 'write-tree').decode().strip()
     print(json.dumps({'pass': True, 'baseline_tree': baseline_tree,
                       'research_tree': result_tree, 'source_paths': len(paths),
                       'patch_sha256': meta['packaging']['sha256'],
-                      'production_byte_identical': True, 'baseline_blob_identical': True,
+                      'production_byte_identical': False,
+                      'production_matches_after_declared_prefix_removal': True,
+                      'source_annotation_paths': sorted(annotations),
+                      'source_annotation_hashes': {path: {key: notice[key] for key in ('tested_sha256', 'annotated_sha256', 'prefix_sha256')} for path, notice in annotations.items()},
+                      'baseline_blob_identical': True,
                       'baseline_mode_exceptions': sorted(exceptions), 'probe_source': probe,
                       'network': False, 'NVCC': False, 'GPU': False}, indent=2))
 

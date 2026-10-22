@@ -120,7 +120,7 @@ case "${TF_GLM_TRANSPORT:-}" in
       [[ "$COMM" == roce ]] || die "TF_GLM_TRANSPORT=roce needs COMM=roce"
     else
       [[ "$COMM" == nccl ]] || die "TF_GLM_TRANSPORT=neighbor needs COMM=nccl (TF_GLM_ROCE=0)"
-      [[ "${TF_GLM_NEIGHBOR_GID_INDEX:-}" =~ ^[0-9]+$ ]] || die "neighbor needs explicit TF_GLM_NEIGHBOR_GID_INDEX; native startup validates the qualified topology"
+      [[ "${TF_GLM_NEIGHBOR_GID_INDEX:-}" == 3 ]] || die "research neighbor needs explicit TF_GLM_NEIGHBOR_GID_INDEX=3; other GIDs are unqualified"
       [[ -z "${TF_GLM_NEIGHBOR_FIRST+x}${TF_GLM_NEIGHBOR_SECOND+x}" ]] || die "neighbor rail lists are derived per rank from the discovered ring; unset TF_GLM_NEIGHBOR_FIRST and TF_GLM_NEIGHBOR_SECOND"
       [[ "${TF_GLM_ROCE_MEMORY-registered}" == registered ]] || die "neighbor needs registered memory"
     fi

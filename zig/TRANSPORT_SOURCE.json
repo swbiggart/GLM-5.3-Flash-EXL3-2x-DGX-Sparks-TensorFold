@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "research only; selected backend submission is separate",
   "mia_recipe": {
     "repository": "https://github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks-TensorFold",
@@ -103,9 +103,35 @@
   },
   "packaging": {
     "patch": "zig/patches/0014-zig-glm-tp4-transport-research.patch",
-    "sha256": "c10e9b29499e2b68ef82b55ceedbd2e6e7f8a680518090a75dd8cc4f8126b739",
+    "sha256": "9e57a723f1377609ef8e3b1d9b965c3e833afb4b8ff095cacd15c88a1f346eae",
     "omitted_operations_note": "GLM_TRANSPORT_CANDIDATES.md",
     "receipts": "docs/tp4-rdma-research/",
-    "source_modification": "No production source changes. Probe source only is updated through probe04. Existing copyright and license notices retained."
+    "source_modification": "Probe source is updated through probe04. Three imported source files receive exact prefixed Apache attribution/modification comments after frozen qualification; removing those declared prefixes reproduces tested production bytes. All other production source bytes and existing notices are retained. Frozen production/probe commits are unchanged."
+  },
+  "source_annotations": {
+    "zig/kernels/cuda/glm_neighbor_rdma.cu": {
+      "source_path": "zig/kernels/cuda/dsv41/rdma_gather.cu",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/kernels/cuda/dsv41/rdma_gather.cu\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// No kernel or wire-protocol changes; file relocated for the GLM adapter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "01443df854d2bc1b0a28bb41d31fdd3bb5263171bfbae8abd2b0c8d9067b0628",
+      "tested_sha256": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4",
+      "annotated_sha256": "c441d4c4e708560a4a87ba6548d72e9e4af85924772a4509926268526633e7e2"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma.zig": {
+      "source_path": "zig/src/families/dsv41/rdma.zig",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma.zig\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// Renamed sequence-helper import; fixed registered-memory cleanup on CUDA failure; added a read-only completed-write counter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "621d0ab6e330b8a38ad2a7d23709388677183f8582707ce2864d35bddda7ed38",
+      "tested_sha256": "6f09f1e1d00f06b116f55c7ae51ad0ba7f1875798543775c0cfc69a066e2f6cd",
+      "annotated_sha256": "ddf5e07d113f86c69b4147e13088f5035546bd4a51e499ec59ec62c4141779a1"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma_seq.zig": {
+      "source_path": "zig/src/families/dsv41/rdma_seq.zig",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma_seq.zig\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// No sequence-protocol changes; file relocated for the GLM adapter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "e32889df0484e28df226d1be8cde7a87ec8eccb442931f4d0e54b352fd3f5581",
+      "tested_sha256": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
+      "annotated_sha256": "9119743445085b9434e26d0f66ffe532b46c8f85aee6a0dd3f968c031969019c"
+    }
   }
 }

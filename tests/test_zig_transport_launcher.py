@@ -71,7 +71,7 @@ class LauncherTransportTest(unittest.TestCase):
                  ({'TF_GLM_TRANSPORT': 'roce', 'COMM': 'roce', 'SPLIT': '1'}, 'FABRIC_EXPECT=ring SPLIT=0'),
                  ({'TF_GLM_TRANSPORT': 'roce'}, 'needs COMM=roce'),
                  ({'TF_GLM_TRANSPORT': 'neighbor', 'COMM': 'roce'}, 'needs COMM=nccl'),
-                 ({'TF_GLM_TRANSPORT': 'neighbor'}, 'explicit TF_GLM_NEIGHBOR_GID_INDEX'),
+                 ({'TF_GLM_TRANSPORT': 'neighbor'}, 'explicit TF_GLM_NEIGHBOR_GID_INDEX=3'),
                  ({'TF_GLM_TRANSPORT': 'neighbor', 'TF_GLM_NEIGHBOR_GID_INDEX': '3', 'TF_GLM_NEIGHBOR_FIRST': 'a,b'}, 'derived per rank'),
                  ({'TF_GLM_ROCE_MEMORY': 'registered'}, 'NCCL-only'),
                  ({'TF_GLM_ROCE_REQUIRED': '1'}, 'NCCL-only'),
@@ -81,6 +81,15 @@ class LauncherTransportTest(unittest.TestCase):
                 result = self.launch(**settings)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn(message, result.stderr)
+
+    def test_unsupported_neighbor_gids_block_start_and_restart_before_mutation(self):
+        for mode in ('check-config', '', 'restart'):
+            for gid in ('0', '2', '4', '5', '03', '256', 'invalid', ''):
+                with self.subTest(mode=mode, gid=gid):
+                    result = self.launch(mode=mode, TF_GLM_TRANSPORT='neighbor',
+                                         TF_GLM_NEIGHBOR_GID_INDEX=gid, PREPARE='1')
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn('TF_GLM_NEIGHBOR_GID_INDEX=3', result.stderr)
 
     def test_unexported_local_selector_and_memory_reach_rank_environment(self):
         (self.root / 'scripts/local.sh').write_text(

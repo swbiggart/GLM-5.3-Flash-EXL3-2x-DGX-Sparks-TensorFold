@@ -1,6 +1,7 @@
 GLM TP4 transport research: tested production c8b5f94b24524fbf776181efc6ba4937c62c1c05 plus probe04 44cd03144b1701be22449bea3d8f99bf44046056.
 Apply after Mia a6c7e08's patches 0001-0013 (reconstructed engine a628d29e4076e470f25fe40d65c1548f9f6cbfba).
-Production source is unchanged; only zig/tests/cuda/glm_transport_probe.zig is updated to probe04.
+Only three declared Apache source-notice prefixes are added to production source; the probe is updated to probe04.
+Removing the exact declared prefixes recovers the frozen tested production file bytes.
 Source/attribution pins: zig/TRANSPORT_SOURCE.json in the recipe; glm-neighbor-source.json in the engine.
 The local operations note GLM_TRANSPORT_CANDIDATES.md is documented in docs/tp4-rdma-research/, not engine code.
 Apply from the TensorFold checkout root with: git apply 0014-zig-glm-tp4-transport-research.patch
@@ -74,10 +75,31 @@ index 3cdcb16..9af4b8d 100644
 +}
 diff --git a/zig/kernels/cuda/glm_neighbor_rdma.cu b/zig/kernels/cuda/glm_neighbor_rdma.cu
 new file mode 100644
-index 0000000..91f3743
+index 0000000..0416e58
 --- /dev/null
 +++ b/zig/kernels/cuda/glm_neighbor_rdma.cu
-@@ -0,0 +1,228 @@
+@@ -0,0 +1,249 @@
++// SPDX-License-Identifier: Apache-2.0
++// Source: bertholomus/TensorFold, zig/kernels/cuda/dsv41/rdma_gather.cu
++// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c
++// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.
++// Modified for the GLM TP4 research integration (2026-10-22):
++// No kernel or wire-protocol changes; file relocated for the GLM adapter.
++// This attribution/modification notice was prefixed after frozen GPU qualification;
++// the remaining file bytes match the pinned tested production source.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
 +// The device half of DeepSeek-V4.1's one-hop RDMA all-gather (the Python family's cuda/rdma_gather.cu v7). The staging
 +// kernel copies this rank's fp32 slice into a pinned host ring slot and rings a doorbell; the host's proxy thread
 +// (rdma.zig) RDMA-writes the slot to every peer with an immediate and publishes a peer's flag once all its parts
@@ -1212,10 +1234,31 @@ index 508134c..92aadbf 100644
      fn checkGreedy(s: *Sampler, i: usize, p: Part, q: Plan, dst: u64) !void {
 diff --git a/zig/src/families/glm_cuda/neighbor_rdma.zig b/zig/src/families/glm_cuda/neighbor_rdma.zig
 new file mode 100644
-index 0000000..f2c5fc8
+index 0000000..a5cdcc4
 --- /dev/null
 +++ b/zig/src/families/glm_cuda/neighbor_rdma.zig
-@@ -0,0 +1,562 @@
+@@ -0,0 +1,583 @@
++// SPDX-License-Identifier: Apache-2.0
++// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma.zig
++// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c
++// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.
++// Modified for the GLM TP4 research integration (2026-10-22):
++// Renamed sequence-helper import; fixed registered-memory cleanup on CUDA failure; added a read-only completed-write counter.
++// This attribution/modification notice was prefixed after frozen GPU qualification;
++// the remaining file bytes match the pinned tested production source.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
 +//! The family's one-hop RDMA all-gather of small fp32 slices (TP decode on GB10), host half: the Python build's
 +//! cuda/rdma_gather.cu v7 in Zig. The staging kernel copies this rank's slice into a slot of pinned host memory and
 +//! rings a doorbell; the proxy thread splits the slot over the node's RDMA devices and writes the parts, with an
@@ -1780,10 +1823,31 @@ index 0000000..f2c5fc8
 +}
 diff --git a/zig/src/families/glm_cuda/neighbor_rdma_seq.zig b/zig/src/families/glm_cuda/neighbor_rdma_seq.zig
 new file mode 100644
-index 0000000..535ccf9
+index 0000000..e890013
 --- /dev/null
 +++ b/zig/src/families/glm_cuda/neighbor_rdma_seq.zig
-@@ -0,0 +1,119 @@
+@@ -0,0 +1,140 @@
++// SPDX-License-Identifier: Apache-2.0
++// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma_seq.zig
++// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c
++// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.
++// Modified for the GLM TP4 research integration (2026-10-22):
++// No sequence-protocol changes; file relocated for the GLM adapter.
++// This attribution/modification notice was prefixed after frozen GPU qualification;
++// the remaining file bytes match the pinned tested production source.
++//
++// Licensed under the Apache License, Version 2.0 (the "License");
++// you may not use this file except in compliance with the License.
++// You may obtain a copy of the License at
++//
++//     http://www.apache.org/licenses/LICENSE-2.0
++//
++// Unless required by applicable law or agreed to in writing, software
++// distributed under the License is distributed on an "AS IS" BASIS,
++// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++// See the License for the specific language governing permissions and
++// limitations under the License.
++
 +//! The RDMA ring's sequence bookkeeping (rdma.zig's proxy thread), apart from the verbs so it can be tested: a
 +//! slot's parts over the devices, a peer's parts back to whole sequences, and when a slot's writes have all been sent.
 +const std = @import("std");
