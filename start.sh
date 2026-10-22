@@ -9,6 +9,7 @@
 #   ./start.sh                         # scripts/config.sh defaults: 4 requests at once, a 1,048,576-token window,
 #                                      # FP8 KV cache, DFlash2 drafts, 4-bit dense weights, images and video
 #                                      # (if the server already runs, says so and leaves it alone)
+#   ./start.sh check-config            # validate settings locally; no SSH, Docker, preparation or stop
 #   ./start.sh restart                 # stop both ranks (./stop.sh), then start them again, e.g. to apply changed
 #                                      # settings or patches; the new arguments are checked before stopping
 #   ./start.sh restart --parallel 2 --context 524288
@@ -55,6 +56,7 @@ WAIT_TIMEOUT="${WAIT_TIMEOUT:-1800}"
 MODE=start
 case "${1:-}" in
   restart) MODE=restart; shift ;;
+  check-config) MODE=check-config; shift ;;
   help) usage; exit 0 ;;
 esac
 for arg in "$@"; do [[ "$arg" == -h || "$arg" == --help ]] && { usage; exit 0; }; done
@@ -106,6 +108,39 @@ DRY=0; [[ "${DRY_RUN:-0}" == 1 ]] && DRY=1
 [[ "$TF_GLM_EXL3_LOADS" =~ ^(0|ldg|1|nc|nc1|nc2|nc4)$ ]] || die "TF_GLM_EXL3_LOADS is 0, nc, nc2 or nc4, not $TF_GLM_EXL3_LOADS"
 [[ "$TF_GLM_EXL3_DEC_ORDER" =~ ^[012]$ ]] || die "TF_GLM_EXL3_DEC_ORDER is 0, 1 or 2, not $TF_GLM_EXL3_DEC_ORDER"
 [[ "$TF_ROCE_MAX_KB" =~ ^[1-9][0-9]*$ ]] || die "TF_ROCE_MAX_KB is a size in KiB (512: up to 32-row windows over RoCE), not $TF_ROCE_MAX_KB"
+# The research transport is an explicit opt-in. Refuse scope/configuration mistakes
+# before preparation, stopping containers, Docker inspection, or worker SSH.
+[[ "${TF_GLM_TRANSPORT+x}" != x || -n "$TF_GLM_TRANSPORT" ]] || die "TF_GLM_TRANSPORT cannot be empty; unset it for the legacy default"
+case "${TF_GLM_TRANSPORT:-}" in
+  ""|nccl) ;;
+  roce|neighbor)
+    [[ "$ENGINE" == zig && "$TP" == 4 ]] || die "TF_GLM_TRANSPORT=$TF_GLM_TRANSPORT needs ENGINE=zig TP=4"
+    [[ "${FABRIC_EXPECT:-}" == ring && "$SPLIT" == 0 ]] || die "TF_GLM_TRANSPORT=$TF_GLM_TRANSPORT needs FABRIC_EXPECT=ring SPLIT=0"
+    if [[ "$TF_GLM_TRANSPORT" == roce ]]; then
+      [[ "$COMM" == roce ]] || die "TF_GLM_TRANSPORT=roce needs COMM=roce"
+    else
+      [[ "$COMM" == nccl ]] || die "TF_GLM_TRANSPORT=neighbor needs COMM=nccl (TF_GLM_ROCE=0)"
+      [[ "${TF_GLM_NEIGHBOR_GID_INDEX:-}" =~ ^[0-9]+$ ]] || die "neighbor needs explicit TF_GLM_NEIGHBOR_GID_INDEX; native startup validates the qualified topology"
+      [[ -z "${TF_GLM_NEIGHBOR_FIRST+x}${TF_GLM_NEIGHBOR_SECOND+x}" ]] || die "neighbor rail lists are derived per rank from the discovered ring; unset TF_GLM_NEIGHBOR_FIRST and TF_GLM_NEIGHBOR_SECOND"
+      [[ "${TF_GLM_ROCE_MEMORY-registered}" == registered ]] || die "neighbor needs registered memory"
+    fi
+    warn "Research GLM transport: $TF_GLM_TRANSPORT; use only qualified hardware (docs/tp4-rdma-research/)"
+    ;;
+  *) die "TF_GLM_TRANSPORT is nccl, roce or neighbor, not $TF_GLM_TRANSPORT" ;;
+esac
+if [[ "$ENGINE" == zig ]]; then
+  [[ "${TF_GLM_ROCE_MEMORY-allocated}" =~ ^(allocated|registered)$ ]] || die "TF_GLM_ROCE_MEMORY is allocated or registered"
+  [[ "${TF_GLM_ROCE_REQUIRED-0}" =~ ^[01]$ ]] || die "TF_GLM_ROCE_REQUIRED is 0 or 1"
+  [[ "${TF_GLM_TRANSPORT:-}" != nccl || "$COMM" == nccl ]] || die "TF_GLM_TRANSPORT=nccl needs COMM=nccl"
+  if [[ "$COMM" == nccl && "${TF_GLM_TRANSPORT:-}" != neighbor ]]; then
+    [[ "${TF_GLM_ROCE_MEMORY-allocated}" == allocated && "${TF_GLM_ROCE_REQUIRED-0}" == 0 ]] || die "NCCL-only transport cannot require RoCE or registered RoCE memory"
+  fi
+  # These research settings may come from local.sh without `export`. The explicit
+  # selector must reach every rank, otherwise native startup would use legacy mode.
+  for v in TF_GLM_TRANSPORT TF_GLM_ROCE_MEMORY TF_GLM_ROCE_REQUIRED TF_GLM_NEIGHBOR_GID_INDEX; do
+    [[ -z "${!v-}" ]] || export "$v"
+  done
+fi
 if [[ "$THINKING" == 1 ]]; then SERVE_ARGS+=(--thinking); else SERVE_ARGS+=(--no-thinking); fi
 if [[ "$ENGINE" == zig ]]; then
   # The Zig engine serves one fixed configuration so far (docs/zig-engine.md lists every setting and its status): what it
@@ -128,11 +163,12 @@ if [[ "$ENGINE" == zig ]]; then
   if (( TP == 4 )); then
     # four Sparks cabled as a ring (./start-tp4-switchless.sh): unsplit prefill over NCCL, whose ring channels run over
     # the cables (the ring's graph files); the kernel set holds the TP=4 shapes (16 heads a rank), captured from the
-    # Python engine at TP=4 on a ring. A switch (./start-tp4.sh) is not tested, and the RoCE ring relay is not ported.
+    # Python engine at TP=4 on a ring. A switch (./start-tp4.sh) is not tested.
+    # Patch 0014 adds explicit research selections; the ordinary NCCL path is unchanged.
     [[ "${FABRIC_EXPECT:-}" == ring ]] || die "ENGINE=zig at TP=4 runs on a ring of four (./start-tp4-switchless.sh)"
     [[ "$SPLIT" == 0 ]] || die "ENGINE=zig at TP=4 needs SPLIT=0 (split prefill is two ranks)"
-    [[ "$COMM" == nccl ]] || die "ENGINE=zig at TP=4 needs COMM=nccl (the RoCE ring relay, TF_ROCE_RING, is not ported)"
-    warn "ENGINE=zig: TP=4 is experimental (a ring of four, unsplit prefill, COMM=nccl)"
+    [[ "$COMM" == nccl || "${TF_GLM_TRANSPORT:-}" == roce ]] || die "ENGINE=zig at TP=4 needs COMM=nccl, or explicit research TF_GLM_TRANSPORT=roce COMM=roce"
+    warn "ENGINE=zig: TP=4 is experimental (a ring of four, unsplit prefill, COMM=$COMM)"
   fi
   [[ "$CONTEXT" == 131072 && "$PARALLEL" == 8 ]] ||
     warn "ENGINE=zig: the captured kernel set is keyed on the 8-stream, 131072-token arena; other CONTEXT / PARALLEL can fail with MissingTritonVariant"
@@ -167,6 +203,13 @@ arg_value() {
   done
   echo "$value"
 }
+# This local check intentionally ends before the first Docker/SSH operation.
+# It validates launcher settings, not native topology, device discovery or GPU execution.
+if [[ "$MODE" == check-config ]]; then
+  printf 'ENGINE=%s TP=%s COMM=%s SPLIT=%s TF_GLM_TRANSPORT=%s TF_GLM_ROCE=%s\n' \
+    "$ENGINE" "$TP" "$COMM" "$SPLIT" "${TF_GLM_TRANSPORT:-legacy}" "$([[ "$COMM" == roce ]] && echo 1 || echo 0)"
+  exit 0
+fi
 # Where to reach the server from this machine: a wildcard bind answers on loopback.
 API_HOST="$HOST"; [[ "$HOST" == 0.0.0.0 || "$HOST" == "::" ]] && API_HOST=127.0.0.1
 [[ "$API_HOST" == *:* ]] && API_HOST="[$API_HOST]"
@@ -289,6 +332,7 @@ docker run --rm --entrypoint python "$IMAGE" -c \
   else cat "$STATE_DIR/args.err" >&2; die "tensorfold serve rejects these arguments (see above); nothing was changed"; fi
 fi
 detect_links
+check_neighbor_links
 if (( TP == 2 )); then log "Link: $HEAD_ADDR ($HEAD_DEV) <-> $WORKER_ADDR ($WORKER_DEV), RoCE $HEAD_HCAS / $WORKER_HCAS (GID $HEAD_GID / $WORKER_GID; $(tr ',' '\n' <<<"$HEAD_HCAS" | wc -l) rail(s) -> NCCL_IB_HCA, TF_ROCE_HCA)"
 else
   log "Rendezvous: $MASTER_ADDR:$MASTER_PORT; NCCL bootstrap over ${NODE_DEV[*]} (rank 0 to $((TP - 1)))$( [[ "$FABRIC" == ring ]] && echo "; a ring in rank order: NCCL_ALGO=${NCCL_ALGO:-Ring}, TF_GLM_HC_EXCHANGE=gather")"

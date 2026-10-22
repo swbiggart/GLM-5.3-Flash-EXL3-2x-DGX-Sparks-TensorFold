@@ -13,13 +13,15 @@ yet. The Zig engine's greedy replies equal the Python engine's on two prompts at
 
 | Part | Source |
 | --- | --- |
-| `tensorfold-native` and `tensorfold` | TensorFold v1.0.7 (`ZIG_TF_REF`, commit `e7c523eb`) plus `zig/patches/0001-0005`, built with Zig 0.17.0 and nvcc (sm_121 fatbins are embedded in the binary) |
+| `tensorfold-native` and `tensorfold` | TensorFold v1.0.7 (`ZIG_TF_REF`, commit `e7c523eb`) plus `zig/patches/0001-0013` and research patch `0014`, built with Zig 0.17.0 and nvcc (sm_121 fatbins are embedded in the binary) |
 | captured Triton kernel set | `zig/aot/glm-aot-sm121.tar.xz` (aot.json and 311 cubins, captured from the Python engine on a GB10; pinned by its sha256), at `TENSORFOLD_CUDA_KERNELS` |
 | runtime libraries | `nvidia/cuda:13.0.2-runtime-ubuntu24.04` (cuBLAS, cuBLASLt), NCCL 2.30.7 (the pip wheel; the Python image runs the same), libibverbs and the mlx5 provider |
 
-`zig/patches/` is the Zig port against TensorFold v1.0.7, in five patches: the shared engine changes (lane host, native
+`zig/patches/0001-0013` is the existing Zig port against TensorFold v1.0.7. The original five groups cover the shared engine changes (lane host, native
 CUDA registry, server), the Flash Next Zig CUDA engine the GLM engine builds on, the GLM kernels, the GLM engine, and its
-tests. `tools/make-zig-patches.sh <Zig port checkout>` writes them and checks that they reproduce the branch exactly.
+tests, followed by the fixes in 0006-0013. Research patch 0014 is pinned in [`zig/TRANSPORT_SOURCE.json`](../zig/TRANSPORT_SOURCE.json).
+`tools/make-zig-patches.sh` regenerates the original five groups and deletes the other patches; do not use it to refresh this research series.
+`tools/verify-zig-transport.py` verifies the complete research series without changing any patch.
 The image tag is `zig-v1.0.7-<hash>` of the patches, the kernel set, the Dockerfile and the pins (`IMAGE_TAG`,
 `IMAGE_DIGEST` pin a published one; none yet, so `prepare.sh` builds it, about 10 minutes the first time).
 
@@ -31,14 +33,14 @@ would change what is served.
 
 | Setting | Zig engine |
 | --- | --- |
-| `TP`, `WORKER`, `WORKER2/3`, `FABRIC_PEER*`, `MASTER_PORT`, `MASTER_ADDR`, `SOCKET_IFNAME` | `--tp`, `--rank`, `--master`, `--master-port`; NCCL variables as the Python engine's. TP=2, TP=3 on a triangle with `SPLIT=0 COMM=nccl` and TP=4 on a ring of four with `SPLIT=0 COMM=nccl` (both experimental, see below; TP=3 also takes `COMM=roce`). TP=4 on a switch is untested and refused; the RoCE ring relay is not ported (start refuses `COMM=roce` at TP=4) |
+| `TP`, `WORKER`, `WORKER2/3`, `FABRIC_PEER*`, `MASTER_PORT`, `MASTER_ADDR`, `SOCKET_IFNAME` | `--tp`, `--rank`, `--master`, `--master-port`; NCCL variables as the Python engine's. TP=2, TP=3 on a triangle with `SPLIT=0 COMM=nccl` and TP=4 on a ring of four with `SPLIT=0 COMM=nccl` (both experimental, see below; TP=3 also takes `COMM=roce`). TP=4 on a switch is untested and refused; patch 0014 allows explicit research transport selections on a ring (below) |
 | `MODEL_ID`, `MODEL_REVISION`, `ABLIT`, `DFLASH2_ID`, `DFLASH2_REVISION`, `HF_CACHE`, `WORKER_WEIGHTS*`, `NFS_*` | unchanged: the snapshots are mounted at `/root/.cache/huggingface` and passed as `MODEL` and `--drafter` (`ABLIT=1` has the same architecture; not tried yet) |
 | `SERVED_NAME`, `HOST`, `PORT` | `--name`, `--host`, `--port` |
 | `CONTEXT`, `PARALLEL` | `--context`, `--parallel`. Defaults 131072 and 8 under `ENGINE=zig`: the captured kernels are keyed on that arena; other values need more captures (TODO; a warning says so) |
 | `MAX_TOKENS`, `THINKING` | `--max-tokens`, `--thinking` / `--no-thinking` |
 | `DRAFTER`, `TF_GLM_MTP`, `TF_GLM_DRAFT_QUANT` | `dflash2` -> `--drafter DIR`. `mtp` -> no `--drafter`; the container gets `DRAFTER=mtp` (PARALLEL=1), which the Zig engine reads from its environment. The MTP head is in `zig/patches`; `ZIG_HAS` defaults to `mtp displaykv` |
 | `KV`, `DENSE` | fixed at `fp8` and `q4`; other values refused (TODO) |
-| `COMM`, `TF_ROCE_MAX_KB` | `TF_GLM_ROCE` (1 for `roce`, 0 for `nccl`), `TF_ROCE_MAX_KB` |
+| `COMM`, `TF_ROCE_MAX_KB`, `TF_GLM_TRANSPORT`, `TF_GLM_ROCE_MEMORY` | Legacy `TF_GLM_ROCE` (1 for `COMM=roce`, 0 for `COMM=nccl`); research TP4 selectors and memory modes below. Neighbor requires `COMM=nccl` so `TF_GLM_ROCE=0` |
 | `TF_GLM_L2PF` | `TF_GLM_L2PF` (0 / off: off; anything else: 1) |
 | `MEMORY_RESERVE_GIB`, `KV_POOL_GIB` | `TENSORFOLD_MEMORY_RESERVE_GIB` and `TF_GLM_CACHE_GIB`, passed as for Python; the memory-sized pool is in branch `r107-cx-displaykv` (see `DISPLAY_KV_*` below); the 19.6 GiB default is the Python engine's measurement |
 | `TF_GLM_EFFORT_TAIL`, `TF_GLM_CLEAR_THINKING`, `STREAM_SMOOTH`, `STREAM_SMOOTH_MS`, `TF_GLM_LOOP_GUARD`, `MAX_QUEUED` (`TF_GLM_MAX_QUEUED`), `TF_GLM_KEEP_REASONING`, `TF_GLM_KEEP_REASONING_MB`, `TF_GLM_ASSISTANT_ENDS`, `TF_GLM_PROMPT_STOP` | implemented (`zig/src/server/recipe.zig`, branch `r107-int`): the ranks read the recipe's own names, passed unchanged |
@@ -54,7 +56,7 @@ would change what is served.
 | `STREAM_SMOOTH`, `STREAM_SMOOTH_MS` | TODO |
 | `MAX_QUEUED` | TODO (no 429 admission yet) |
 | `NUCLEUS_UNION` | not needed (the Zig sampler has its own) |
-| `TF_ROCE_WAIT_S`, `TF_ROCE_IB_TIMEOUT`, `TF_ROCE_RING` | TODO |
+| `TF_ROCE_WAIT_S`, `TF_ROCE_RING` | Relay timeout and ring relay; `TF_ROCE_RING=1` comes from discovered ring launch settings. `TF_ROCE_IB_TIMEOUT` remains unsupported |
 | `TF_GLM_EXL3_LOADS`, `TF_GLM_EXL3_DEC_ORDER` | TODO (its kernels are its own) |
 | `TF_GLM_CLEAR_THINKING`, `TF_GLM_EFFORT_TAIL` | TODO (earlier turns keep their reasoning, as with the Python defaults) |
 | `LOG_*`, `FOREGROUND`, `WAIT_TIMEOUT`, `STOP_TIMEOUT`, `CONTAINER_NAME`, `KERNEL_CACHE`, `STATE_DIR` | unchanged |
@@ -136,10 +138,9 @@ ring's order in `scripts/local.sh`. The tested start:
 ENGINE=zig SPLIT=0 COMM=nccl DRAFTER=dflash2 PARALLEL=8 CONTEXT=131072 MEMORY_RESERVE_GIB=24 ./start-tp4-switchless.sh
 ```
 
-start.sh refuses the Zig engine at TP=4 on a switch (`./start-tp4.sh`, not tested), with `SPLIT=1`, or with
-`COMM=roce`: the ring's RoCE relay to the Spark across (`TF_ROCE_RING=1`, the Python engine's patch 0099) is not
-ported, so every collective goes over NCCL's ring channels and its graph files (`scripts/nodes.sh`, as for the Python
-engine on a ring).
+The original TP4 path uses NCCL ring channels and the discovered graph files (`scripts/nodes.sh`). The launcher
+continues to refuse a switch (`./start-tp4.sh`, untested), `SPLIT=1`, and TP4 `COMM=roce` without the explicit research
+selector described below. The following checks describe the original NCCL configuration.
 
 - Kernel set: the TP=3 set's 510 entries first and unchanged, then 72 TP=4 entries captured from the Python engine at
   TP=4 on a ring (16 heads on every rank; the four ranks compiled byte-identical sets). No variant had to be compiled
@@ -152,6 +153,80 @@ engine on a ring).
   428-case sweep took much longer on Zig: 974 s against 85 s on Python, with the same replies (observed workload
   times, not a controlled attribution: the Python run had a capture hook and its default memory reserve, Zig 24 GiB).
   Not qualified at TP=4: vision, MTP drafts, other arenas, the prompt cache, and TP=4 against TP=2 or TP=3 numerically.
+
+### TP4 transport research (patch 0014)
+
+This branch packages the exact tested production source at `c8b5f94b24524fbf776181efc6ba4937c62c1c05`, plus only
+probe source updates through `44cd03144b1701be22449bea3d8f99bf44046056`. The production delta is against the local
+frozen engine baseline `a628d29e4076e470f25fe40d65c1548f9f6cbfba`: Mia recipe
+`a6c7e08ae864239125d45fc15146d26ec74c7f6d`, TensorFold `e7c523ebfa16b8094cf9e35e3773a7d25befcc5b`, patches 0001-0013.
+The image build applies all patches in filename order; existing pins and NCCL launcher defaults are unchanged.
+This is the research matrix. A submission selecting one backend and removing experimental selectors is separate.
+Qualification receipts and their limits are in [`docs/tp4-rdma-research/`](tp4-rdma-research/).
+
+| Selection | Launcher settings | Native behavior |
+| --- | --- | --- |
+| Existing NCCL | `COMM=nccl`, transport unset (or `TF_GLM_TRANSPORT=nccl`) | NCCL gathers; no RoCE memory/required overrides |
+| Allocated relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=allocated` | Required ring relay; CUDA-allocated mapped host region |
+| Registered relay | `COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=registered` | Same relay and wire protocol; mmap plus portable mapped CUDA host registration |
+| Neighbor candidate | `COMM=nccl TF_GLM_TRANSPORT=neighbor TF_GLM_NEIGHBOR_GID_INDEX=<qualified-index>` | Required registered-memory xor1 then xor3 gather; two rails per edge, PDL off |
+
+Explicit custom selections require `ENGINE=zig TP=4 FABRIC_EXPECT=ring SPLIT=0`. Use only hardware qualified by the
+receipts; these settings do not establish hardware qualification. For example, after configuring workers in physical
+ring order, registered relay can be selected with:
+
+```bash
+ENGINE=zig SPLIT=0 COMM=roce TF_GLM_TRANSPORT=roce TF_GLM_ROCE_MEMORY=registered TF_ROCE_MAX_KB=512 ./start-tp4-switchless.sh
+```
+
+`./start.sh check-config` validates local settings and prints the resolved transport/legacy switch, then exits before
+SSH, Docker, preparation or stopping containers. It does not discover or validate hardware. Scope, selector and
+memory-mode errors also stop ordinary starts/restarts before those operations. Runtime transport setup remains an
+all-rank native gate; all ranks must use identical binaries and profile settings.
+
+The launcher derives `TF_GLM_NEIGHBOR_FIRST` and `TF_GLM_NEIGHBOR_SECOND` separately for each rank from the existing
+discovered `TOWARD[rank, rank xor 1]` and `TOWARD[rank, rank xor 3]` lists. Common manual FIRST/SECOND overrides are
+refused. The lists must contain two distinct devices each and have no overlap; one-rail neighbor configurations fail
+before containers are stopped. Relay supports qualified one- and two-rail configurations. `TF_ROCE_HCA`, the NCCL
+HCA/graph assignments and GID discovery retain the existing dynamic mapping. No host addresses, GID or ports are
+chosen by the research launcher. Native neighbor validation in this frozen research source accepts only GID3;
+other GIDs and neighbor topologies remain unqualified. Registered relay retains the existing dynamic GID handling.
+
+Custom setup failures are collective errors for explicit profiles. Neighbor uses NCCL for unsupported sizes/layouts
+before custom enqueue (512 KiB cutoff, positive 16-byte-aligned disjoint buffers); it never retries NCCL after a
+selected neighbor operation fails. Larger and in-place collectives remain NCCL. Model arithmetic, accumulation order,
+KV code and numerical kernels are unchanged. Registered-memory cleanup does not unmap pages when CUDA unregister
+fails; those exceptional pages remain allocated until process exit.
+
+The neighbor protocol is adapted from BertholomusAI / Albert Lee's `bertholomus/TensorFold` PR30 merge
+`b8b115e7ed6c86d81b7575caa6f3d4ade52b323c`. The exact imported file hashes and adaptations are recorded in
+[`zig/TRANSPORT_SOURCE.json`](../zig/TRANSPORT_SOURCE.json), and in the engine's `glm-neighbor-source.json`.
+Adaptations rename the sequence import, fix registered-memory cleanup on CUDA failure, and add a read-only completed-write
+counter; the imported CUDA protocol is unchanged. The GLM integration adds startup agreement, two-match dispatch,
+scratch ownership, lifecycle checks and qualification probes. Existing licenses and attribution are retained.
+The old local `GLM_TRANSPORT_CANDIDATES.md` is an operations note, excluded from the engine patch; its historical
+claims are superseded by the dated research receipts.
+
+Probe04 uses the actual production communicator and has explicit NCCL/allocated-relay/registered-relay/neighbor
+profiles. Its size plan checks the negotiated backend/cutoff, 512 or 1024 KiB relay boundaries, guard bytes, a direct
+NCCL oracle, changing eager payloads, aliases/alignment, graph capture and changing-input replay. All four ranks must
+pass under an external fleet-wide deadline. Graph acceptance measures execution-counter changes across replay on
+all ranks, including relayed stripe progress; capture enqueue counts alone do not qualify replay. This weight-free
+probe does not establish model quality, fault recovery, sustained-serving reliability or a performance win.
+No graph may survive a profile change, and concurrent execution streams are unsupported.
+
+To verify source packaging using local object databases (no network, CUDA or GPU):
+
+```bash
+python3 tools/verify-zig-transport.py --upstream-repo /path/to/TensorFold --production-repo /path/to/frozen-production --probe-repo /path/to/probe04 --neighbor-repo /path/to/imported-TensorFold --tree-dir /tmp/glm-research-source
+cd /tmp/glm-research-source
+zig build test-glm-transport-host test-glm-transport-probe-host glm-transport-probe-host-build --summary all
+```
+
+The verifier checks all baseline file blobs, the exact production source bytes, the probe-only delta, imported provenance
+and all changed paths. It records six executable-mode differences in the original frozen-baseline reconstruction;
+shipping patches preserve upstream modes. Host-only test/build artifacts contain no CUDA blobs and must not be
+used as GPU qualification. A real Linux/NVCC build and the receipt-defined fleet gates remain necessary.
 
 ## Build and test the Zig side
 
