@@ -1,0 +1,8 @@
+{
+  "shared_requests": 18,
+  "unmatched_each": 22,
+  "missing_token_arrays": 0,
+  "all_shared_exact_equal": true,
+  "full_external_parity": false,
+  "reason": "Qualification nonce differed in22 boundary/timing fixtures;40-job local qualification passed,18 identical cross-profile fixtures exactly match"
+}

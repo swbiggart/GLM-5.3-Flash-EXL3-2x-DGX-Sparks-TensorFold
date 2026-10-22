@@ -1,0 +1,14 @@
+INVALID: evidence or declarations cannot support this comparison
+Scope: structured C1 (one concurrent request), exactly 400 output tokens per request.
+Complete acquisitions: baseline 6/8; candidate unavailable
+Model: GLM-5.3-Flash-EXL3
+Baseline: /home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01
+  Requests: 28 dispatched, 27 complete; reported output: unknown total (10800 known tokens; 1 dispatched requests missing usage)
+  Ceiling: 32 requests / 12800 output tokens; allowance 300s. Full completion needs >42.7 reported output tokens/s including overhead; use --seconds for a larger allowance.
+stopped-after-response-failure
+Stopped: connection failed.
+  Measurement errors: response_not_complete, completion_usage_unavailable
+  Receipt: /home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/acquisition-06/wave-000003/wave.json
+  Raw response: /home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/acquisition-06/wave-000003/response-0000.bin
+Serving identity is declared, not attested.
+Report: /home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/report.json

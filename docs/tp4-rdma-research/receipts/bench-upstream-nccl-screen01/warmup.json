@@ -1,0 +1,97 @@
+{
+  "cmd": "concurrent",
+  "parameters": {
+    "set": "a",
+    "streams": "1,4,8",
+    "tokens": 256,
+    "reps": 1
+  },
+  "started": 1792658499.6499991,
+  "ended": 1792658524.6650553,
+  "result": [
+    {
+      "streams": 1,
+      "rep": 0,
+      "max_tokens": 256,
+      "total_tokens": 256,
+      "wall_s": 3.488591253058985,
+      "aggregate_tps": 73.38205637462555,
+      "per_stream_decode_tps": [
+        76.663
+      ],
+      "per_stream_tokens": [
+        256
+      ],
+      "ttft_s": [
+        0.162
+      ]
+    },
+    {
+      "streams": 4,
+      "rep": 0,
+      "max_tokens": 256,
+      "total_tokens": 1024,
+      "wall_s": 8.781907110940665,
+      "aggregate_tps": 116.60337408081686,
+      "per_stream_decode_tps": [
+        37.553,
+        31.399,
+        65.25,
+        35.793
+      ],
+      "per_stream_tokens": [
+        256,
+        256,
+        256,
+        256
+      ],
+      "ttft_s": [
+        0.66,
+        0.659,
+        0.659,
+        0.134
+      ]
+    },
+    {
+      "streams": 8,
+      "rep": 0,
+      "max_tokens": 256,
+      "total_tokens": 2048,
+      "wall_s": 12.737870660144836,
+      "aggregate_tps": 160.78040471928557,
+      "per_stream_decode_tps": [
+        26.248,
+        22.208,
+        49.073,
+        26.823,
+        24.245,
+        44.728,
+        29.895,
+        21.124
+      ],
+      "per_stream_tokens": [
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256,
+        256
+      ],
+      "ttft_s": [
+        1.255,
+        1.255,
+        1.253,
+        1.254,
+        1.253,
+        1.253,
+        1.255,
+        0.14
+      ]
+    }
+  ],
+  "worker_errors": [],
+  "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+  "raw_sha256": "c53ee9a0c058dad80862e13c3b0fe351cb0357ca8698652f1097834e0cd05ae3"
+}

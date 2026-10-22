@@ -1,0 +1,18 @@
+{
+  "command": [
+    "docker",
+    "build",
+    "--progress=plain",
+    "-t",
+    "spark/glm-tp4:zig-a6c7e08-probe-04",
+    "/home/spark/lab/glm-tp4-ring-20261022/probe04-build-context"
+  ],
+  "patch_sha256": "b0737ad904be3bdd9fa903877c9a169ca6017395dbdccc74f0ef223eeca23142",
+  "input_image_ids": {
+    "spark/glm-tp4-build:rdma02": "sha256:7e5c0ff414177c160d9c7c6b33a146cd2fdacff31a2fe950830d7addfa186b1e",
+    "spark/glm-tp4:zig-a6c7e08-rdma-02": "sha256:385e1fd4af762b5a0b54df7d0979b2e8e60bd69018969d8e6bb53f0f1b53311e"
+  },
+  "image_id": "sha256:13391f95793d44523054047551ee19382c3646898a17c61a498b49665d32c4f1",
+  "no_gpu_execution": true,
+  "dockerfile": "FROM spark/glm-tp4-build:rdma02 AS probe_build\nCOPY glm-probe03-04.patch /tmp/glm-probe03-04.patch\nRUN cd /tensorfold && git apply /tmp/glm-probe03-04.patch && /opt/zig/zig build -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121 -Doptimize=fast --prefix /opt/tensorfold -j4 glm-transport-probe\nFROM spark/glm-tp4:zig-a6c7e08-rdma-02\nCOPY --from=probe_build /opt/tensorfold/bin/tf-glm-transport-probe /opt/tensorfold/bin/tf-glm-transport-probe\n"
+}

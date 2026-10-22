@@ -1,0 +1,100 @@
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xfe3b0c1a8000 mergedDev=1 qpIndex=0 qpNum=1124 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54030b remoteGid=00000000000000000000ffff0a54030a remoteQpNum=614
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:66 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 910 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:66 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xfe3b0c1f0000 mergedDev=2 qpIndex=0 qpNum=910 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54040a remoteGid=00000000000000000000ffff0a54040b remoteQpNum=1323
+spark-4e04:1:66 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xfe3b0c234000 mergedDev=3 qpIndex=0 qpNum=1251 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54070b remoteGid=00000000000000000000ffff0a54070a remoteQpNum=740
+spark-4e04:1:1 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+spark-4e04:1:1 [0] NCCL INFO Tree transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-4e04:1:1 [0] NCCL INFO PAT transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-4e04:1:1 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+spark-4e04:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+spark-4e04:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+spark-4e04:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer
+spark-4e04:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0
+spark-4e04:1:1 [0] NCCL INFO CC Off, workFifoBytes 1048576
+spark-4e04:1:1 [0] NCCL INFO ncclCommInitRank comm 0x3b1dd30 rank 0 nranks 4 cudaDev 0 nvmlDev 0 busId f01000 commId 0x559ea0e66c4fd747 - Init COMPLETE
+spark-4e04:1:1 [0] NCCL INFO Init timings - ncclCommInitRank: rank 0 nranks 4 total 0.37 (kernels 0.15, alloc 0.05, bootstrap 0.01, allgathers 0.01, topo 0.01, graphs 0.00, connections 0.14, rest 0.00)
+spark-4e04:1:1 [0] NCCL INFO Symmetric VA size=124GB
+info: GLM transport rank 0: backend=neighbor memory=registered required=true cutoff=524288 bytes gid=3 pdl=false
+PASS rank=0 eager bytes=8 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=16 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=68 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=4096 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=16384 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=98304 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=262144 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=524288 backend=neighbor guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=524304 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=1048576 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 layout alias=false offset=4 backend=nccl
+PASS rank=0 layout alias=true offset=0 backend=nccl
+PASS rank=0 explicit-in-place backend=nccl
+GRAPH rank=0 backends=neighbor,nccl,neighbor
+PHASE rank=0 stage=eager_barrier
+PHASE rank=0 stage=eager_counter_drain
+SNAPSHOT rank=0 stage=eager_drained nccl_enqueues=16 roce_enqueues=0 neighbor_enqueues=20 first=20 second=20 roce_ops=0 relay_stripes=0
+PHASE rank=0 stage=capture_begin
+PHASE rank=0 stage=capture_end
+PHASE rank=0 stage=graph_instantiate
+SNAPSHOT rank=0 stage=capture_snapshot nccl_enqueues=17 roce_enqueues=0 neighbor_enqueues=22 first=20 second=20 roce_ops=0 relay_stripes=0
+PHASE rank=0 stage=capture_snapshot_barrier
+PHASE rank=0 stage=replay_begin
+PHASE rank=0 stage=replay iteration=0/64
+PHASE rank=0 stage=replay iteration=8/64
+PHASE rank=0 stage=replay iteration=16/64
+PHASE rank=0 stage=replay iteration=24/64
+PHASE rank=0 stage=replay iteration=32/64
+PHASE rank=0 stage=replay iteration=40/64
+PHASE rank=0 stage=replay iteration=48/64
+PHASE rank=0 stage=replay iteration=56/64
+PHASE rank=0 stage=replay_barrier
+PHASE rank=0 stage=replay_counter_drain
+SNAPSHOT rank=0 stage=replay_drained nccl_enqueues=17 roce_enqueues=0 neighbor_enqueues=22 first=148 second=148 roce_ops=0 relay_stripes=0
+GRAPH_COUNTERS rank=0 replays=64 neighbor_first_delta=128 neighbor_second_delta=128 roce_ops_delta=0 relay_stripes_delta=0 enqueue_counts_unchanged=true
+COUNTERS rank=0 nccl_enqueues=17 roce_enqueues=0 neighbor_enqueues=22 roce_gpu_ops=0 relayed_stripes=0 neighbor_first_completed=148 neighbor_second_completed=148 registered_host_bytes=25296896
+PASS rank=0 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=230078668 (includes host checks; not a benchmark)

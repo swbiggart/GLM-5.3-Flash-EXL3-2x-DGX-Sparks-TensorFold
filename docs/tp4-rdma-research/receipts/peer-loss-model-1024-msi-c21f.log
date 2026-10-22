@@ -1,0 +1,99 @@
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 652 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xf75ef0010000 mergedDev=0 qpIndex=0 qpNum=652 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54030a remoteGid=00000000000000000000ffff0a54030b remoteQpNum=1185
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 778 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xf75ef009c000 mergedDev=2 qpIndex=0 qpNum=778 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54070a remoteGid=00000000000000000000ffff0a54070b remoteQpNum=1312
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1376 pkey=0 pd=0xf75ef0098e40 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1377 pkey=0 pd=0xf75ef0098e40
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=0 devName=rocep1s0f0 ndevs=4 nmdevs=4 qp_num=653 pkey=0 pd=0xf75ef000fc30 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 0 IbDev 0 Port 1 qp_num 653 mtu 5 GID 3 (0/A03540AFFFF0000) ctsFifoRkey=0x17f4b2 ctsFifoLkey=0x17f4b2
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 0 Port 1 qp_num 653 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1248 pkey=0 pd=0xf75ef02ceab0 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1249 pkey=0 pd=0xf75ef02ceab0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=2 devName=roceP2p1s0f0 ndevs=4 nmdevs=4 qp_num=779 pkey=0 pd=0xf75ef0053c50 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 2 IbDev 2 Port 1 qp_num 779 mtu 5 GID 3 (0/A07540AFFFF0000) ctsFifoRkey=0x19dfdd ctsFifoLkey=0x19dfdd
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 2 Port 1 qp_num 779 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1378 pkey=0 pd=0xf75ef0098e40 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1379 pkey=0 pd=0xf75ef0098e40
+edgexpert-c21f:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1250 pkey=0 pd=0xf75ef02ceab0 oooRq=0
+edgexpert-c21f:1:14 [0] NCCL INFO Ninfo: RoCE all-gather on 4 rail(s), 2 stripe(s) a peer, ring with relays for gathers up to 1024 KiB a rank
+info: GLM transport rank 3: backend=roce-relay memory=registered required=true cutoff=1048576 bytes
+info: rank 3: settings agreed, NCCL joined
+warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven
+warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit
+info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers
+info: weights loaded in 41151 ms (dense MSE quantize 188006 ms, expert stacks 335757 ms, dense reads 225060 ms, pack 444 ms, head 450 ms)
+info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB
+info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)
+tensorfold: stop signal: this rank follows rank 0 to its end (it stores its kept states first)

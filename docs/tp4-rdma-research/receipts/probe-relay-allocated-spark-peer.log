@@ -1,0 +1,100 @@
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1155 pkey=0 pd=0xe4c66c0f2f60 oooRq=0
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1156 pkey=0 pd=0xe4c66c0f2f60
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1282 pkey=0 pd=0xe4c66c00fa30 oooRq=0
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1283 pkey=0 pd=0xe4c66c00fa30
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 595 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-133c:1:63 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe4c66c1a0000 mergedDev=0 qpIndex=0 qpNum=595 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54010a remoteGid=00000000000000000000ffff0a54010b remoteQpNum=1058
+spark-133c:1:63 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe4c66c1e4000 mergedDev=1 qpIndex=0 qpNum=1155 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54000b remoteGid=00000000000000000000ffff0a54000a remoteQpNum=2396
+spark-133c:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-133c:1:63 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 721 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-133c:1:63 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe4c66c22c000 mergedDev=2 qpIndex=0 qpNum=721 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54050a remoteGid=00000000000000000000ffff0a54050b remoteQpNum=1186
+spark-133c:1:63 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe4c66c2ca000 mergedDev=3 qpIndex=0 qpNum=1282 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54040b remoteGid=00000000000000000000ffff0a54040a remoteQpNum=883
+spark-133c:1:1 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+spark-133c:1:1 [0] NCCL INFO Tree transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-133c:1:1 [0] NCCL INFO PAT transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-133c:1:1 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+spark-133c:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+spark-133c:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+spark-133c:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer
+spark-133c:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0
+spark-133c:1:1 [0] NCCL INFO ncclCommInitRank comm 0x13cafab0 rank 1 nranks 4 cudaDev 0 nvmlDev 0 busId f01000 commId 0xab56b15696f66c4c - Init COMPLETE
+spark-133c:1:1 [0] NCCL INFO Init timings - ncclCommInitRank: rank 1 nranks 4 total 0.34 (kernels 0.16, alloc 0.02, bootstrap 0.03, allgathers 0.01, topo 0.01, graphs 0.00, connections 0.12, rest 0.00)
+spark-133c:1:1 [0] NCCL INFO Symmetric VA size=124GB
+info: RoCE all-gather on 4 rail(s), 2 stripe(s) a peer, ring with relays for gathers up to 512 KiB a rank
+info: GLM transport rank 1: backend=roce-relay memory=allocated required=true cutoff=524288 bytes
+PASS rank=1 eager bytes=8 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=16 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=68 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=4096 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=16384 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=98304 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=262144 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=524288 backend=roce guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=524304 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=1 eager bytes=1048576 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=1 layout alias=false offset=4 backend=roce
+PASS rank=1 layout alias=true offset=0 backend=roce
+PASS rank=1 explicit-in-place backend=nccl
+GRAPH rank=1 backends=roce,nccl,roce
+GRAPH_COUNTERS rank=1 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true
+COUNTERS rank=1 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=0
+PASS rank=1 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=224412375 (includes host checks; not a benchmark)

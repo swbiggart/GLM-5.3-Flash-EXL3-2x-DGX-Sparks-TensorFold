@@ -1,0 +1,169 @@
+diff --git a/zig/tests/cuda/glm_transport_probe.zig b/zig/tests/cuda/glm_transport_probe.zig
+index b315f95..893a7b1 100644
+--- a/zig/tests/cuda/glm_transport_probe.zig
++++ b/zig/tests/cuda/glm_transport_probe.zig
+@@ -42,14 +42,21 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+         break :blk l;
+     };
+     defer link.close();
+-    const agreement = try std.fmt.allocPrint(gpa, "glm-transport-probe-v2 replays={d}", .{replays});
++    const agreement = try std.fmt.allocPrint(gpa, "glm-transport-probe-v3 replays={d}", .{replays});
+     defer gpa.free(agreement);
+     try link.agreeRanks(gpa, rank, agreement);
+     var comm = try Comm.init(gpa, link, rank, 4);
+     defer comm.deinit();
+     var stream = try cuda.Stream.init(&driver, true);
+     defer stream.deinit();
+-    for ([_]usize{ 8, 16, 68, 4096, 16384, 98304, 262144, 524288, 524304, 1048576 }) |bytes| {
++    const requested_profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
++    const backend = checked(rank, parseProfile(requested_profile));
++    const plan = checked(rank, SizePlan.init(backend, activeCutoff(&comm)));
++    const plan_text = checked(rank, std.fmt.allocPrint(gpa, "glm-probe-size-plan backend={s} cutoff={d} graph={d},{d},{d}", .{ requested_profile, plan.cutoff, plan.mixed[0], plan.mixed[1], plan.mixed[2] }));
++    defer gpa.free(plan_text);
++    checked(rank, link.agreeRanks(gpa, rank, plan_text));
++    std.debug.print("PLAN rank={d} {s} eager_cases={d}\n", .{ rank, plan_text, plan.eager_len });
++    for (plan.eager[0..plan.eager_len]) |bytes| {
+         var c = checked(rank, Case.init(&driver, bytes, 0, false, rank));
+         defer c.deinit();
+         for (0..3) |seed| {
+@@ -78,7 +85,7 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+     var mixed: [3]Case = undefined;
+     var opened: usize = 0;
+     defer for (mixed[0..opened]) |*c| c.deinit();
+-    for ([_]usize{ 16384, 524304, 32768 }, 0..) |bytes, i| {
++    for (plan.mixed, 0..) |bytes, i| {
+         mixed[i] = checked(rank, Case.init(&driver, bytes, 0, false, rank));
+         opened += 1;
+         checked(rank, mixed[i].prepare(gpa, rank, 0));
+@@ -90,10 +97,9 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+     const first_backend = checked(rank, comm.gatherBackend(mixed[0].src(), mixed[0].dst(), mixed[0].bytes, .u8));
+     const middle_backend = checked(rank, comm.gatherBackend(mixed[1].src(), mixed[1].dst(), mixed[1].bytes, .u8));
+     const last_backend = checked(rank, comm.gatherBackend(mixed[2].src(), mixed[2].dst(), mixed[2].bytes, .u8));
+-    const requested_profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
+     if (middle_backend != .nccl) die(error.ProbeRequiresFallbackMiddle, rank);
+-    if (!std.mem.eql(u8, requested_profile, "nccl") and (first_backend == .nccl or last_backend == .nccl)) die(error.ProbeRequiresCustomGraph, rank);
+-    std.debug.print("GRAPH rank={d} backends={s},{s},{s}\n", .{ rank, @tagName(first_backend), @tagName(middle_backend), @tagName(last_backend) });
++    if (first_backend != backend or last_backend != backend) die(error.ProbeRequiresRequestedGraphBackend, rank);
++    std.debug.print("GRAPH rank={d} backends={s},{s},{s} bytes={d},{d},{d}\n", .{ rank, @tagName(first_backend), @tagName(middle_backend), @tagName(last_backend), plan.mixed[0], plan.mixed[1], plan.mixed[2] });
+     const ring = if (std.c.getenv("TF_ROCE_RING")) |v| std.mem.eql(u8, std.mem.span(v), "1") else false;
+     // Every GPU is done with eager work, then wait for the proxies' trailing
+     // completion polls. Counts for captured calls are deliberately excluded.
+@@ -135,10 +141,55 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+     if (std.mem.eql(u8, profile, "roce") and (counts.roce_ops == 0 or counts.roce_enqueues == 0)) die(error.NoRoceExecution, rank);
+     if (std.mem.eql(u8, profile, "roce") and std.c.getenv("TF_ROCE_RING") != null and std.mem.eql(u8, std.mem.span(std.c.getenv("TF_ROCE_RING").?), "1") and counts.relayed_stripes == 0) die(error.NoRelayExecution, rank);
+     if (std.mem.eql(u8, profile, "neighbor") and (counts.neighbor_enqueues == 0 or counts.neighbor_first_completed == 0 or counts.neighbor_second_completed == 0)) die(error.NoNeighborExecution, rank);
+-    checked(rank, link.agreeRanks(gpa, rank, "glm-transport-probe-v2 passed"));
++    checked(rank, link.agreeRanks(gpa, rank, "glm-transport-probe-v3 passed"));
+     std.debug.print("PASS rank={d} mixed-graph=true replays={d} slot-reuse=true guards=true exact=true elapsed_ns={d} (includes host checks; not a benchmark)\n", .{ rank, replays, elapsed });
+ }
+ 
++// Probe support is intentionally bounded. Read the live relay's agreed slot size,
++// not an environment default. Neighbor's production cutoff remains fixed at 512 KiB.
++const max_probe_bytes: usize = (1024 << 10) + 16;
++fn activeCutoff(comm: *const Comm) u64 {
++    if (comm.extra) |x| {
++        if (x.r) |r| return r.slot_bytes;
++        if (x.n != null) return 512 << 10;
++    }
++    return 0;
++}
++fn parseProfile(text: []const u8) !Comm.GatherBackend {
++    return std.meta.stringToEnum(Comm.GatherBackend, text) orelse error.BadProbeProfile;
++}
++const SizePlan = struct {
++    cutoff: u64,
++    eager: [12]usize = .{ 8, 16, 68, 4096, 16384, 98304, 262144, 524288, 524304, 1048576, 0, 0 },
++    eager_len: usize = 10,
++    mixed: [3]usize = .{ 16384, 524304, 32768 },
++
++    fn init(backend: Comm.GatherBackend, cutoff: u64) !SizePlan {
++        switch (backend) {
++            .nccl => if (cutoff != 0) return error.ProbeProfileMismatch,
++            .neighbor => if (cutoff != 512 << 10) return error.UnsupportedProbeCutoff,
++            .roce => if (cutoff != 512 << 10 and cutoff != 1024 << 10) return error.UnsupportedProbeCutoff,
++        }
++        var out: SizePlan = .{ .cutoff = cutoff };
++        if (cutoff == 1024 << 10) {
++            // 33 FP32 GLM rows, just beyond cutoff, 64 FP32 GLM rows.
++            // Exactly two custom calls, preserving replay counter expectations.
++            out.mixed = .{ 33 * 4096 * 4, max_probe_bytes, 64 * 4096 * 4 };
++            out.eager[10] = out.mixed[0];
++            out.eager[11] = max_probe_bytes;
++            out.eager_len = out.eager.len;
++        }
++        return out;
++    }
++};
++const CaseSizes = struct { send: usize, recv: usize, oracle: usize };
++fn caseSizes(bytes: usize, offset: usize) !CaseSizes {
++    if (bytes == 0 or bytes > max_probe_bytes or (offset != 0 and offset != 4)) return error.UnsupportedProbeCase;
++    const payload = try std.math.mul(usize, 4, bytes);
++    const edges = try std.math.add(usize, 2 * guard, offset);
++    return .{ .send = try std.math.add(usize, bytes, edges), .recv = try std.math.add(usize, payload, edges), .oracle = payload };
++}
++
+ const Case = struct {
+     send: cuda.DeviceBuffer,
+     recv: cuda.DeviceBuffer,
+@@ -148,11 +199,13 @@ const Case = struct {
+     alias: bool,
+     rank: u32,
+     fn init(d: *const cuda.Driver, bytes: usize, offset: usize, alias: bool, rank: u32) !Case {
+-        var send = try cuda.DeviceBuffer.alloc(d, bytes + 2 * guard + offset);
++        if (rank >= 4) return error.BadCaseRank;
++        const sizes = try caseSizes(bytes, offset);
++        var send = try cuda.DeviceBuffer.alloc(d, sizes.send);
+         errdefer send.free();
+-        var recv = try cuda.DeviceBuffer.alloc(d, 4 * bytes + 2 * guard + offset);
++        var recv = try cuda.DeviceBuffer.alloc(d, sizes.recv);
+         errdefer recv.free();
+-        return .{ .send = send, .recv = recv, .oracle = try cuda.DeviceBuffer.alloc(d, 4 * bytes), .bytes = bytes, .offset = offset, .alias = alias, .rank = rank };
++        return .{ .send = send, .recv = recv, .oracle = try cuda.DeviceBuffer.alloc(d, sizes.oracle), .bytes = bytes, .offset = offset, .alias = alias, .rank = rank };
+     }
+     fn deinit(c: *Case) void {
+         c.oracle.free();
+@@ -368,3 +421,44 @@ test "graph counter capture gate rejects execution and propagates a closed peer
+     try std.testing.expectError(error.CaptureExecutedTransport, captureReady(std.testing.allocator, &gate, 3, drained, captured));
+     try std.testing.expectEqual(@as(usize, 2), gate.calls); // A mismatched rank never releases peers.
+ }
++
++test "graph counter size plan retains 512 KiB cases and extends relay to 64 rows" {
++    const original = [_]usize{ 16384, 524304, 32768 };
++    const nccl = try SizePlan.init(.nccl, 0);
++    const neighbor = try SizePlan.init(.neighbor, 512 << 10);
++    const relay = try SizePlan.init(.roce, 512 << 10);
++    for ([_]SizePlan{ nccl, neighbor, relay }) |plan| {
++        try std.testing.expectEqualSlices(usize, &original, &plan.mixed);
++        try std.testing.expectEqual(@as(usize, 10), plan.eager_len);
++    }
++    const large = try SizePlan.init(.roce, 1024 << 10);
++    try std.testing.expectEqualSlices(usize, &.{ 540672, 1048592, 1048576 }, &large.mixed);
++    try std.testing.expectEqual(@as(usize, 12), large.eager_len);
++    try std.testing.expectEqual(max_probe_bytes, large.eager[large.eager_len - 1]);
++    var custom: usize = 0;
++    for (large.mixed) |bytes| {
++        _ = try caseSizes(bytes, 0);
++        if (bytes <= large.cutoff) custom += 1;
++    }
++    try std.testing.expectEqual(@as(usize, 2), custom);
++    try std.testing.expect(large.mixed[1] > large.cutoff);
++}
++
++test "graph counter size planning refuses unsupported profiles and buffer bounds" {
++    for ([_]u64{ 0, 128 << 10, 768 << 10, 2048 << 10, std.math.maxInt(u64) }) |cutoff|
++        try std.testing.expectError(error.UnsupportedProbeCutoff, SizePlan.init(.roce, cutoff));
++    try std.testing.expectError(error.UnsupportedProbeCutoff, SizePlan.init(.neighbor, 1024 << 10));
++    try std.testing.expectError(error.ProbeProfileMismatch, SizePlan.init(.nccl, 512 << 10));
++    for ([_][]const u8{ "", "auto", "ROCE", "registered", " roce" }) |bad|
++        try std.testing.expectError(error.BadProbeProfile, parseProfile(bad));
++    try std.testing.expectEqual(Comm.GatherBackend.roce, try parseProfile("roce"));
++    for ([_]usize{ 0, max_probe_bytes + 1, std.math.maxInt(usize) }) |bytes|
++        try std.testing.expectError(error.UnsupportedProbeCase, caseSizes(bytes, 0));
++    try std.testing.expectError(error.UnsupportedProbeCase, caseSizes(16, std.math.maxInt(usize)));
++    const sizes = try caseSizes(max_probe_bytes, 4);
++    try std.testing.expectEqual(@as(usize, 4194368), sizes.oracle);
++    try std.testing.expectEqual(sizes.oracle + 132, sizes.recv);
++    try std.testing.expectEqual(max_probe_bytes + 132, sizes.send);
++    // Last rank's in-place source ends at payload end, before the trailing guard.
++    try std.testing.expectEqual(guard + 4 + 4 * max_probe_bytes, sizes.recv - guard);
++}

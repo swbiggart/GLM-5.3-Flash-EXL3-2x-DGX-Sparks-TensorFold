@@ -1,0 +1,132 @@
+{
+  "comparisons": [],
+  "limits": [
+    "Descriptive screening medians; no statistical significance or global optimum claim.",
+    "Token parity covers shared strict request identities only; unmatched requests are unverified.",
+    "Complete request coverage does not require equal repetition counts; these are listed separately.",
+    "Qualification fixture reports are not benchmark raw records and are not compared."
+  ],
+  "matching_mode": "strict",
+  "ok": true,
+  "runs": [
+    {
+      "benchmark_settings": {
+        "concurrent": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 2,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        },
+        "prefill8k": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "prefill",
+          "parameters": {
+            "fixed_words": false,
+            "lengths": "8192",
+            "reps": 2
+          }
+        },
+        "steady": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "sustained",
+          "parameters": {
+            "seconds": 30,
+            "set": "a",
+            "streams": "4",
+            "tokens": 256
+          }
+        },
+        "warmup": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 1,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        }
+      },
+      "directory": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01",
+      "draft_verified_observations": {
+        "false": 0,
+        "true": 59
+      },
+      "metrics": {
+        "cold_8k": {
+          "median_prefill_tps": 1666.6433685123206,
+          "median_ttft_s": 4.915277938358486,
+          "validated_requests": 2
+        },
+        "concurrent": {
+          "1": {
+            "median_aggregate_tps": 74.31724858136423,
+            "median_per_request_ttft_s": 0.131,
+            "repetitions": 2
+          },
+          "4": {
+            "median_aggregate_tps": 116.30165566403234,
+            "median_per_request_ttft_s": 0.673,
+            "repetitions": 2
+          },
+          "8": {
+            "median_aggregate_tps": 159.41654433774266,
+            "median_per_request_ttft_s": 1.273,
+            "repetitions": 2
+          }
+        },
+        "steady": {
+          "median_aggregate_tps": 131.39,
+          "reported_requests": 18,
+          "summary_rows": 1
+        }
+      },
+      "name": "nccl",
+      "ok": true,
+      "sources": [
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/concurrent-raw.jsonl",
+          "sha256": "d54877cb4c746d0c308fda70d4f71ad112f2a49b33f106c220e5d2df5d7d08d4"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/concurrent.json",
+          "sha256": "1fd108f2a7fd5cd742c2ce976e225c1ebd653364b53b2a9fb8a02decf2da7df3"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/prefill8k-raw.jsonl",
+          "sha256": "d5fdc2cefcdeb73aea619d877a64dec71fe8635d8907b9dfcb1aa897c04150be"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/prefill8k.json",
+          "sha256": "8b52fdf81652e88170da78635249e1a3754adb232ee699a2ce751c036f4e87ff"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/steady-raw.jsonl",
+          "sha256": "c5b0621edf402d0934682a22ab9f3ee2de8075b657ba5622e215bc488d3e5521"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/steady.json",
+          "sha256": "3c1b05d10747f138c7a88fab5aa49919d41bae4e3efba4ee203a31e66fa4f525"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/warmup-raw.jsonl",
+          "sha256": "c53ee9a0c058dad80862e13c3b0fe351cb0357ca8698652f1097834e0cd05ae3"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/warmup.json",
+          "sha256": "fe0cd7171f3062433ab32ad59cef136e2eb10b0c30030908090a03efdfa5ac4d"
+        }
+      ],
+      "unique_request_identities": 36,
+      "validated_generation_observations": 59,
+      "validation_errors": [],
+      "within_run_divergences": [],
+      "worker_errors": []
+    }
+  ],
+  "schema_version": 1
+}

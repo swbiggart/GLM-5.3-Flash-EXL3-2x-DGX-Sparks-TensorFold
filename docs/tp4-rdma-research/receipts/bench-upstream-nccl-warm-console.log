@@ -1,0 +1,4 @@
+{"streams": 1, "rep": 0, "aggregate_tps": 73.72205108782839, "per_stream_decode_tps": [77.031]}
+{"streams": 4, "rep": 0, "aggregate_tps": 116.9211281539053, "per_stream_decode_tps": [37.604, 30.025, 64.95, 36.47]}
+{"streams": 8, "rep": 0, "aggregate_tps": 161.109205882865, "per_stream_decode_tps": [23.962, 22.288, 48.782, 26.884, 24.314, 44.594, 29.856, 21.374]}
+{"stage": "warmup", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-upstream-nccl-warm/warmup.json"}

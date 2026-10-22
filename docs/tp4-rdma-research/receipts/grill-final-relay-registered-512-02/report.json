@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "kind": "performance-capture-comparison-v1",
+  "result": "IMPROVED",
+  "result_scope": "between these capture periods; not causal attribution",
+  "model": "GLM-5.3-Flash-EXL3",
+  "baseline_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-final-control-nccl-01",
+  "candidate_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-final-relay-registered-512-02",
+  "declared_change": "settings",
+  "baseline_accounting": {
+    "dispatched_requests": 32,
+    "complete_requests": 32,
+    "known_reported_completion_tokens": 12800,
+    "missing_completion_usage_requests": 0,
+    "reported_completion_tokens": 12800,
+    "request_ceiling": 32,
+    "output_token_ceiling": 12800,
+    "allowance_seconds": 300,
+    "minimum_full_capture_tokens_per_second": 42.666666666666664
+  },
+  "candidate_accounting": {
+    "dispatched_requests": 32,
+    "complete_requests": 32,
+    "known_reported_completion_tokens": 12800,
+    "missing_completion_usage_requests": 0,
+    "reported_completion_tokens": 12800,
+    "request_ceiling": 32,
+    "output_token_ceiling": 12800,
+    "allowance_seconds": 300,
+    "minimum_full_capture_tokens_per_second": 42.666666666666664
+  },
+  "baseline_ready": false,
+  "baseline_complete_acquisitions": 8,
+  "candidate_complete_acquisitions": 8,
+  "baseline_acquisition_medians": [
+    155.80819854950357,
+    155.4248518898302,
+    156.80770866695806,
+    157.44461098585518,
+    156.45657156714725,
+    155.87559412956924,
+    156.07807025073942,
+    156.79768942924858
+  ],
+  "candidate_acquisition_medians": [
+    181.26359760206387,
+    182.06487973021626,
+    180.58291261276838,
+    181.41132569047417,
+    180.4949894590926,
+    182.53388056990727,
+    181.99993357002424,
+    182.67567805786527
+  ],
+  "observed_change_percent": 16.17759199028686,
+  "model_based_interval_percent": [
+    15.574794668491506,
+    16.783533290076775
+  ],
+  "model_based_confidence_level": 0.95,
+  "log_mean_difference": 0.14994979981895007,
+  "heteroscedastic_standard_error": 0.002199965825634677,
+  "critical_value": 2.364624251,
+  "conservative_degrees_of_freedom": 7,
+  "baseline_capture_sha256": "774d01b79d3c165cf035020c13b7e0af938ea3a2fa3affc8cd55e2d4e8385dac",
+  "candidate_capture_sha256": "1e5d2b87a04ea18b61846ac67f027b480f94a8ec20febb68facbc84bbabbc8a4",
+  "report_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-final-relay-registered-512-02/report.json",
+  "reasons": [],
+  "stop_reason": null,
+  "first_failure": null,
+  "assumptions": "Model-based interval assumes stable, independent acquisition-level variation and an adequate log-scale mean model. Resetting a client does not prove independence. Positive autocorrelation can make the interval narrower than justified, increasing false directional conclusions. Sequential captures cannot remove time or carryover confounding; no causal attribution, equivalence, noninferiority, or guaranteed precision/power is established.",
+  "scope": "One short synthetic structured C1/exact400 workload; not general concurrency, long-context, model quality, tail SLOs, or full serving qualification. Deployment values are operator declarations, not server attestation. A settings fingerprint cannot prove only one internal knob changed."
+}

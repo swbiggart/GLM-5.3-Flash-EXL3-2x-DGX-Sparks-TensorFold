@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "upstream_client": {
+    "repository": "https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10",
+    "commit": "9af1f4567ee49ec2a31f68975982093277e7090d",
+    "source_path": "tools/kit_bench.py",
+    "license": "Apache-2.0"
+  },
+  "adaptation": "bench_glm.py differs from vendor/original_glm_adapter.py only in its local vendor import path and explanatory comment. Other retained producers/analyzer are unchanged. The original qualification producer has site-specific authenticated gateway paths; it is provenance, not a portable credential setup.",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "8561bb5fa7efc150bde477579fc6c39322307a23cb48eb0e058c8fe0bcae4650"
+    },
+    {
+      "path": "analyze_glm_runs.py",
+      "sha256": "221f1d4faf451587eb29042bcb1b685b30671da2031f0a0b3d3279e37cee143d"
+    },
+    {
+      "path": "bench_glm.py",
+      "sha256": "42cfb2182c121651d2fdfc7bda1bcbb91a8a305aa182cde4ef48d29d24155cc3"
+    },
+    {
+      "path": "glm_accept.py",
+      "sha256": "bbae3c2a5086c27207445b07e306a8f5a72cfebffcfc7ba925da46a2676349bc"
+    },
+    {
+      "path": "test_analyze_glm_runs.py",
+      "sha256": "b4c2b95532158bf6cf3cab064a3395c59750c562283d74f5165e3ac6bd5470bf"
+    },
+    {
+      "path": "vendor/LICENSE.bertholomus",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "vendor/benchmark.py",
+      "sha256": "6981e483d67739df937674e706f85f651395c7cd0a592dfedd439b7b0c5e1621"
+    },
+    {
+      "path": "vendor/kit_bench.py",
+      "sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5"
+    },
+    {
+      "path": "vendor/original_glm_adapter.py",
+      "sha256": "1249029d0a4ed96746dcf9c55153cc7bc22ce8dae815928746c25d1060fd0820"
+    },
+    {
+      "path": "vendor/qualify_glm_native.py",
+      "sha256": "27103de679ef590050cb4ba15e1d85b3f3f9e8d801233eae702972804468e9b9"
+    },
+    {
+      "path": "verify_receipts.py",
+      "sha256": "e7dbb6ddda8cc9988f6f9684b62a4a1f0ae59065934fc64f722c41d589042d88"
+    }
+  ]
+}

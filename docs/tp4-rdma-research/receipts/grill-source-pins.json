@@ -1,0 +1,9 @@
+{
+  "repo": "https://github.com/plotarmordev/thegrill",
+  "commit": "755859a084471a17c6f153088fc78ffadc04606e",
+  "tag": "v0.3.0",
+  "archive_url": "https://github.com/plotarmordev/thegrill/releases/download/v0.3.0/grill-perf-0.3.0-aarch64-unknown-linux-gnu.tar.gz",
+  "archive_sha256": "0dae75a72bee501622dafe6ea0c26e838bfb6060f3651f6cd9bb1eee5f2c557a",
+  "binary_sha256": "2b48429f5b97cc949a221b8fcef20cbcbb583432ceb766a18d8b1bf3a10b9310",
+  "protocol": "default baseline-v1 C1 exact400,8acquisitions,1warmup+3measured each; cacheobserve"
+}

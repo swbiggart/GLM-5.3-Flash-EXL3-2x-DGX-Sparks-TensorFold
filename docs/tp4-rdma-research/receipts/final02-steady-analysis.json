@@ -1,0 +1,79 @@
+{
+  "comparisons": [],
+  "limits": [
+    "Descriptive screening medians; no statistical significance or global optimum claim.",
+    "Token parity covers shared strict request identities only; unmatched requests are unverified.",
+    "Complete request coverage does not require equal repetition counts; these are listed separately.",
+    "Qualification fixture reports are not benchmark raw records and are not compared."
+  ],
+  "matching_mode": "strict",
+  "ok": true,
+  "runs": [
+    {
+      "benchmark_settings": {
+        "steady": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "sustained",
+          "parameters": {
+            "seconds": 90,
+            "set": "a",
+            "streams": "4",
+            "tokens": 256
+          }
+        }
+      },
+      "directory": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-final-90s-02",
+      "draft_verified_observations": {
+        "false": 0,
+        "true": 57
+      },
+      "metrics": {
+        "cold_8k": {
+          "median_prefill_tps": null,
+          "median_ttft_s": null,
+          "validated_requests": 0
+        },
+        "concurrent": {
+          "1": {
+            "median_aggregate_tps": null,
+            "median_per_request_ttft_s": null,
+            "repetitions": 0
+          },
+          "4": {
+            "median_aggregate_tps": null,
+            "median_per_request_ttft_s": null,
+            "repetitions": 0
+          },
+          "8": {
+            "median_aggregate_tps": null,
+            "median_per_request_ttft_s": null,
+            "repetitions": 0
+          }
+        },
+        "steady": {
+          "median_aggregate_tps": 157.02,
+          "reported_requests": 57,
+          "summary_rows": 1
+        }
+      },
+      "name": "final02",
+      "ok": true,
+      "sources": [
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-final-90s-02/steady-raw.jsonl",
+          "sha256": "79057484db76456fe2d4e352cbc9fa4994edde974349838fad7497442fa6bb76"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-final-90s-02/steady.json",
+          "sha256": "855726e37625e88d8a913c79ea6cafc0912efb8c538a93c320badbb87886d9e9"
+        }
+      ],
+      "unique_request_identities": 57,
+      "validated_generation_observations": 57,
+      "validation_errors": [],
+      "within_run_divergences": [],
+      "worker_errors": []
+    }
+  ],
+  "schema_version": 1
+}

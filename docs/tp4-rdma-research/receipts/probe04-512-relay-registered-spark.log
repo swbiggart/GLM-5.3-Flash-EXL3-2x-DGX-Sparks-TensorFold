@@ -1,0 +1,100 @@
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1298 pkey=0 pd=0xedca080f2b40 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1299 pkey=0 pd=0xedca080f2b40
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 2451 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xedca08010000 mergedDev=0 qpIndex=0 qpNum=2451 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54000a remoteGid=00000000000000000000ffff0a54000b remoteQpNum=1243
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1171 pkey=0 pd=0xedca082c4b30 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1172 pkey=0 pd=0xedca082c4b30
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=2 devName=roceP2p1s0f0 ndevs=4 nmdevs=4 qp_num=938 pkey=0 pd=0xedca0809be70 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 2 IbDev 2 Port 1 qp_num 938 mtu 5 GID 3 (0/A04540AFFFF0000) ctsFifoRkey=0x19a5a2 ctsFifoLkey=0x19a5a2
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 2 Port 1 qp_num 938 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xedca0811c000 mergedDev=3 qpIndex=0 qpNum=1298 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54070b remoteGid=00000000000000000000ffff0a54070a remoteQpNum=768
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=0 devName=rocep1s0f0 ndevs=4 nmdevs=4 qp_num=2452 pkey=0 pd=0xedca0800fc30 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 0 IbDev 0 Port 1 qp_num 2452 mtu 5 GID 3 (0/A00540AFFFF0000) ctsFifoRkey=0x1828e6 ctsFifoLkey=0x1828e6
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 0 Port 1 qp_num 2452 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1173 pkey=0 pd=0xedca082c4b30 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1174 pkey=0 pd=0xedca082c4b30
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=2 devName=roceP2p1s0f0 ndevs=4 nmdevs=4 qp_num=939 pkey=0 pd=0xedca0809be70 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 2 IbDev 2 Port 1 qp_num 939 mtu 5 GID 3 (0/A04540AFFFF0000) ctsFifoRkey=0x19ebea ctsFifoLkey=0x19ebea
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 2 Port 1 qp_num 939 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1300 pkey=0 pd=0xedca080f2b40 oooRq=0
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1301 pkey=0 pd=0xedca080f2b40
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xedca08054000 mergedDev=1 qpIndex=0 qpNum=1171 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54030b remoteGid=00000000000000000000ffff0a54030a remoteQpNum=643
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 938 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xedca0809c000 mergedDev=2 qpIndex=0 qpNum=938 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54040a remoteGid=00000000000000000000ffff0a54040b remoteQpNum=1370
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 2452 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xedca08164000 mergedDev=0 qpIndex=0 qpNum=2452 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54000a remoteGid=00000000000000000000ffff0a54000b remoteQpNum=1245
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xedca081a8000 mergedDev=1 qpIndex=0 qpNum=1173 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54030b remoteGid=00000000000000000000ffff0a54030a remoteQpNum=642
+spark-4e04:1:65 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+spark-4e04:1:65 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 939 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xedca081f0000 mergedDev=2 qpIndex=0 qpNum=939 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54040a remoteGid=00000000000000000000ffff0a54040b remoteQpNum=1372
+spark-4e04:1:65 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xedca08234000 mergedDev=3 qpIndex=0 qpNum=1300 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54070b remoteGid=00000000000000000000ffff0a54070a remoteQpNum=769
+spark-4e04:1:1 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+spark-4e04:1:1 [0] NCCL INFO Tree transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-4e04:1:1 [0] NCCL INFO PAT transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+spark-4e04:1:1 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+spark-4e04:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+spark-4e04:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+spark-4e04:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer
+spark-4e04:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0
+spark-4e04:1:1 [0] NCCL INFO CC Off, workFifoBytes 1048576
+spark-4e04:1:1 [0] NCCL INFO ncclCommInitRank comm 0x3bd2aa00 rank 0 nranks 4 cudaDev 0 nvmlDev 0 busId f01000 commId 0xb7b0a92f9389d70a - Init COMPLETE
+spark-4e04:1:1 [0] NCCL INFO Init timings - ncclCommInitRank: rank 0 nranks 4 total 0.35 (kernels 0.17, alloc 0.03, bootstrap 0.03, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.11, rest 0.00)
+spark-4e04:1:1 [0] NCCL INFO Symmetric VA size=124GB
+info: RoCE all-gather on 4 rail(s), 2 stripe(s) a peer, ring with relays for gathers up to 512 KiB a rank
+info: GLM transport rank 0: backend=roce-relay memory=registered required=true cutoff=524288 bytes
+PLAN rank=0 glm-probe-size-plan backend=roce cutoff=524288 graph=16384,524304,32768 eager_cases=10
+PASS rank=0 eager bytes=8 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=16 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=68 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=4096 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=16384 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=98304 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=262144 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=524288 backend=roce guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=524304 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 eager bytes=1048576 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=0 layout alias=false offset=4 backend=roce
+PASS rank=0 layout alias=true offset=0 backend=roce
+PASS rank=0 explicit-in-place backend=nccl
+GRAPH rank=0 backends=roce,nccl,roce bytes=16384,524304,32768
+PHASE rank=0 stage=eager_barrier
+PHASE rank=0 stage=eager_counter_drain
+SNAPSHOT rank=0 stage=eager_drained nccl_enqueues=8 roce_enqueues=28 neighbor_enqueues=0 first=0 second=0 roce_ops=28 relay_stripes=56
+PHASE rank=0 stage=capture_begin
+PHASE rank=0 stage=capture_end
+PHASE rank=0 stage=graph_instantiate
+SNAPSHOT rank=0 stage=capture_snapshot nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 first=0 second=0 roce_ops=28 relay_stripes=56
+PHASE rank=0 stage=capture_snapshot_barrier
+PHASE rank=0 stage=replay_begin
+PHASE rank=0 stage=replay iteration=0/64
+PHASE rank=0 stage=replay iteration=8/64
+PHASE rank=0 stage=replay iteration=16/64
+PHASE rank=0 stage=replay iteration=24/64
+PHASE rank=0 stage=replay iteration=32/64
+PHASE rank=0 stage=replay iteration=40/64
+PHASE rank=0 stage=replay iteration=48/64
+PHASE rank=0 stage=replay iteration=56/64
+PHASE rank=0 stage=replay_barrier
+PHASE rank=0 stage=replay_counter_drain
+SNAPSHOT rank=0 stage=replay_drained nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 first=0 second=0 roce_ops=156 relay_stripes=312
+GRAPH_COUNTERS rank=0 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true
+COUNTERS rank=0 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=5308416
+PASS rank=0 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=244292267 (includes host checks; not a benchmark)

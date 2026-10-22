@@ -1,0 +1,33 @@
+{
+  "started": 1792663378.6099832,
+  "ended": 1792663422.2018273,
+  "first_content_at": 1792663378.705796,
+  "http_status": 200,
+  "done_received": false,
+  "finish_reason": null,
+  "completed_response": false,
+  "error_type": null,
+  "response_sha256": "2dddf4f224d840105c248fdb83139a5755e0dfc7c3b0570aa33c542f697ea669",
+  "request": {
+    "model": "GLM-5.3-Flash-EXL3",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Write a very long detailed essay about the history of ocean navigation. Continue in numbered sections."
+      }
+    ],
+    "max_tokens": 4096,
+    "ignore_eos": true,
+    "temperature": 0,
+    "stream": true,
+    "return_token_ids": true,
+    "stream_options": {
+      "include_usage": true
+    },
+    "chat_template_kwargs": {
+      "thinking": false,
+      "enable_thinking": false
+    }
+  },
+  "scope": "Client evidence only; pair with controller stop receipt, exact container IDs and peer exits"
+}

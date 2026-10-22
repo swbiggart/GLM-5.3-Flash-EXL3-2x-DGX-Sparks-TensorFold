@@ -1,0 +1,16 @@
+{"streams": 1, "rep": 0, "aggregate_tps": 85.00743579013036, "per_stream_decode_tps": [89.323]}
+{"streams": 4, "rep": 0, "aggregate_tps": 133.09576590079573, "per_stream_decode_tps": [43.139, 36.156, 74.822, 40.761]}
+{"streams": 8, "rep": 0, "aggregate_tps": 175.02271420670016, "per_stream_decode_tps": [28.436, 24.35, 51.412, 28.993, 26.415, 46.847, 32.148, 22.94]}
+{"stage": "warmup", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-neighbor-screen01/warmup.json"}
+{"streams": 1, "rep": 0, "aggregate_tps": 85.94547057784706, "per_stream_decode_tps": [89.451]}
+{"streams": 1, "rep": 1, "aggregate_tps": 85.63048770994071, "per_stream_decode_tps": [89.188]}
+{"streams": 4, "rep": 0, "aggregate_tps": 133.24497938769534, "per_stream_decode_tps": [43.489, 34.33, 74.954, 41.837]}
+{"streams": 4, "rep": 1, "aggregate_tps": 134.22735512196928, "per_stream_decode_tps": [41.146, 36.444, 76.256, 41.978]}
+{"streams": 8, "rep": 0, "aggregate_tps": 175.12925137506824, "per_stream_decode_tps": [28.464, 24.367, 51.481, 29.019, 26.436, 46.88, 32.18, 22.953]}
+{"streams": 8, "rep": 1, "aggregate_tps": 174.68437390297038, "per_stream_decode_tps": [28.39, 24.303, 51.414, 28.949, 26.367, 46.927, 32.115, 22.881]}
+{"stage": "concurrent", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-neighbor-screen01/concurrent.json"}
+{"streams": 4, "seconds": 30, "max_tokens": 256, "set": "a", "requests": 20, "aggregate_tps": 151.04, "per_stream_tps_p50": 39.654, "per_stream_tps_p95": 74.435, "per_stream_tps_p05": 25.992, "ttft_s_p50": 0.188, "ttft_s_p95": 0.679}
+{"stage": "steady", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-neighbor-screen01/steady.json"}
+{"length": 8192, "rep": 0, "prompt_tokens": 8192, "ttft_s": 4.8675928809680045, "prefill_tps": 1682.9673722365376}
+{"length": 8192, "rep": 1, "prompt_tokens": 8192, "ttft_s": 4.854807377792895, "prefill_tps": 1687.3995943633645}
+{"stage": "prefill8k", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-neighbor-screen01/prefill8k.json"}

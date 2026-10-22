@@ -1,0 +1,29 @@
+{
+  "cmd": "prefill",
+  "parameters": {
+    "lengths": "8192",
+    "reps": 2,
+    "fixed_words": false
+  },
+  "started": 1792658611.296262,
+  "ended": 1792658621.1654909,
+  "result": [
+    {
+      "length": 8192,
+      "rep": 0,
+      "prompt_tokens": 8192,
+      "ttft_s": 4.922012912807986,
+      "prefill_tps": 1664.3597132146695
+    },
+    {
+      "length": 8192,
+      "rep": 1,
+      "prompt_tokens": 8192,
+      "ttft_s": 4.908542963908985,
+      "prefill_tps": 1668.9270238099716
+    }
+  ],
+  "worker_errors": [],
+  "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+  "raw_sha256": "d5fdc2cefcdeb73aea619d877a64dec71fe8635d8907b9dfcb1aa897c04150be"
+}

@@ -1,0 +1,100 @@
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=0 devName=rocep1s0f0 ndevs=4 nmdevs=4 qp_num=788 pkey=0 pd=0xe3e2d000ff50 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 0 IbDev 0 Port 1 qp_num 788 mtu 5 GID 3 (0/A02540AFFFF0000) ctsFifoRkey=0x17b472 ctsFifoLkey=0x17b472
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 0 Port 1 qp_num 788 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=2 devName=roceP2p1s0f0 ndevs=4 nmdevs=4 qp_num=914 pkey=0 pd=0xe3e2d0053ba0 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 2 IbDev 2 Port 1 qp_num 914 mtu 5 GID 3 (0/A06540AFFFF0000) ctsFifoRkey=0x19c1bf ctsFifoLkey=0x19c1bf
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 2 Port 1 qp_num 914 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=0 devName=rocep1s0f0 ndevs=4 nmdevs=4 qp_num=789 pkey=0 pd=0xe3e2d000ff50 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 0 IbDev 0 Port 1 qp_num 789 mtu 5 GID 3 (0/A02540AFFFF0000) ctsFifoRkey=0x17ba77 ctsFifoLkey=0x17ba77
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 0 Port 1 qp_num 789 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1146 pkey=0 pd=0xe3e2d02c8110 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1147 pkey=0 pd=0xe3e2d02c8110
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 788 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe3e2d0010000 mergedDev=0 qpIndex=0 qpNum=788 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54020a remoteGid=00000000000000000000ffff0a54020b remoteQpNum=1234
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe3e2d0054000 mergedDev=1 qpIndex=0 qpNum=1146 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54010b remoteGid=00000000000000000000ffff0a54010a remoteQpNum=650
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 914 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe3e2d009c000 mergedDev=2 qpIndex=0 qpNum=914 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54060a remoteGid=00000000000000000000ffff0a54060b remoteQpNum=1362
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1274 pkey=0 pd=0xe3e2d02b7f80 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1275 pkey=0 pd=0xe3e2d02b7f80
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 1 with dev 0 preserving PCI root pci0000:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 789 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe3e2d0128000 mergedDev=0 qpIndex=0 qpNum=789 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54020a remoteGid=00000000000000000000ffff0a54020b remoteQpNum=1236
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsCreate: QP created: port=1 dev=2 devName=roceP2p1s0f0 ndevs=4 nmdevs=4 qp_num=915 pkey=0 pd=0xe3e2d0053ba0 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: NCCL Dev 2 IbDev 2 Port 1 qp_num 915 mtu 5 GID 3 (0/A06540AFFFF0000) ctsFifoRkey=0x19c6c3 ctsFifoLkey=0x19c6c3
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbConnectImpl: IbDev 2 Port 1 qp_num 915 query_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe3e2d00e0000 mergedDev=3 qpIndex=0 qpNum=1274 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54050b remoteGid=00000000000000000000ffff0a54050a remoteQpNum=776
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1148 pkey=0 pd=0xe3e2d02c8110 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=1 devName=rocep1s0f1 ndevs=4 nmdevs=4 qp_num=1149 pkey=0 pd=0xe3e2d02c8110
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 915 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xe3e2d01b4000 mergedDev=2 qpIndex=0 qpNum=915 devIndex=0 ibDev=2 hca=roceP2p1s0f0 port=1 localGid=00000000000000000000ffff0a54060a remoteGid=00000000000000000000ffff0a54060b remoteQpNum=1364
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1276 pkey=0 pd=0xe3e2d02b7f80 oooRq=0
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB: ncclIbReceiverQpsCreateToRts: Flush QP created: port=1 dev=3 devName=roceP2p1s0f1 ndevs=4 nmdevs=4 qp_num=1277 pkey=0 pd=0xe3e2d02b7f80
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe3e2d016c000 mergedDev=1 qpIndex=0 qpNum=1148 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54010b remoteGid=00000000000000000000ffff0a54010a remoteQpNum=651
+edgexpert-b9dc:1:14 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xe3e2d01f8000 mergedDev=3 qpIndex=0 qpNum=1276 devIndex=0 ibDev=3 hca=roceP2p1s0f1 port=1 localGid=00000000000000000000ffff0a54050b remoteGid=00000000000000000000ffff0a54050a remoteQpNum=777
+edgexpert-b9dc:1:1 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0
+edgexpert-b9dc:1:1 [0] NCCL INFO Tree transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+edgexpert-b9dc:1:1 [0] NCCL INFO PAT transport setup disabled by NCCL_SWITCHLESS_RING_ONLY
+edgexpert-b9dc:1:1 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open shared object file: No such file or directory
+edgexpert-b9dc:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so
+edgexpert-b9dc:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512
+edgexpert-b9dc:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer
+edgexpert-b9dc:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0
+edgexpert-b9dc:1:1 [0] NCCL INFO ncclCommInitRank comm 0x71f6990 rank 2 nranks 4 cudaDev 0 nvmlDev 0 busId f01000 commId 0xb7b0a92f9389d70a - Init COMPLETE
+edgexpert-b9dc:1:1 [0] NCCL INFO Init timings - ncclCommInitRank: rank 2 nranks 4 total 0.35 (kernels 0.20, alloc 0.02, bootstrap 0.00, allgathers 0.00, topo 0.01, graphs 0.00, connections 0.11, rest 0.00)
+edgexpert-b9dc:1:1 [0] NCCL INFO Symmetric VA size=124GB
+info: RoCE all-gather on 4 rail(s), 2 stripe(s) a peer, ring with relays for gathers up to 512 KiB a rank
+info: GLM transport rank 2: backend=roce-relay memory=registered required=true cutoff=524288 bytes
+PLAN rank=2 glm-probe-size-plan backend=roce cutoff=524288 graph=16384,524304,32768 eager_cases=10
+PASS rank=2 eager bytes=8 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=16 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=68 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=4096 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=16384 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=98304 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=262144 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=524288 backend=roce guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=524304 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=2 eager bytes=1048576 backend=nccl guard=true oracle=nccl changing=3
+PASS rank=2 layout alias=false offset=4 backend=roce
+PASS rank=2 layout alias=true offset=0 backend=roce
+PASS rank=2 explicit-in-place backend=nccl
+GRAPH rank=2 backends=roce,nccl,roce bytes=16384,524304,32768
+PHASE rank=2 stage=eager_barrier
+PHASE rank=2 stage=eager_counter_drain
+SNAPSHOT rank=2 stage=eager_drained nccl_enqueues=8 roce_enqueues=28 neighbor_enqueues=0 first=0 second=0 roce_ops=28 relay_stripes=56
+PHASE rank=2 stage=capture_begin
+PHASE rank=2 stage=capture_end
+PHASE rank=2 stage=graph_instantiate
+SNAPSHOT rank=2 stage=capture_snapshot nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 first=0 second=0 roce_ops=28 relay_stripes=56
+PHASE rank=2 stage=capture_snapshot_barrier
+PHASE rank=2 stage=replay_begin
+PHASE rank=2 stage=replay iteration=0/64
+PHASE rank=2 stage=replay iteration=8/64
+PHASE rank=2 stage=replay iteration=16/64
+PHASE rank=2 stage=replay iteration=24/64
+PHASE rank=2 stage=replay iteration=32/64
+PHASE rank=2 stage=replay iteration=40/64
+PHASE rank=2 stage=replay iteration=48/64
+PHASE rank=2 stage=replay iteration=56/64
+PHASE rank=2 stage=replay_barrier
+PHASE rank=2 stage=replay_counter_drain
+SNAPSHOT rank=2 stage=replay_drained nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 first=0 second=0 roce_ops=156 relay_stripes=312
+GRAPH_COUNTERS rank=2 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true
+COUNTERS rank=2 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=5308416
+PASS rank=2 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=244125035 (includes host checks; not a benchmark)

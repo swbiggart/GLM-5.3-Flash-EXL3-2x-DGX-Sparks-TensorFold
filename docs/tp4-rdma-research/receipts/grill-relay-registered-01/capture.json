@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "kind": "performance-capture-v1",
+  "metric_contract": "generated-text-arrival-v2",
+  "collector_sha256": "2b48429f5b97cc949a221b8fcef20cbcbb583432ceb766a18d8b1bf3a10b9310",
+  "workload_sha256": "a2eb10e38e7c351c91a3dc78452af3e99b505d718342c3344517375f8567c959",
+  "deployment_sha256": "28f5e7d6a5c1fb0f69683c7d96dcdc9a22debd260d5bdbd3bcc064d574d62567",
+  "endpoint": "http://127.0.0.1:40053/v1/chat/completions",
+  "model": "GLM-5.3-Flash-EXL3",
+  "auth_env": null,
+  "local_http": true,
+  "seconds": 300,
+  "request_ceiling": 32,
+  "output_token_ceiling": 12800,
+  "baseline_sha256": "20d4cfb648b5a65ac7581a282447b94146648d726b899fd861c54201ac942a5a",
+  "change": "settings",
+  "status": "complete",
+  "stop_reason": null,
+  "acquisitions": [
+    {
+      "directory": "acquisition-00",
+      "plan_sha256": "defb048e7684e25e7019f30986480d082fb2cd5c84fb1533f19466c84c6be33c",
+      "evidence_sha256": "66a12338d363578ac5eb50a5699001ffa2ff5548bb46c796b08631bd4b725bad",
+      "started_unix_ms": 1792662013752,
+      "finished_unix_ms": 1792662022732,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 181.38755128166176
+    },
+    {
+      "directory": "acquisition-01",
+      "plan_sha256": "df02a57de102d0243027edd710521daf4b4b4efe85069ce3c1de2232af5b2cdc",
+      "evidence_sha256": "12d30487c136d76191460e362f373acd54180642a131736dcec44c6a16026296",
+      "started_unix_ms": 1792662022733,
+      "finished_unix_ms": 1792662031656,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 181.06437789222053
+    },
+    {
+      "directory": "acquisition-02",
+      "plan_sha256": "55405b24e6ce2b753065d5efe61086c1cb4ce0620e7cff52b5090010cca1db52",
+      "evidence_sha256": "3fc27170283a918ac0a90d950a20acb484134a1b6c6a9d0ec25b1d4f6a9c73af",
+      "started_unix_ms": 1792662031657,
+      "finished_unix_ms": 1792662040597,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.9475772250332
+    },
+    {
+      "directory": "acquisition-03",
+      "plan_sha256": "e91659bb5059b6b7a8e570a79e95c15026e632e000e5c266eeaff9da23152bfb",
+      "evidence_sha256": "18da89571ac00b0c63b953ef82b614bd53a3bee15ae0b27e52c7cdf111436e26",
+      "started_unix_ms": 1792662040598,
+      "finished_unix_ms": 1792662049548,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.7593428855608
+    },
+    {
+      "directory": "acquisition-04",
+      "plan_sha256": "f65cee9d694e920af80a2ba90c1ee3fac2994ee3c97d99f8d4437d31fd615c53",
+      "evidence_sha256": "141eb3a08f3cad13679e478789b6e9c68e6835a80faf09d77ff80b0656e8915d",
+      "started_unix_ms": 1792662049549,
+      "finished_unix_ms": 1792662058536,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.48228476133926
+    },
+    {
+      "directory": "acquisition-05",
+      "plan_sha256": "86254b10d8123161259e8af8a3b540cb2167b56b3018a1b1707d50c7c0c4d79f",
+      "evidence_sha256": "d430025c6daccde460be1defffe40df9f8bc070b9c77f30158f5bec09ccc8b78",
+      "started_unix_ms": 1792662058537,
+      "finished_unix_ms": 1792662067505,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.89610503551444
+    },
+    {
+      "directory": "acquisition-06",
+      "plan_sha256": "7787544a8c708aaae4c60f187cfe59933510e0a3a43d2e173c6c0919768db2c3",
+      "evidence_sha256": "21ecec2e8a80fefd1b77a059db85a3780ae24db6d7e772c2f8af03e62e5abc3f",
+      "started_unix_ms": 1792662067506,
+      "finished_unix_ms": 1792662076478,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.38965970392644
+    },
+    {
+      "directory": "acquisition-07",
+      "plan_sha256": "0fa503492d98395aa7676c966bd49971c0c92269f59d608560b376120a0708f0",
+      "evidence_sha256": "3c539017eeefa189f0256c570faffdef8026fd1f0304d2fe8084d69f663cec19",
+      "started_unix_ms": 1792662076478,
+      "finished_unix_ms": 1792662085433,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.86535026835895
+    }
+  ]
+}

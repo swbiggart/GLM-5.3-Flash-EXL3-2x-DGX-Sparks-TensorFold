@@ -1053,3 +1053,7 @@ expert loads). Patches 0099-0109 are ported from the
   stop at chunk boundaries ([05dfb7b](https://github.com/ashhart/TensorFold/commit/05dfb7b)) that 0109 follows.
 
 The full list, including the runtime stack and licenses, is in [`CREDITS.md`](CREDITS.md).
+
+## TP4 RDMA research branch
+
+This branch preserves the four-GB10 transport exploration and raw comparisons: [results, reproducibility and receipts](docs/tp4-rdma-research/README.md). The smaller opt-in implementation is on [`feat/tp4-registered-relay`](https://github.com/swbiggart/GLM-5.3-Flash-EXL3-2x-DGX-Sparks-TensorFold/tree/feat/tp4-registered-relay).

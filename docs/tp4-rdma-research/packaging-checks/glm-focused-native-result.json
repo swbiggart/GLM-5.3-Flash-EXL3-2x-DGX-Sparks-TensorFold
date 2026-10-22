@@ -1,0 +1,43 @@
+{
+  "worktree": "/private/tmp/glm-tp4-focused-native-20261022",
+  "branch": "upstream/glm-tp4-registered-relay",
+  "base_commit": "a628d29e4076e470f25fe40d65c1548f9f6cbfba",
+  "commit": "c0b1568c94397195f37fcc13079afdbc7b989627",
+  "diff_path": "/tmp/glm-focused-native.patch",
+  "diff_sha256": "a140f6fd2fb2ad7da652832d628b2d62bdaa6c6bcbd68425123d1e363899f6bb",
+  "files": {
+    "GLM_TP4_REGISTERED_RELAY.md": "57ce6dd781d27901db7591cf6188041e256e035fcac619a396a6a49d0adc85cf",
+    "zig/build/cuda.zig": "611c0dd313218194d9923334fa2d02cb92db3fb3c0cb09dd8b46f0caff94144e",
+    "zig/src/cuda/roce.zig": "fa6c545d2e7cc2d5c66527bcd66ca165ac4b6f5152ff5b354406b06f22891066",
+    "zig/src/cuda/roce_proxy.c": "ed643a446321cfb21fe1cef3a4689b934b3dcfe3574fac1d3ee4e0306f85bde8",
+    "zig/src/cuda/roce_region.zig": "2e8ec426b99c225b7ae7208b8fdd26f00a7fe0106d7bfee696a8db277c890ce3",
+    "zig/src/families/glm_cuda/cuda.zig": "96358682426c9dca3fe09bcf81d5e0ac47c00242a7b58a968e4af170781c9a0a",
+    "zig/src/families/glm_cuda/cuda_comm.zig": "afc17864a8dc314e549470b3829472bbcb25e32f824870203f3dea697120ab09",
+    "zig/src/families/glm_cuda/cuda_engine.zig": "cc31641fe0a4bc922a407d09979ace9f127d9c6144f10703746574a96bb070fa",
+    "zig/src/families/glm_cuda/cuda_native.zig": "229ac81302c841ab8ca4ddaf7a8bba345bce70f9b75647eacce25749eacf5ecc",
+    "zig/src/families/glm_cuda/cuda_sampler.zig": "f933eff6ad1fd6f5ba80ff54881f42d91f0877fb198d823c64795c4c56569f82",
+    "zig/tests/cuda/glm_transport_probe.zig": "96abcebe56093321558b5bf5d16cb38f3c7801b2723d95d39db264aa79fa0982"
+  },
+  "host_command": "/tmp/zig-aarch64-macos-0.17.0/zig build test-glm-transport-host test-glm-transport-probe-host glm-transport-probe-host-build --summary all",
+  "host_result": "39/39 tests, 12/12 steps passed",
+  "host_log": "/tmp/glm-focused-native-host.log",
+  "semantic_command": "/tmp/zig-aarch64-macos-0.17.0/zig build native glm-transport-probe -Dtarget=aarch64-linux-gnu -Dfatbins=/tmp/glm-empty-fatbins-semantic-only --summary all",
+  "semantic_log": "/tmp/glm-focused-native-linux-semantic.log",
+  "proof_limits": [
+    "No NVCC compilation",
+    "No GPU execution",
+    "No SSH or live changes",
+    "No model inference",
+    "No push/publication",
+    "Cross-build uses empty fatbins and no-verbs proxy stub, not deployable"
+  ],
+  "routing_evidence": {
+    "requested": "gpt-6-astra High, Fast off",
+    "actual_runtime_model_effort_fast": "not independently exposed to child"
+  },
+  "semantic_result": "9/9 steps passed; native server and probe aarch64 Linux semantic build",
+  "logs_sha256": {
+    "/tmp/glm-focused-native-host.log": "ce4c17ccb2c57eeca8b2c3e6d4eba6923cddad9292af23ac97b3de6feaab2463",
+    "/tmp/glm-focused-native-linux-semantic.log": "a653e907702707ee62336110154e47d7c3280285747cf1632d133c87677b093c"
+  }
+}

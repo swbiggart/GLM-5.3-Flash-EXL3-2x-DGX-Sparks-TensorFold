@@ -1,0 +1,2191 @@
+diff --git a/GLM_TRANSPORT_CANDIDATES.md b/GLM_TRANSPORT_CANDIDATES.md
+new file mode 100644
+index 0000000..b5f588b
+--- /dev/null
++++ b/GLM_TRANSPORT_CANDIDATES.md
+@@ -0,0 +1,162 @@
++# GLM transport candidates — unqualified on GPUs
++
++Source reconstruction: MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks-TensorFold
++`zig-engine` at `a6c7e08ae864239125d45fc15146d26ec74c7f6d`, underlying
++TensorFold `e7c523ebfa16b8094cf9e35e3773a7d25befcc5b`, recipe patches 0001–0013.
++The imported neighbor host protocol, sequence helpers and CUDA kernel are pinned
++in `glm-neighbor-source.json` to TensorFold PR30 merge `b8b115e7…`. Host adaptations rename the
++sequence-helper import, make unregister-failure cleanup safe, and expose read-only
++completed-write/registered-byte diagnostics. The separate GLM adapter supplies bootstrap,
++topology, dispatch, scratch, lifecycle and result-boundary checks.
++
++No model arithmetic, HC accumulation, rank order, tensor layout, KV code or
++inference defaults change. No live deployment, NVCC build, GPU execution,
++performance win or exact-token qualification is claimed by this patch.
++
++## Profiles and startup
++
++All ranks must run the same build and profile. Set `TF_GLM_TRANSPORT` explicitly:
++
++| Profile | Additional environment | Behavior |
++|---|---|---|
++| `nccl` | `TF_GLM_ROCE=0`, unset memory/required overrides | Existing NCCL all-gathers |
++| `roce` | `TF_GLM_ROCE=1`, `TF_ROCE_RING=1`, `TF_GLM_ROCE_MEMORY=allocated` | Existing GLM relay, required on all ranks |
++| `roce` | Same, but `TF_GLM_ROCE_MEMORY=registered` | Same relay/protocol, RoCE region alone uses mmap + portable mapped HostRegister |
++| `neighbor` | `TF_GLM_NEIGHBOR_GID_INDEX=3`, explicit per-host FIRST/SECOND lists below; memory unset or `registered` | Required two-match gather; documented shape fallback remains NCCL |
++
++Keep existing per-host NCCL HCA/graph/GID3 and physical ring mapping unchanged.
++For neighbor, `TF_GLM_NEIGHBOR_FIRST` and `TF_GLM_NEIGHBOR_SECOND` must each name
++exactly two distinct local devices, with no overlap between lists. FIRST reaches
++rank `rank xor 1`, SECOND reaches `rank xor 3`. This is the existing deployed DS
++FIRST/SECOND mapping, not a derivation from the printed host order. Both devices
++in each list are used to stripe that match. Missing/incorrect lists or non-3 GID
++fail setup collectively. No default rail choice or NCCL-only success is allowed
++for an explicitly selected custom profile.
++
++Startup logs actual backend, memory mode and cutoff. Configuration validation
++and validity/profile exchange run BEFORE opening any NCCL handle. A malformed
++setting is sent as an invalid row, so every rank rejects it together.
++This intentionally tightens earlier fallback semantics: mixed enable/ring/memory/
++prefetch/required settings fail startup instead of negotiating optional NCCL.
++All four ranks MUST use the identical image/binary fingerprint; mixed old/new
++binaries are unsupported, including their different startup frame sequence.
++Uniform legacy optional profiles still fall back together when hardware setup
++fails; explicit custom profiles fail closed. All ranks agree backend;
++relay additionally agrees memory/required/ring/legacy-enable and slot size.
++Neighbor open/connect/proxy-start each have all-rank success agreement. It uses
++fixed qualified-protocol defaults: four slots, stage blocks 16, collect blocks
++48, grain 4, PDL/own-early/unroll/fence enabled. Existing `TF_RDMA_*` and historic
++DS specialized switches are not consumed by this adapter. Their use would need
++a separate explicit, agreed option implementation and qualification.
++
++Neighbor eligibility is positive, at most 512 KiB per rank, size divisible by
++16, 16-byte-aligned non-null pointers and fully disjoint send/output/scratch.
++The full rank gather is xor1 into dedicated two-rank scratch, then xor3 into
++`[rank0,rank1,rank2,rank3]`. Unsupported sizes/layouts select NCCL *before* any
++custom enqueue. The eight-byte GLM startup proposal and in-place gathers thus
++remain supported. Actual model callsites must provide identical layout classes
++on every rank, as existing GLM does; asymmetric pointers/alias classes across
++ranks are unsupported and are not silently reconciled.
++
++The imported protocol is ordered by one CUDA execution stream. GLM's logical
++serving lanes share the engine stream. Adapter binds to its first stream and
++rejects another before enqueue. Concurrent execution across multiple CUDA
++streams is unsupported. Graphs must be destroyed and streams finished before
++Comm teardown; existing engine ownership already provides this order. No
++captured graph survives a backend/profile change.
++
++Any custom enqueue error sets both local abort words; future dispatch and
++result-producing sampler synchronization reject the sticky failure. No NCCL
++retry occurs after partial enqueue. The copied kernel abort behavior can return
++partial bytes, so the added `Comm.check()` after synchronization is essential.
++Production peer-loss watchdog still exits the process. Failure propagation and
++watchdog bounds require separate fleet tests before acceptance.
++
++## Weight-free production probe
++
++Build on the Linux CUDA image with Zig 0.17 and the normal complete fatbin set:
++
++```
++# Add the new optional kernel to a COPY of the normal fatbin directory.
++nvcc -std=c++20 -O3 -fatbin -arch=sm_121 zig/kernels/cuda/glm_neighbor_rdma.cu -o /candidate-fatbins/glm_neighbor_rdma.fatbin
++zig build glm-transport-probe -Dfatbins=/candidate-fatbins -Dstrip=true
++```
++
++Or use the ordinary `-Dnvcc=... -Dsm=121` source build. Relay/NCCL builds may omit
++the optional new kernel; selecting neighbor then fails explicitly. This build
++also needs normal `/usr/include/infiniband/verbs.h` for the GLM relay C proxy.
++Cross-compiling on a host without that header selects the existing proxy stub,
++so it is a semantic check only and must not be deployed.
++
++For the initial relay gate use `TF_ROCE_MAX_KB=512`; the probe requires its
++32 KiB graph call to be custom and its 512 KiB+16 call to be NCCL. Different
++cutoffs outside that interval need a separately adjusted graph case.
++
++One process on each of the four hosts, with the selected profile and pinned
++network environment, under an external deadline that terminates all peers on
++any failure:
++
++```
++TF_GLM_L2PF=0 ./zig-out/bin/tf-glm-transport-probe RANK MASTER_FLEET_IP 40060 64
++```
++
++It opens the real GLM Link and Comm, with exact master-interface binding, no
++borrowed/externally mocked NCCL communicator, no model, and no Torch. It checks:
++
++- Guards and unmodified source, rank-contiguous bytes versus both a CPU pattern
++  and direct NCCL oracle, including signed-zero/NaN payload/subnormal words.
++- Changing eager payloads: 8 B, 16 B, 68 B, 4 KiB, 1/6/16/32 FP32 GLM rows,
++  512 KiB + 16 B, and 1 MiB per rank.
++- Four-byte-offset alignment, in-place alias through general production dispatch,
++  and explicit production `allGatherInPlace`.
++- One captured sequence of 16 KiB / 512 KiB+16 / 32 KiB gathers, covering mixed
++  custom/NCCL transport, 64 changing-input replays and ring-slot reuse.
++- Production dispatch backend printed for every eager/layout case; post-sync
++  transport failure check before inspecting or accepting bytes.
++- Actual production successful-enqueue counts by backend, relay proxy operation/
++  stripe counts and both neighbor stages' completed-write sequence counts.
++  Enqueue counts include graph capture, not replay; proxy counts include replay.
++  Required custom profiles fail the probe if their execution counters stay zero.
++
++Exit 0 and PASS on *all four ranks* is required. Its elapsed time includes CPU
++patterns, guard checks and oracle transfers; it is NOT a performance benchmark.
++It does not qualify peer-loss handling, nonempty prefetch, concurrent CUDA
++streams, model output, sustained serving, or speed. Run separate failure and
++matched inference gates. Probe deliberately exits without CUDA teardown on
++operation failure to avoid hanging cleanup behind a failed peer; the external
++supervisor must stop the remaining ranks.
++
++Host checks: `zig build test-glm-transport-host glm-transport-probe-host-build`.
++The host executable has no CUDA blobs and is not a deployable GPU probe. The
++full GLM host suite has nine pre-existing macOS SocketFailed failures also seen
++on the untouched baseline; report those separately from focused tests.
++
++## Required acceptance sequence
++
++1. Review exact patch and imported-source hashes; real Linux/NVCC build.
++2. Weight-free probe in NCCL, allocated relay, registered relay, neighbor order;
++   all four ranks, no unintended fallback. Capture logs and image/binary hashes.
++3. Kill/abort a peer under a controlled deadline; verify no sampled output can
++   be accepted after transport failure and all processes are stopped before reuse.
++4. Frozen model/checkpoint/config, deterministic repeated exact-token corpus
++   against matched NCCL; graph/eager, prompt/decode boundaries and DFlash2.
++5. Matched timing repeats only after correctness. Any numerical/math-path
++   changes are separate candidates with their own quality acceptance.
++
++Registration-only stage changes no global HostBuffer behavior. Memory cleanup
++never unmaps pages if CUDA unregister fails, including setup failure; it leaks
++until process exit in that exceptional case. It does not promise a new address
++alignment beyond mmap's system-page guarantee.
++
++Registered allocations are not included in the pre-existing global HostBuffer
++usage tracker. `Comm.stats().registered_host_bytes` and probe COUNTERS report
++these separately (neighbor owns two ring sets, roughly 24 MiB plus metadata,
++and a separate 1 MiB device scratch). No global HostBuffer accounting or
++allocation behavior changes. The relay diagnostic stripe counter is now atomic
++so reading it while its proxy runs is defined; transport payload/protocol is unchanged.
++
++Negative startup gate: use one invalid memory/backend/required value, one
++missing neighbor rail/GID, and one mismatched valid profile on separate controlled
++four-process launches. Require collective failure before any NCCL initialization
++log; no peer may remain blocked past the supervisor deadline. These fault launches
++have not been run by this source-only builder.
+diff --git a/glm-neighbor-source.json b/glm-neighbor-source.json
+new file mode 100644
+index 0000000..6e60f78
+--- /dev/null
++++ b/glm-neighbor-source.json
+@@ -0,0 +1,10 @@
++{
++  "upstream": "bertholomus/TensorFold",
++  "commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
++  "sha256": {
++    "zig/src/families/dsv41/rdma.zig": "ef1560661c71135659e9688480cdd088df2f46a28c76d35d1aebf023daf1e920",
++    "zig/src/families/dsv41/rdma_seq.zig": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
++    "zig/kernels/cuda/dsv41/rdma_gather.cu": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4"
++  },
++  "adaptation": "Renamed sequence-helper import; fixed registered-memory cleanup on CUDA failure; added read-only completed-write counter. CUDA and wire/sequence protocol unchanged. Wrapper integration is separate."
++}
+diff --git a/zig/build/cuda.zig b/zig/build/cuda.zig
+index 3cdcb16..913ab7f 100644
+--- a/zig/build/cuda.zig
++++ b/zig/build/cuda.zig
+@@ -13,6 +13,7 @@ const torch_ops = &[_][]const u8{ "-O3", "--fmad=false", "--ftz=false" };
+ const glue = &[_][]const u8{ "-O3", "--fmad=false", "--ftz=false", "--prec-div=true", "--prec-sqrt=true" };
+ 
+ const kernels = [_]Kernel{
++    .{ .name = "glm_neighbor_rdma", .optional = true, .flags = &.{"-O3"} },
+     // GLM package images: optional until their owning packages supply the CUDA sources.
+     .{ .name = "glm_ops", .flags = torch_ops },
+     .{ .name = "glm_foundations", .flags = &.{"-O3"} },
+@@ -136,6 +137,7 @@ fn family(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin
+     glm_cuda.addImport("core", core);
+     glm_cuda.addImport("lanes", lanes);
+     glm_cuda.addImport("flashnext", flashnext);
++    glm_cuda.addImport("fabric", b.createModule(.{ .root_source_file = b.path("zig/src/fabric/fabric.zig"), .target = target, .optimize = optimize, .link_libc = true }));
+     // cuda_mla.zig stays a root so its host tests keep running; the family root re-exports it as mla.
+     const glm = b.createModule(.{ .root_source_file = b.path("zig/src/families/glm_cuda/cuda_mla.zig"), .target = target, .optimize = optimize, .link_libc = true });
+     glm.addImport("cuda", cuda);
+@@ -190,6 +192,7 @@ pub fn targets(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.bu
+     runner.addImport("nemotron", mods.nemotron);
+     b.installArtifact(b.addExecutable(.{ .name = "tf-cuda-test", .root_module = runner }));
+     nativeServer(b, target, optimize, cuda, mods.lanes, mods.nemotron, mods.flashnext, mods.glm_cuda, mods.tokenizer, build_options, true).root_module.strip = strip;
++    transportProbe(b, target, optimize, cuda, mods.glm_cuda, "glm-transport-probe");
+     // Flash Next's two-rank transport test (zig/tests/cuda/flashnext/box/comm.sh): its own step, not in `install`
+     const comm_test = b.createModule(.{ .root_source_file = b.path("zig/tests/cuda/flashnext/comm_test.zig"), .target = target, .optimize = optimize, .link_libc = true, .imports = &.{ .{ .name = "cuda", .module = cuda }, .{ .name = "flashnext", .module = mods.flashnext } } });
+     b.step("flashnext-comm", "tf-flashnext-comm RANK MASTER PORT: two-rank all-gathers, exact and timed").dependOn(&b.addInstallArtifact(b.addExecutable(.{ .name = "tf-flashnext-comm", .root_module = comm_test }), .{}).step);
+@@ -258,10 +261,12 @@ pub fn hostTests(b: *std.Build, draft_ids: *std.Build.Module, build_options: *st
+     step.dependOn(&b.addRunArtifact(b.addTest(.{ .root_module = b.createModule(.{ .root_source_file = b.path("zig/build/check_fatbins.zig"), .target = host }) })).step);
+     const cuda = runtime(b, host, .debug, &.{});
+     const mods = family(b, host, .debug, cuda, draft_ids);
++    transportProbe(b, host, .debug, cuda, mods.glm_cuda, "glm-transport-probe-host-build");
+     const layer_tool = b.createModule(.{ .root_source_file = b.path("zig/tests/cuda/glm_layer_check.zig"), .target = host, .optimize = .debug, .link_libc = true, .imports = &.{.{ .name = "glm_cuda", .module = mods.glm_cuda }} });
+     b.step("glm-layer-check", "Build tf-glm-layer-check REFERENCE_DIR ACTUAL_DIR (CPU byte oracle)").dependOn(&b.addInstallArtifact(b.addExecutable(.{ .name = "tf-glm-layer-check", .root_module = layer_tool }), .{}).step);
+     const prefill_tool = b.createModule(.{ .root_source_file = b.path("zig/tests/cuda/glm_prefill_check.zig"), .target = host, .optimize = .debug, .link_libc = true, .imports = &.{.{ .name = "glm_cuda", .module = mods.glm_cuda }} });
+     b.step("glm-prefill-check", "Build tf-glm-prefill-check REFERENCE_DIR ACTUAL_DIR (prompt chunk byte oracle)").dependOn(&b.addInstallArtifact(b.addExecutable(.{ .name = "tf-glm-prefill-check", .root_module = prefill_tool }), .{}).step);
++    b.step("test-glm-transport-host", "Focused transport protocol/profile host tests; no GPU or sockets").dependOn(&b.addRunArtifact(b.addTest(.{ .root_module = mods.glm_cuda, .filters = &.{ "neighbor", "two matchings", "transport profile", "backend selection", "slot", "info a peer", "declaration compiles", "RoCE memory", "registered RoCE", "region allocation", "memory profiles", "sequence", "arrivals", "sends", "immediate" } })).step);
+     const glm_test = b.addRunArtifact(b.addTest(.{ .root_module = mods.glm_cuda }));
+     b.step("test-glm-cuda-host", "GLM CUDA CPU contracts (foundations, packed sampling, rounds, lanes)").dependOn(&glm_test.step);
+     const serve_test = b.step("test-glm-serve", "GLM serving and drafted-versus-serial CPU contracts");
+@@ -371,3 +376,8 @@ fn exists(b: *std.Build, path: []const u8) bool {
+     std.Io.Dir.cwd().access(b.graph.io, path, .{}) catch return false;
+     return true;
+ }
++
++fn transportProbe(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, cuda: *std.Build.Module, glm: *std.Build.Module, step_name: []const u8) void {
++    const m = b.createModule(.{ .root_source_file = b.path("zig/tests/cuda/glm_transport_probe.zig"), .target = target, .optimize = optimize, .link_libc = true, .imports = &.{ .{ .name = "cuda", .module = cuda }, .{ .name = "glm_cuda", .module = glm } } });
++    b.step(step_name, "Build weight-free four-rank GLM production transport qualifier").dependOn(&b.addInstallArtifact(b.addExecutable(.{ .name = "tf-glm-transport-probe", .root_module = m }), .{}).step);
++}
+diff --git a/zig/kernels/cuda/glm_neighbor_rdma.cu b/zig/kernels/cuda/glm_neighbor_rdma.cu
+new file mode 100644
+index 0000000..91f3743
+--- /dev/null
++++ b/zig/kernels/cuda/glm_neighbor_rdma.cu
+@@ -0,0 +1,228 @@
++// The device half of DeepSeek-V4.1's one-hop RDMA all-gather (the Python family's cuda/rdma_gather.cu v7). The staging
++// kernel copies this rank's fp32 slice into a pinned host ring slot and rings a doorbell; the host's proxy thread
++// (rdma.zig) RDMA-writes the slot to every peer with an immediate and publishes a peer's flag once all its parts
++// are in; the collecting kernels wait for the flags and copy the slots out in rank order, or straight into the caller's
++// views (gather_into). The kernel bodies are the served build's; only their names are the family's.
++// v7: a nonzero `pdl` makes each kernel wait for the one before it and let the next one launch (programmatic dependent
++// launches, sm_90+), so the pair does not break a chain of early launches.
++
++#include <cstdint>
++#include <cuda_runtime.h>
++
++namespace {
++constexpr int STAGE_THREADS = 512;
++constexpr int COLLECT_THREADS = 256;
++
++__device__ __forceinline__ uint64_t load_sys(const uint64_t* p) {
++    uint64_t v;
++    asm volatile("ld.acquire.sys.global.u64 %0, [%1];" : "=l"(v) : "l"(p) : "memory");
++    return v;
++}
++
++__device__ __forceinline__ void store_sys(uint64_t* p, uint64_t v) {
++    asm volatile("st.release.sys.global.u64 [%0], %1;" ::"l"(p), "l"(v) : "memory");
++}
++
++__device__ __forceinline__ uint64_t now_ns() {
++    uint64_t t;
++    asm volatile("mov.u64 %0, %globaltimer;" : "=l"(t));
++    return t;
++}
++
++__device__ __forceinline__ void store_relaxed_sys(uint64_t* p, uint64_t v) {
++    asm volatile("st.relaxed.sys.global.u64 [%0], %1;" ::"l"(p), "l"(v) : "memory");
++}
++
++
++// v7 (TF_RDMA_PDL): wait for the kernel before this one (done, its memory visible), then let the next one launch
++__device__ __forceinline__ void pdl_enter(int pdl) {
++#if defined(__CUDA_ARCH__) && __CUDA_ARCH__ >= 900
++    if (pdl) {
++        asm volatile("griddepcontrol.wait;" ::: "memory");
++        asm volatile("griddepcontrol.launch_dependents;" ::: "memory");
++    }
++#endif
++}
++
++
++}  // namespace
++
++// Each block: wait until the slot's last writes are done, copy its share of the partial in; the last block to finish
++// (a counter) publishes the size and the doorbell. (One block took ~6 us for a 6-row window's 120 KB and ~35 us for a
++// 6-row head's 1.5 MB into the pinned ring on GB10; 8-16 blocks 2.5 and 9.) Every block reads the sequence before it
++// counts itself in, and only the last one, after every block has, advances it.
++extern "C" __global__ void __launch_bounds__(STAGE_THREADS) dsv41_rdma_stage(const float4* __restrict__ src, int n4,
++        char* send_ring, uint64_t* sizes, uint64_t* doorbell, const uint64_t* sent, uint64_t* seq, int slots,
++        uint64_t max_bytes, uint64_t* probe, const uint64_t* abort_word, unsigned* staged, int fence_mode,
++        float4* __restrict__ own_dst, int own_row4, long long own_stride4, int pdl) {
++    __shared__ uint64_t s_seq;
++    __shared__ int s_last;
++    pdl_enter(pdl);                              // before anything reads the partial or this gather's sequence
++    const uint64_t t0 = now_ns();
++    if (threadIdx.x == 0) {
++        const uint64_t q = *seq + 1;
++        const int slot = (int)(q % slots);
++        if (q > (uint64_t)slots)
++            for (uint32_t i = 1; load_sys(sent + slot) + slots < q; ++i)
++                if ((i & 1023) == 0 && load_sys(abort_word)) break;
++        s_seq = q;
++        // fence_mode 1: the size is written before this block's release below, so the publish needs no second fence
++        if (fence_mode && blockIdx.x == 0) store_relaxed_sys(sizes + slot, (uint64_t)n4 * 16);
++    }
++    __syncthreads();
++    const uint64_t q = s_seq;
++    const int slot = (int)(q % slots);
++    float4* dst = reinterpret_cast<float4*>(send_ring + (size_t)slot * max_bytes);
++    for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n4; i += gridDim.x * blockDim.x) dst[i] = src[i];
++    if (fence_mode) {
++        // the barrier orders every thread's stores before thread 0's system fence (a release for the whole block, as
++        // NCCL publishes its proxy FIFO), then the counter
++        __syncthreads();
++        if (threadIdx.x == 0) {
++            __threadfence_system();
++            s_last = atomicAdd(staged, 1u) == gridDim.x - 1;
++        }
++    } else {
++        __threadfence_system();
++        __syncthreads();
++        if (threadIdx.x == 0) s_last = atomicAdd(staged, 1u) == gridDim.x - 1;
++    }
++    __syncthreads();
++    if (threadIdx.x == 0 && s_last) {
++        __threadfence_system();
++        *staged = 0;
++        *seq = q;
++        if (fence_mode) {
++            // the fence above acquired every block's release (data and size) and orders them before this strong store
++            store_relaxed_sys(doorbell, q);
++        } else {
++            store_sys(sizes + slot, (uint64_t)n4 * 16);
++            store_sys(doorbell, q);
++        }
++        if (probe) {
++            probe[0] += now_ns() - t0;
++            probe[4] = now_ns();
++        }
++    }
++    if (own_dst) {
++        // TF_RDMA_OWN_EARLY: this rank's own slice of the output, copied after the doorbell (during the RDMA writes and
++        // the peer's) instead of by the collecting kernel after the wait; the same bytes from the same source
++        if (s_last) __syncthreads();             // the publishing block lets its doorbell out first (s_last is uniform)
++        if (own_stride4 == own_row4) {
++            for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n4; i += gridDim.x * blockDim.x) own_dst[i] = src[i];
++        } else {                                 // gather_into: rows of own_row4 float4, own_stride4 apart
++            for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n4; i += gridDim.x * blockDim.x) {
++                const int r = i / own_row4;
++                own_dst[(size_t)r * own_stride4 + (i - r * own_row4)] = src[i];
++            }
++        }
++    }
++}
++
++
++// Wait for every peer's flag at this sequence, then copy the slots (and this rank's own source) out in rank order.
++extern "C" __global__ void __launch_bounds__(COLLECT_THREADS) dsv41_rdma_collect(const float4* __restrict__ own,
++        float4* __restrict__ dst, int n4, const char* recv_ring, const uint64_t* flags, const uint64_t* seq, int rank,
++        int world, int slots, uint64_t max_bytes, uint64_t* probe, const uint64_t* abort_word, int skip_own, int unroll,
++        int pdl) {
++    pdl_enter(pdl);                              // the staging kernel's sequence and own slice are written
++    const uint64_t q = *seq;
++    const int slot = (int)(q % slots);
++    if (threadIdx.x < world && threadIdx.x != rank)
++        for (uint32_t i = 1; load_sys(flags + (size_t)slot * world + threadIdx.x) < q; ++i)
++            if ((i & 1023) == 0 && load_sys(abort_word)) break;
++    __syncthreads();
++    const uint64_t t2 = now_ns();
++    for (int p = 0; p < world; ++p) {
++        float4* out = dst + (size_t)p * n4;
++        if (p == rank) {
++            if (skip_own) continue;              // the staging kernel wrote it
++            for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n4; i += gridDim.x * blockDim.x) out[i] = own[i];
++        } else {
++            const float4* in = reinterpret_cast<const float4*>(recv_ring + ((size_t)slot * world + p) * max_bytes);
++            if (unroll) {
++                // TF_RDMA_COLLECT_UNROLL: up to four loads of the ring in flight a thread before its stores (the ring's
++                // first reads after the flag wait out a DRAM queue when a prefetch runs beside)
++                const int stride = gridDim.x * blockDim.x;
++                for (int b = blockIdx.x * blockDim.x + threadIdx.x; b < n4; b += 4 * stride) {
++                    float4 v[4];
++#pragma unroll
++                    for (int u = 0; u < 4; ++u)
++                        if (b + u * stride < n4) v[u] = __ldcv(in + b + u * stride);
++#pragma unroll
++                    for (int u = 0; u < 4; ++u)
++                        if (b + u * stride < n4) out[b + u * stride] = v[u];
++                }
++            } else {
++                for (int i = blockIdx.x * blockDim.x + threadIdx.x; i < n4; i += gridDim.x * blockDim.x)
++                    out[i] = __ldcv(in + i);
++            }
++        }
++    }
++    if (probe && blockIdx.x == 0) {
++        __syncthreads();
++        if (threadIdx.x == 0) {
++            probe[1] += t2 - probe[4];
++            probe[2] += now_ns() - t2;
++            probe[3] += 1;
++        }
++    }
++}
++
++
++constexpr int MAXW = 8;
++
++// gather_into's destinations: rank p's slice is rows x row4[p] float4 (packed in its ring slot), copied to rows
++// stride4[p] float4 apart from ptr[p]; ptr[p] null: not copied out.
++struct Dsts {
++    float4* ptr[MAXW];
++    long long stride4[MAXW];
++    int row4[MAXW];
++};
++
++// Wait for every peer's flag at this sequence, then copy each peer's slot to its destination rows (this rank's own
++// slice was written by the staging kernel).
++extern "C" __global__ void __launch_bounds__(COLLECT_THREADS) dsv41_rdma_collect_into(Dsts d, int rows,
++        const char* recv_ring, const uint64_t* flags, const uint64_t* seq, int rank, int world, int slots,
++        uint64_t max_bytes, uint64_t* probe, const uint64_t* abort_word, int pdl) {
++    pdl_enter(pdl);                              // the staging kernel's sequence and own slice are written
++    const uint64_t q = *seq;
++    const int slot = (int)(q % slots);
++    if (threadIdx.x < world && threadIdx.x != rank)
++        for (uint32_t i = 1; load_sys(flags + (size_t)slot * world + threadIdx.x) < q; ++i)
++            if ((i & 1023) == 0 && load_sys(abort_word)) break;
++    __syncthreads();
++    const uint64_t t2 = now_ns();
++    const int stride = gridDim.x * blockDim.x;
++    for (int p = 0; p < world; ++p) {
++        if (p == rank || d.ptr[p] == nullptr) continue;
++        const float4* in = reinterpret_cast<const float4*>(recv_ring + ((size_t)slot * world + p) * max_bytes);
++        float4* out = d.ptr[p];
++        const int r4 = d.row4[p], n4 = rows * r4;
++        const long long s4 = d.stride4[p];
++        // up to four ring loads in flight a thread before its stores (as dsv41_rdma_collect's unrolled loop)
++        for (int b = blockIdx.x * blockDim.x + threadIdx.x; b < n4; b += 4 * stride) {
++            float4 v[4];
++#pragma unroll
++            for (int u = 0; u < 4; ++u)
++                if (b + u * stride < n4) v[u] = __ldcv(in + b + u * stride);
++#pragma unroll
++            for (int u = 0; u < 4; ++u) {
++                const int i = b + u * stride;
++                if (i < n4) {
++                    const int r = i / r4;
++                    out[(size_t)r * s4 + (i - r * r4)] = v[u];
++                }
++            }
++        }
++    }
++    if (probe && blockIdx.x == 0) {
++        __syncthreads();
++        if (threadIdx.x == 0) {
++            probe[1] += t2 - probe[4];
++            probe[2] += now_ns() - t2;
++            probe[3] += 1;
++        }
++    }
++}
++
+diff --git a/zig/src/cuda/kernels.zig b/zig/src/cuda/kernels.zig
+index 8e8a14c..832322a 100644
+--- a/zig/src/cuda/kernels.zig
++++ b/zig/src/cuda/kernels.zig
+@@ -11,6 +11,7 @@ fn Blob(comptime import_name: []const u8) type {
+ 
+ /// False in host-only builds (no nvcc, no prebuilt fatbins); every image is then empty.
+ pub const available = options.with_kernels;
++pub const glm_neighbor_rdma: []const u8 = if (options.glm_neighbor_rdma) &Blob("fatbin_glm_neighbor_rdma").bytes else &.{};
+ 
+ pub const gdn: []const u8 = if (available) &Blob("fatbin_gdn").bytes else &.{};
+ pub const probe: []const u8 = if (available) &Blob("fatbin_probe").bytes else &.{};
+diff --git a/zig/src/cuda/roce.zig b/zig/src/cuda/roce.zig
+index 1287133..592d25a 100644
+--- a/zig/src/cuda/roce.zig
++++ b/zig/src/cuda/roce.zig
+@@ -15,6 +15,7 @@ const abi = @import("abi.zig");
+ const Driver = @import("driver.zig").Driver;
+ const Error = @import("driver.zig").Error;
+ const memory = @import("memory.zig");
++pub const region = @import("roce_region.zig");
+ const module = @import("module.zig");
+ const launch = @import("launch.zig");
+ const Stream = @import("stream.zig").Stream;
+@@ -41,7 +42,6 @@ extern fn tf_roce_close(r: *Proxy) void;
+ pub const max_ports = 4;
+ pub const max_world = 4;
+ 
+-
+ /// Read-only bytes to pull into the L2 while a gather waits (decode plan D2): the next kernels' weights.
+ pub const Prefetch = struct { ptr: abi.DevicePtr = 0, bytes: usize = 0 };
+ 
+@@ -99,12 +99,13 @@ pub const Settings = struct {
+     slot_bytes: u64 = 512 << 10,
+     /// how long a kernel waits for the peer before it stops the stream (a trap: the peer is gone or its proxy failed)
+     timeout_s: u64 = 600,
++    memory_mode: region.Mode = .allocated,
+ };
+ 
+ pub const Roce = struct {
+     d: *const Driver,
+     proxy: *Proxy,
+-    region: memory.HostBuffer,
++    region: region.Region,
+     region_dev: abi.DevicePtr,
+     state: memory.DeviceBuffer,
+     mod: module.Module,
+@@ -136,10 +137,9 @@ pub const Roce = struct {
+         if (tf_roce_abi() != 7) return error.Invalid;
+         var lay: [5]u64 = undefined;
+         if (tf_roce_layout(@intCast(world), s.slot_bytes, &lay) != 0) return error.Invalid;
+-        var region = try memory.HostBuffer.allocMapped(d, @intCast(lay[4]));
+-        errdefer region.free();
+-        @memset(region.bytes, 0);
+-        const dev = try region.device();
++        var host_region = try region.Region.alloc(d, @intCast(lay[4]), s.memory_mode);
++        errdefer host_region.free();
++        const dev = host_region.dev;
+         var names: [max_ports][256:0]u8 = undefined;
+         var ptrs: [max_ports][*:0]const u8 = undefined;
+         for (s.ports, 0..) |p, i| {
+@@ -151,7 +151,7 @@ pub const Roce = struct {
+         var err: [512]u8 = @splat(0);
+         var gids: [max_ports]c_int = undefined;
+         for (0..s.ports.len) |i| gids[i] = if (s.gids.len != 0) s.gids[i] else s.gid_index;
+-        const proxy = tf_roce_open(@intCast(world), @intCast(rank), &ptrs, @intCast(s.ports.len), &gids, s.traffic_class, region.bytes.ptr, lay[4], s.slot_bytes, &err, err.len) orelse {
++        const proxy = tf_roce_open(@intCast(world), @intCast(rank), &ptrs, @intCast(s.ports.len), &gids, s.traffic_class, host_region.bytes.ptr, lay[4], s.slot_bytes, &err, err.len) orelse {
+             std.log.err("RoCE: {s}", .{std.mem.sliceTo(&err, 0)});
+             return error.RoceUnavailable;
+         };
+@@ -163,7 +163,7 @@ pub const Roce = struct {
+         errdefer mod.unload();
+         var fns: [2]module.Function = undefined;
+         for (symbols, &fns) |name, *f| f.* = try mod.function(name);
+-        return .{ .d = d, .proxy = proxy, .region = region, .region_dev = dev, .state = state, .mod = mod, .fns = fns, .layout = lay, .rank = rank, .world = world, .ports = @intCast(s.ports.len), .n_flag = @intCast(s.ports.len), .slot_bytes = s.slot_bytes, .timeout_ns = s.timeout_s * std.time.ns_per_s };
++        return .{ .d = d, .proxy = proxy, .region = host_region, .region_dev = dev, .state = state, .mod = mod, .fns = fns, .layout = lay, .rank = rank, .world = world, .ports = @intCast(s.ports.len), .n_flag = @intCast(s.ports.len), .slot_bytes = s.slot_bytes, .timeout_ns = s.timeout_s * std.time.ns_per_s };
+     }
+ 
+     pub fn deinit(r: *Roce) void {
+diff --git a/zig/src/cuda/roce_proxy.c b/zig/src/cuda/roce_proxy.c
+index 87f101e..38fafa8 100644
+--- a/zig/src/cuda/roce_proxy.c
++++ b/zig/src/cuda/roce_proxy.c
+@@ -121,7 +121,8 @@ typedef struct tf_roce {
+   int ring, relayed[ROCE_WORLD_MAX], n_relay;
+   int relay_src[ROCE_HCAS_MAX], relay_stripe[ROCE_HCAS_MAX], relay_dst[ROCE_HCAS_MAX];
+   uint32_t relay_last[ROCE_HCAS_MAX];
+-  uint64_t fwd_outstanding, fwd_posted;
++  uint64_t fwd_outstanding;
++  _Atomic uint64_t fwd_posted;
+   uint8_t *region;
+   uint64_t region_bytes, slot_bytes;
+   uint64_t recv_off, flag_off, send_off, ctrl_off;
+@@ -704,7 +705,7 @@ static int forward(tf_roce *r, int e, uint32_t seq) {
+   hca->outstanding[dst]++;
+   hca->bytes += bytes;
+   r->fwd_outstanding++;
+-  r->fwd_posted++;
++  atomic_fetch_add_explicit(&r->fwd_posted, 1, memory_order_relaxed);
+   return 0;
+ }
+ 
+@@ -826,7 +827,7 @@ int tf_roce_start(tf_roce *r) {
+ int tf_roce_failed(tf_roce *r) { return atomic_load(&r->failed); }
+ const char *tf_roce_error(tf_roce *r) { return r->err; }
+ uint64_t tf_roce_ops(tf_roce *r) { return atomic_load_explicit(&r->ops, memory_order_relaxed); }
+-uint64_t tf_roce_relayed(tf_roce *r) { return r->fwd_posted; }
++uint64_t tf_roce_relayed(tf_roce *r) { return atomic_load_explicit(&r->fwd_posted, memory_order_relaxed); }
+ 
+ void tf_roce_close(tf_roce *r) {
+   if (!r) return;
+diff --git a/zig/src/cuda/roce_region.zig b/zig/src/cuda/roce_region.zig
+new file mode 100644
+index 0000000..9b3fec8
+--- /dev/null
++++ b/zig/src/cuda/roce_region.zig
+@@ -0,0 +1,107 @@
++//! RoCE-only host-region ownership. The default retains CUDA allocated mapped memory.
++//! The registered variant adapts TensorFold dsv41/rdma.zig's mmap/HostRegister path;
++//! neither variant changes the RoCE wire protocol or any model arithmetic.
++const std = @import("std");
++const abi = @import("abi.zig");
++const Driver = @import("driver.zig").Driver;
++const memory = @import("memory.zig");
++
++pub const Mode = enum(u8) {
++    allocated = 0,
++    registered = 1,
++
++    pub fn parse(raw: ?[]const u8) !Mode {
++        const value = raw orelse return .allocated;
++        if (std.mem.eql(u8, value, "allocated")) return .allocated;
++        if (std.mem.eql(u8, value, "registered")) return .registered;
++        return error.BadRoceMemory;
++    }
++};
++
++const host_register_portable: c_uint = 1;
++
++pub const Region = struct {
++    bytes: []align(16) u8,
++    dev: abi.DevicePtr,
++    owner: union(Mode) {
++        allocated: memory.HostBuffer,
++        registered: struct { mem: []align(std.heap.page_size_min) u8, d: *const Driver },
++    },
++
++    pub fn alloc(d: *const Driver, len: usize, mode: Mode) !Region {
++        if (len == 0) return error.Invalid;
++        switch (mode) {
++            .allocated => {
++                var b = try memory.HostBuffer.allocMapped(d, len);
++                errdefer b.free();
++                const dev = try b.device();
++                @memset(b.bytes, 0);
++                return .{ .bytes = b.bytes, .dev = dev, .owner = .{ .allocated = b } };
++            },
++            .registered => {
++                // Round the allocation length to 64 KiB; mmap supplies a system-page
++                // aligned address. CUDA pins it; close MRs before unregistering.
++                const size = try roundedBytes(len);
++                const mem = try std.posix.mmap(null, size, .{ .READ = true, .WRITE = true }, .{ .TYPE = .PRIVATE, .ANONYMOUS = true }, -1, 0);
++                var registered = false;
++                errdefer {
++                    if (!registered or d.api.cuMemHostUnregister(mem.ptr) == abi.success) std.posix.munmap(mem);
++                }
++                @memset(mem, 0);
++                try d.check(d.api.cuMemHostRegister_v2(mem.ptr, mem.len, host_register_portable | abi.host_register_devicemap), "RoCE cuMemHostRegister");
++                registered = true;
++                var dev: abi.DevicePtr = 0;
++                try d.check(d.api.cuMemHostGetDevicePointer_v2(&dev, mem.ptr, 0), "RoCE cuMemHostGetDevicePointer");
++                return .{ .bytes = @alignCast(mem[0..len]), .dev = dev, .owner = .{ .registered = .{ .mem = mem, .d = d } } };
++            },
++        }
++    }
++
++    pub fn free(r: *Region) void {
++        switch (r.owner) {
++            .allocated => |*b| b.free(),
++            .registered => |*v| {
++                // An unregister failure must not unmap pages CUDA may still own.
++                // Shutdown cannot return an error; leak until process exit instead.
++                if (v.d.api.cuMemHostUnregister(v.mem.ptr) == abi.success) std.posix.munmap(v.mem);
++            },
++        }
++        r.* = undefined;
++    }
++};
++
++fn roundedBytes(len: usize) !usize {
++    if (len == 0) return error.Invalid;
++    return (try std.math.add(usize, len, 65535)) & ~@as(usize, 65535);
++}
++
++test "RoCE memory selection is explicit and strict" {
++    try std.testing.expectEqual(Mode.allocated, try Mode.parse(null));
++    try std.testing.expectEqual(Mode.allocated, try Mode.parse("allocated"));
++    try std.testing.expectEqual(Mode.registered, try Mode.parse("registered"));
++    for ([_][]const u8{ "", "default", "1", "REGISTERED", " registered" }) |v|
++        try std.testing.expectError(error.BadRoceMemory, Mode.parse(v));
++}
++
++test "registered RoCE length rounds without overflow" {
++    try std.testing.expectEqual(@as(usize, 65536), try roundedBytes(1));
++    try std.testing.expectEqual(@as(usize, 65536), try roundedBytes(65536));
++    try std.testing.expectEqual(@as(usize, 131072), try roundedBytes(65537));
++    try std.testing.expectError(error.Invalid, roundedBytes(0));
++    try std.testing.expectError(error.Overflow, roundedBytes(std.math.maxInt(usize)));
++}
++
++test "both region allocation paths compile without opening CUDA" {
++    // A runtime condition keeps both ownership paths semantically checked.
++    // The standalone host test never supplies a driver or touches a GPU.
++    const Probe = struct {
++        fn run(d: ?*const Driver, mode: Mode) !void {
++            if (d) |driver| {
++                var r = try Region.alloc(driver, 65537, mode);
++                r.free();
++            }
++        }
++    };
++    try Probe.run(null, .allocated);
++    try Probe.run(null, .registered);
++}
+diff --git a/zig/src/families/glm_cuda/cuda.zig b/zig/src/families/glm_cuda/cuda.zig
+index 2236625..fb77b44 100644
+--- a/zig/src/families/glm_cuda/cuda.zig
++++ b/zig/src/families/glm_cuda/cuda.zig
+@@ -212,3 +212,7 @@ pub const vision_cudnn = @import("cuda_vision_cudnn.zig");
+ test {
+     _ = vision_cudnn;
+ }
++
++// Production transport entry points shared with the weight-free qualifier.
++pub const comm = @import("cuda_comm.zig");
++pub const link = @import("cuda_link.zig");
+diff --git a/zig/src/families/glm_cuda/cuda_comm.zig b/zig/src/families/glm_cuda/cuda_comm.zig
+index 1b6517b..fb9f62e 100644
+--- a/zig/src/families/glm_cuda/cuda_comm.zig
++++ b/zig/src/families/glm_cuda/cuda_comm.zig
+@@ -16,7 +16,8 @@
+ //! TF_GLM_ROCE (default on; 0 off) (decode plan D1) adds the one-shot RoCE all-gather (cuda/roce.zig, b12x's RoCEnante protocol)
+ //! for every all-gather of up to 512 KiB a rank, on the ports TF_ROCE_HCA / NCCL_IB_HCA name with NCCL_IB_GID_INDEX;
+ //! larger gathers and the broadcasts stay on NCCL. The ranks use it only when every one opened and connected it (they
+-//! say so over the link), a rank that cannot (no NCCL_IB_HCA, no RDMA device, no route) leaves all on NCCL. The choice
++//! say so over the link). Uniform legacy optional profiles can fall back together; explicitly selected custom profiles
++//! are required. Mixed/invalid settings are rejected collectively before NCCL setup (one binary on all ranks). The choice
+ //! per gather is by its byte count alone, so every rank makes it alike (a buffer RoCE cannot take is an error, never
+ //! a silent switch to NCCL on one rank). TF_GLM_L2PF (default on; 0
+ //! off) (decode plan D2) prefetches the weights a gather's
+@@ -28,6 +29,7 @@ const link_mod = @import("cuda_link.zig");
+ const Link = link_mod.Link;
+ const nccl = cuda.nccl;
+ const roce = cuda.roce;
++pub const neighbor = @import("cuda_neighbor.zig");
+ const Allocator = std.mem.Allocator;
+ 
+ pub const Prefetch = roce.Prefetch;
+@@ -41,7 +43,12 @@ const row_head: usize = 8 + 8 * roce.max_ports;
+ const roce_tag: link_mod.Tag = @fromBackingInt(@intCast(0x524f4345));
+ 
+ /// The RoCE all-gather, the L2 prefetch and the driver they were opened with (heap: Comm is copied by value).
+-const Extra = struct { driver: cuda.Driver, r: ?roce.Roce = null, l2: ?roce.L2 = null, prefetch: bool = false };
++const GatherCounters = struct {
++    nccl: std.atomic.Value(u64) = .init(0),
++    roce: std.atomic.Value(u64) = .init(0),
++    neighbor: std.atomic.Value(u64) = .init(0),
++};
++const Extra = struct { driver: cuda.Driver, r: ?roce.Roce = null, l2: ?roce.L2 = null, prefetch: bool = false, n: ?neighbor.Gather = null };
+ 
+ fn envIs(name: [:0]const u8, value: []const u8) bool {
+     return if (std.c.getenv(name)) |v| std.mem.eql(u8, std.mem.span(v), value) else false;
+@@ -53,11 +60,64 @@ pub const Comm = struct {
+     rank: u32,
+     world: u32,
+     extra: ?*Extra = null,
++    counters: ?*GatherCounters = null,
++
++    pub const Stats = struct { nccl_enqueues: u64 = 0, roce_enqueues: u64 = 0, neighbor_enqueues: u64 = 0, roce_ops: u64 = 0, relayed_stripes: u64 = 0, neighbor_first_completed: u64 = 0, neighbor_second_completed: u64 = 0, registered_host_bytes: usize = 0 };
++    /// Enqueue counters include capture, not replay. Proxy counters reflect GPU
++    /// execution, including replay. Query after synchronization for qualification.
++    pub fn stats(c: *const Comm) Stats {
++        var out: Stats = .{};
++        if (c.counters) |v| {
++            out.nccl_enqueues = v.nccl.load(.monotonic);
++            out.roce_enqueues = v.roce.load(.monotonic);
++            out.neighbor_enqueues = v.neighbor.load(.monotonic);
++        }
++        if (c.extra) |x| {
++            if (x.r) |*r| {
++                out.roce_ops = r.ops();
++                out.relayed_stripes = r.relayed();
++                out.registered_host_bytes = switch (r.region.owner) {
++                    .registered => |v| v.mem.len,
++                    .allocated => 0,
++                };
++            }
++            if (x.n) |*n| {
++                out.neighbor_first_completed = n.first.completedWrites();
++                out.neighbor_second_completed = n.second.completedWrites();
++                out.registered_host_bytes = n.first.registeredBytes() + n.second.registeredBytes();
++            }
++        }
++        return out;
++    }
++    fn recordEnqueue(c: *const Comm, backend: GatherBackend) void {
++        if (c.counters) |v| switch (backend) {
++            .nccl => {
++                _ = v.nccl.fetchAdd(1, .monotonic);
++            },
++            .roce => {
++                _ = v.roce.fetchAdd(1, .monotonic);
++            },
++            .neighbor => {
++                _ = v.neighbor.fetchAdd(1, .monotonic);
++            },
++        };
++    }
+ 
+     /// Join the communicator on the current CUDA context. Rank 0 sends the id first (to every follower), the others
+     /// wait for it. `link` is rank 0's fan-out to ranks 1..world-1, or a follower's one link to rank 0.
+     pub fn init(gpa: Allocator, link: Link, rank: u32, world: u32) !Comm {
+         if (world < 2 or world > max_world or rank >= world) return error.UnsupportedWorld;
++        // Parse and exchange validity BEFORE opening NCCL. A malformed setting
++        // on one rank must not strand peers in a control read / ncclCommDestroy.
++        const local: ?Startup = Startup.read(world) catch |e| blk: {
++            std.log.err("invalid GLM transport profile rank {d}: {t}", .{ rank, e });
++            break :blk null;
++        };
++        const profile: [8]u8 = if (local) |v| v.row() else @splat(0);
++        const agreed = try gatherToAll(gpa, link, rank, world, &profile);
++        defer gpa.free(agreed);
++        try validateStartupRows(agreed[1..], world);
++        const settings = local.?;
+         var lib = nccl.Library.open() catch |e| {
+             std.log.err("cannot open libnccl.so.2 ({s}): the image's NCCL is needed for two ranks", .{@errorName(e)});
+             return e;
+@@ -73,16 +133,21 @@ pub const Comm = struct {
+             if (bytes.len != id.internal.len) return error.BadNcclId;
+             @memcpy(&id.internal, bytes);
+         }
++        const counters = try std.heap.c_allocator.create(GatherCounters);
++        counters.* = .{};
++        errdefer std.heap.c_allocator.destroy(counters);
+         var comm: nccl.Comm = null;
+         try lib.check(lib.api.ncclCommInitRank(&comm, @intCast(world), id, @intCast(rank)), "ncclCommInitRank");
+-        var c: Comm = .{ .lib = lib, .comm = comm, .rank = rank, .world = world };
++        var c: Comm = .{ .lib = lib, .comm = comm, .rank = rank, .world = world, .counters = counters };
+         errdefer _ = lib.api.ncclCommDestroy(comm);
+         errdefer if (c.extra) |x| freeExtra(x);
+-        // on by default (decode D1, D2); "0" turns either off. RoCE is the two-rank protocol only (see above).
+-        const want_roce = !envIs("TF_GLM_ROCE", "0");
+-        const want_pf = !envIs("TF_GLM_L2PF", "0");
++        const want_roce = settings.mode == .roce;
++        const want_neighbor = settings.mode == .neighbor;
++        const memory_mode = settings.memory;
++        const required = settings.required;
++        const want_pf = settings.prefetch;
+         var driver: ?cuda.Driver = null;
+-        if (want_roce or want_pf) driver = cuda.Driver.open() catch |e| blk: {
++        if (want_roce or want_neighbor or want_pf) driver = cuda.Driver.open() catch |e| blk: {
+             std.log.warn("RoCE / L2 prefetch: no CUDA driver handle ({t}); NCCL alone", .{e});
+             break :blk null;
+         };
+@@ -91,9 +156,15 @@ pub const Comm = struct {
+             x.* = .{ .driver = d };
+             c.extra = x;
+         }
+-        // both ranks always say whether they opened RoCE (one rank's setting alone never leaves the other waiting);
+-        // beyond two ranks nobody does, so there is nothing to say
+-        const r = try handshake(gpa, link, rank, world, if (want_roce) (if (c.extra) |x| &x.driver else null) else null);
++        // Every rank participates in each custom setup verdict.
++        if (want_neighbor) {
++            const n = try openNeighbor(gpa, link, rank, world, if (c.extra) |x| &x.driver else null);
++            c.extra.?.n = n;
++            std.log.info("GLM transport rank {d}: backend=neighbor memory=registered required=true cutoff={d} bytes gid=3", .{ rank, neighbor.cutoff });
++        }
++        const r = if (want_neighbor) null else try handshake(gpa, link, rank, world, if (want_roce) (if (c.extra) |x| &x.driver else null) else null, memory_mode, required);
++        if (!want_neighbor and r == null and required) return error.RequiredRoceUnavailable;
++        if (!want_neighbor) std.log.info("GLM transport rank {d}: backend={s} memory={s} required={} cutoff={d} bytes", .{ rank, if (r != null) (if (world == 4 and envIs("TF_ROCE_RING", "1")) "roce-relay" else "roce") else "nccl", if (r != null) @tagName(memory_mode) else "none", required, if (r) |rr| rr.slot_bytes else @as(u64, 0) });
+         if (c.extra) |x| {
+             x.r = r;
+             if (want_pf) {
+@@ -115,9 +186,9 @@ pub const Comm = struct {
+     /// TF_ROCE_RING=1: a ring of four cabled to the neighbours, who relay to the rank across), connects and starts the
+     /// proxy, and agrees that every rank did. Null when any rank did not (every rank then keeps NCCL for every
+     /// gather: the choice is the same on all of them). Every rank takes this path whether or not it opened RoCE.
+-    fn handshake(gpa: Allocator, link: Link, rank: u32, world: u32, d: ?*const cuda.Driver) !?roce.Roce {
++    fn handshake(gpa: Allocator, link: Link, rank: u32, world: u32, d: ?*const cuda.Driver, memory_mode: roce.region.Mode, required: bool) !?roce.Roce {
+         var found: [roce.max_ports]?roce.Addr = @splat(null);
+-        var r: ?roce.Roce = if (d) |dd| openRoce(dd, rank, world, &found) else null;
++        var r: ?roce.Roce = if (d) |dd| openRoce(dd, rank, world, &found, memory_mode) else null;
+         var keep = false;
+         defer if (!keep) if (r) |*x| x.deinit();
+         const n = roce.Roce.blobBytes();
+@@ -125,6 +196,8 @@ pub const Comm = struct {
+         const mine = try gpa.alloc(u8, row_bytes);
+         defer gpa.free(mine);
+         @memset(mine, 0);
++        mine[2] = @backingInt(memory_mode);
++        mine[3] = @as(u8, @intFromBool(required)) | (@as(u8, @intFromBool(envIs("TF_ROCE_RING", "1"))) << 1) | (@as(u8, @intFromBool(!envIs("TF_GLM_ROCE", "0"))) << 2);
+         if (r) |*x| {
+             mine[0] = 1;
+             mine[1] = @intCast(x.ports);
+@@ -140,6 +213,7 @@ pub const Comm = struct {
+         const all = try gatherToAll(gpa, link, rank, world, mine);
+         defer gpa.free(all);
+         const rows = all[1..];
++        try sameMemoryProfile(rows, row_bytes, world);
+         const peers_ok = all[0] == 1;
+         if (mine[0] != 1 or !peers_ok) {
+             std.log.warn("RoCE all-gather off: this rank {s}; some rank could not open it; NCCL carries every gather", .{if (mine[0] == 1) "opened it" else if (d == null) "has it off (TF_GLM_ROCE=0)" else "could not open it"});
+@@ -206,6 +280,52 @@ pub const Comm = struct {
+         return res;
+     }
+ 
++    fn openNeighbor(gpa: Allocator, link: Link, rank: u32, world: u32, d: ?*const cuda.Driver) !neighbor.Gather {
++        const first = envText("TF_GLM_NEIGHBOR_FIRST") orelse "";
++        const second = envText("TF_GLM_NEIGHBOR_SECOND") orelse "";
++        const gid: u8 = if (envText("TF_GLM_NEIGHBOR_GID_INDEX")) |v| std.fmt.parseInt(u8, v, 10) catch 255 else 255;
++        var n: ?neighbor.Gather = if (d) |driver| neighbor.Gather.init(gpa, driver, rank, first, second, gid) catch |e| blk: {
++            std.log.err("neighbor local setup failed: {t}", .{e});
++            break :blk @as(?neighbor.Gather, null);
++        } else null;
++        var keep = false;
++        defer if (!keep) if (n) |*v| v.deinit();
++        var mine: [1 + @sizeOf(neighbor.Info)]u8 = @splat(0);
++        if (n) |*v| {
++            mine[0] = 1;
++            const info = v.info();
++            @memcpy(mine[1..], std.mem.asBytes(&info));
++        }
++        const rows = try gatherToAll(gpa, link, rank, world, &mine);
++        defer gpa.free(rows);
++        if (rows[0] != 1 or n == null) return error.NeighborSetupFailed;
++        var all: [4]neighbor.Info = undefined;
++        for (0..4) |p| @memcpy(std.mem.asBytes(&all[p]), rows[1 + p * mine.len + 1 ..][0..@sizeOf(neighbor.Info)]);
++        var ok = true;
++        n.?.connect(&all) catch {
++            ok = false;
++        };
++        const connected = try gatherToAll(gpa, link, rank, world, &.{@intFromBool(ok)});
++        defer gpa.free(connected);
++        if (connected[0] != 1) return error.NeighborConnectFailed;
++        n.?.start() catch {
++            ok = false;
++        };
++        const started = try gatherToAll(gpa, link, rank, world, &.{@intFromBool(ok)});
++        defer gpa.free(started);
++        if (started[0] != 1) return error.NeighborStartFailed;
++        keep = true;
++        return n.?;
++    }
++
++    /// Must be checked after result-producing synchronization, including captured replay.
++    pub fn check(c: *const Comm) !void {
++        if (c.extra) |x| {
++            if (x.n) |*n| try n.check();
++            if (x.r) |*r| if (r.failure() != null or r.timedOut() != null) return error.RoceTransportFailed;
++        }
++    }
++
+     /// The last agreement: every rank says whether it connected and started; all go on only when all did.
+     fn verdict(gpa: Allocator, link: Link, rank: u32, world: u32, r: ?*roce.Roce, ok: bool) !?roce.Roce {
+         const all = try gatherToAll(gpa, link, rank, world, &.{@intFromBool(ok)});
+@@ -249,7 +369,7 @@ pub const Comm = struct {
+     /// rail is TF_ROCE_GID_INDEX / NCCL_IB_GID_INDEX (3) at two ranks or when set, else each rail's own RoCE v2 IPv4
+     /// GID. Beyond two ranks every rail is probed; its address and prefix go into `found` for the routes unless a fixed
+     /// index names another GID (railAddr).
+-    fn openRoce(d: *const cuda.Driver, rank: u32, world: u32, found: *[roce.max_ports]?roce.Addr) ?roce.Roce {
++    fn openRoce(d: *const cuda.Driver, rank: u32, world: u32, found: *[roce.max_ports]?roce.Addr, memory_mode: roce.region.Mode) ?roce.Roce {
+         const hca_env = std.c.getenv("TF_ROCE_HCA") orelse std.c.getenv("NCCL_IB_HCA") orelse {
+             std.log.warn("RoCE: NCCL_IB_HCA is not set", .{});
+             return null;
+@@ -282,7 +402,7 @@ pub const Comm = struct {
+         const tc: c_int = if (std.c.getenv("NCCL_IB_TC")) |t| std.fmt.parseInt(c_int, std.mem.span(t), 0) catch 0 else 0;
+         // TF_ROCE_MAX_KB: the largest shard a rank RoCE takes (default 512 KiB; a multiple of 4096)
+         const max: u64 = if (std.c.getenv("TF_ROCE_MAX_KB")) |m| std.fmt.parseInt(u64, std.mem.span(m), 10) catch 512 else 512;
+-        return roce.Roce.openRanks(d, rank, world, .{ .ports = ports, .gids = gids[0..ports.len], .traffic_class = tc, .slot_bytes = max * 1024, .timeout_s = roceTimeoutS() }) catch |e| {
++        return roce.Roce.openRanks(d, rank, world, .{ .ports = ports, .gids = gids[0..ports.len], .traffic_class = tc, .slot_bytes = max * 1024, .timeout_s = roceTimeoutS(), .memory_mode = memory_mode }) catch |e| {
+             std.log.warn("RoCE: {t}", .{e});
+             return null;
+         };
+@@ -300,9 +420,12 @@ pub const Comm = struct {
+         c.lib.close();
+         if (c.extra) |x| freeExtra(x);
+         c.extra = null;
++        if (c.counters) |v| std.heap.c_allocator.destroy(v);
++        c.counters = null;
+     }
+ 
+     fn freeExtra(x: *Extra) void {
++        if (x.n) |*n| n.deinit();
+         if (x.r) |*r| r.deinit();
+         if (x.l2) |*l| l.deinit();
+         x.driver.close();
+@@ -325,6 +448,7 @@ pub const Comm = struct {
+ 
+     /// The peer is gone: end the communicator's pending collectives so a waiting stream returns (any thread).
+     pub fn abort(c: *const Comm) void {
++        if (c.extra) |x| if (x.n) |*n| n.abort("GLM communicator aborted");
+         _ = c.lib.api.ncclCommAbort(c.comm);
+     }
+ 
+@@ -334,26 +458,52 @@ pub const Comm = struct {
+     }
+ 
+     /// allGather, and with TF_GLM_L2PF=1 `next` (the next kernels' weights) prefetched into the L2 meanwhile.
+-    pub fn allGatherThen(c: *const Comm, send: cuda.abi.DevicePtr, recv: cuda.abi.DevicePtr, count: usize, dtype: nccl.DataType, stream: cuda.abi.Stream, next: Prefetch) !void {
++    pub const GatherBackend = enum { nccl, roce, neighbor };
++
++    /// Shared by production enqueue and the weight-free qualification probe.
++    /// Every rank must supply the same count/layout class, as for NCCL itself.
++    pub fn gatherBackend(c: *const Comm, send: cuda.abi.DevicePtr, recv: cuda.abi.DevicePtr, count: usize, dtype: nccl.DataType) !GatherBackend {
++        const bytes = try std.math.mul(usize, count, size(dtype));
+         if (c.extra) |x| {
+-            const pf: Prefetch = if (x.prefetch) next else .{};
+-            const bytes = count * size(dtype);
+-            // RoCE takes every size it fits whose layout it can (aligned; out of place or NCCL's in-place form), else
+-            // NCCL. Both ranks run the same calls on buffers carved the same way (the same allocation sequence,
+-            // offsets and in-place choices), so the layout test answers alike on both: no rank picks the other path.
++            if (x.n) |*n| {
++                try n.check();
++                if (n.takes(send, recv, bytes)) return .neighbor;
++            }
+             if (x.r) |*r| if (r.fits(bytes)) {
+                 if (!r.takes(send, recv, bytes)) return error.RoceBuffers;
+-                return r.allGather(send, recv, bytes, stream, pf);
++                return .roce;
+             };
++        }
++        return .nccl;
++    }
++
++    pub fn allGatherThen(c: *const Comm, send: cuda.abi.DevicePtr, recv: cuda.abi.DevicePtr, count: usize, dtype: nccl.DataType, stream: cuda.abi.Stream, next: Prefetch) !void {
++        const backend = try c.gatherBackend(send, recv, count, dtype);
++        if (c.extra) |x| {
++            const pf: Prefetch = if (x.prefetch) next else .{};
++            const bytes = try std.math.mul(usize, count, size(dtype));
++            if (backend == .roce) {
++                try x.r.?.allGather(send, recv, bytes, stream, pf);
++                c.recordEnqueue(.roce);
++                return;
++            }
+             if (x.l2) |*l| if (pf.bytes > 0) try l.run(pf, stream);
++            if (backend == .neighbor) {
++                try x.n.?.run(.{ .d = &x.driver, .handle = stream }, send, recv, bytes);
++                c.recordEnqueue(.neighbor);
++                return;
++            }
+         }
+         try c.lib.check(c.lib.api.ncclAllGather(send, recv, count, dtype, c.comm, stream), "ncclAllGather");
++        c.recordEnqueue(.nccl);
+     }
+ 
+     /// NCCL's in-place all-gather (`send` = `recv` + rank * count elements): the prompt glue's row halves. Never RoCE,
+     /// which takes no overlapping buffers; NCCL on both ranks whatever the size (the same choice on both).
+     pub fn allGatherInPlace(c: *const Comm, send: cuda.abi.DevicePtr, recv: cuda.abi.DevicePtr, count: usize, dtype: nccl.DataType, stream: cuda.abi.Stream) !void {
++        try c.check();
+         try c.lib.check(c.lib.api.ncclAllGather(send, recv, count, dtype, c.comm, stream), "ncclAllGather");
++        c.recordEnqueue(.nccl);
+     }
+ 
+     /// `bytes` bytes of `buf` from `root` to every rank, in place, on `stream` (the mirror's per-round records).
+@@ -560,3 +710,96 @@ test "a fixed GID index on a triangle: a mismatched rail is left out; the plan h
+     // (every rank keeps NCCL)
+     try std.testing.expectError(error.NoSharedSubnet, roce.planRoutes(&rows(&rails, .{ .rank = 2, .rail = 0 }), false));
+ }
++
++fn envText(name: [:0]const u8) ?[]const u8 {
++    return if (std.c.getenv(name)) |v| std.mem.span(v) else null;
++}
++fn parseRequired(raw: ?[]const u8) !bool {
++    const value = raw orelse return false;
++    if (std.mem.eql(u8, value, "0")) return false;
++    if (std.mem.eql(u8, value, "1")) return true;
++    return error.BadRoceRequired;
++}
++fn sameMemoryProfile(rows: []const u8, stride: usize, world: usize) !void {
++    if (stride < 4 or world == 0 or rows.len != stride * world) return error.BadRoceRow;
++    for (0..world) |p| if (!std.mem.eql(u8, rows[2..4], rows[p * stride + 2 ..][0..2])) return error.MixedRoceProfile;
++}
++test "RoCE memory and required policy agree even when a rank failed to open" {
++    var rows = [_]u8{ 1, 2, 1, 1, 0, 0, 1, 1 };
++    try sameMemoryProfile(&rows, 4, 2);
++    rows[6] = 0;
++    try std.testing.expectError(error.MixedRoceProfile, sameMemoryProfile(&rows, 4, 2));
++    rows[6] = 1;
++    rows[7] = 0;
++    try std.testing.expectError(error.MixedRoceProfile, sameMemoryProfile(&rows, 4, 2));
++    try std.testing.expectError(error.BadRoceRequired, parseRequired("true"));
++    try std.testing.expect(try parseRequired("1"));
++    try std.testing.expect(!try parseRequired(null));
++}
++
++const Transport = enum(u8) { nccl, roce, neighbor };
++fn transportMode(raw: ?[]const u8, legacy_roce: bool) !Transport {
++    if (raw) |v| {
++        if (std.mem.eql(u8, v, "nccl")) return .nccl;
++        if (std.mem.eql(u8, v, "roce")) return .roce;
++        if (std.mem.eql(u8, v, "neighbor")) return .neighbor;
++        return error.BadGlmTransport;
++    }
++    return if (legacy_roce) .roce else .nccl;
++}
++test "explicit GLM backend selection is strict" {
++    try std.testing.expectEqual(Transport.nccl, try transportMode(null, false));
++    try std.testing.expectEqual(Transport.roce, try transportMode(null, true));
++    try std.testing.expectEqual(Transport.neighbor, try transportMode("neighbor", false));
++    try std.testing.expectError(error.BadGlmTransport, transportMode("auto", true));
++}
++
++const Startup = struct {
++    mode: Transport,
++    memory: roce.region.Mode,
++    required: bool,
++    prefetch: bool,
++    ring: bool,
++    legacy_roce: bool,
++
++    fn read(world: u32) !Startup {
++        const legacy_roce = !envIs("TF_GLM_ROCE", "0");
++        const explicit = envText("TF_GLM_TRANSPORT");
++        const mode = try transportMode(explicit, legacy_roce);
++        var memory = try roce.region.Mode.parse(envText("TF_GLM_ROCE_MEMORY"));
++        const required = (try parseRequired(envText("TF_GLM_ROCE_REQUIRED"))) or (mode == .roce and explicit != null);
++        if (mode == .nccl and (required or memory != .allocated)) return error.RoceProfileDisabled;
++        if (mode == .neighbor) {
++            if (world != 4) return error.NotFourNodes;
++            if (envText("TF_GLM_ROCE_MEMORY") != null and memory != .registered) return error.NeighborRequiresRegisteredMemory;
++            memory = .registered;
++            const gid: u8 = if (envText("TF_GLM_NEIGHBOR_GID_INDEX")) |v| try std.fmt.parseInt(u8, v, 10) else return error.NeighborGidRequired;
++            try neighbor.validateProfile(envText("TF_GLM_NEIGHBOR_FIRST") orelse "", envText("TF_GLM_NEIGHBOR_SECOND") orelse "", gid);
++        }
++        return .{ .mode = mode, .memory = memory, .required = required, .prefetch = !envIs("TF_GLM_L2PF", "0"), .ring = envIs("TF_ROCE_RING", "1"), .legacy_roce = legacy_roce };
++    }
++    fn row(s: Startup) [8]u8 {
++        return .{ 1, 1, @backingInt(s.mode), @backingInt(s.memory), @intFromBool(s.required), @intFromBool(s.prefetch), @intFromBool(s.ring), @intFromBool(s.legacy_roce) };
++    }
++};
++fn validateStartupRows(rows: []const u8, world: u32) !void {
++    if (world == 0 or rows.len != world * 8) return error.BadTransportProfileRow;
++    // Test all validity markers before comparing fields: all ranks see one error.
++    for (0..world) |p| if (rows[8 * p] != 1) return error.InvalidTransportProfile;
++    for (0..world) |p| if (!std.mem.eql(u8, rows[0..8], rows[8 * p ..][0..8])) return error.MixedTransportProfile;
++}
++test "transport profile errors and mismatches are collective before NCCL" {
++    const row = Startup.row(.{ .mode = .roce, .memory = .registered, .required = true, .prefetch = false, .ring = true, .legacy_roce = true });
++    var rows = row ++ row ++ row ++ row;
++    try validateStartupRows(&rows, 4);
++    for (0..4) |rank| {
++        rows[8 * rank] = 0;
++        try std.testing.expectError(error.InvalidTransportProfile, validateStartupRows(&rows, 4));
++        rows[8 * rank] = 1;
++    }
++    for (1..8) |field| {
++        rows[8 + field] ^= 1;
++        try std.testing.expectError(error.MixedTransportProfile, validateStartupRows(&rows, 4));
++        rows[8 + field] ^= 1;
++    }
++}
+diff --git a/zig/src/families/glm_cuda/cuda_neighbor.zig b/zig/src/families/glm_cuda/cuda_neighbor.zig
+new file mode 100644
+index 0000000..5529a70
+--- /dev/null
++++ b/zig/src/families/glm_cuda/cuda_neighbor.zig
+@@ -0,0 +1,140 @@
++//! Four-rank GLM byte gather using TensorFold PR30's complete RDMA protocol.
++//! First xor1 gathers pairs, then xor3 gathers pair bundles into [0,1,2,3].
++//! The model's FP32 rank-order reduction is untouched. Attribution/pin: glm-neighbor-source.json.
++const std = @import("std");
++const cuda = @import("cuda");
++const rdma = @import("neighbor_rdma.zig");
++pub const cutoff: usize = 512 << 10;
++pub const Info = [4]rdma.Info;
++pub const Gather = struct {
++    gpa: std.mem.Allocator,
++    mod: cuda.Module,
++    first: *rdma.Ring,
++    second: *rdma.Ring,
++    scratch: cuda.DeviceBuffer,
++    rank: u32,
++    bound_stream: ?cuda.abi.Stream = null,
++
++    pub fn init(gpa: std.mem.Allocator, d: *const cuda.Driver, rank: u32, first_text: []const u8, second_text: []const u8, gid: u8) !Gather {
++        if (rank >= 4) return error.BadNeighborTopology;
++        try validateProfile(first_text, second_text, gid);
++        const first_devs = try devices(first_text);
++        const second_devs = try devices(second_text);
++        if (cuda.kernels.glm_neighbor_rdma.len == 0) return error.BuiltWithoutNeighborKernel;
++        var mod = try cuda.Module.load(d, cuda.kernels.glm_neighbor_rdma);
++        errdefer mod.unload();
++        const k = try rdma.Kernels.load(mod);
++        const s: rdma.Settings = .{ .max_bytes = 2 * cutoff, .gid_index = gid };
++        const first = try rdma.Ring.create(gpa, d, k, &first_devs, rank % 2, 2, s);
++        errdefer first.destroy(gpa);
++        const second = try rdma.Ring.create(gpa, d, k, &second_devs, rank / 2, 2, s);
++        errdefer second.destroy(gpa);
++        var scratch = try cuda.DeviceBuffer.alloc(d, 2 * cutoff);
++        errdefer scratch.free();
++        first.failure_peer = second;
++        second.failure_peer = first;
++        return .{ .gpa = gpa, .mod = mod, .first = first, .second = second, .scratch = scratch, .rank = rank };
++    }
++    pub fn info(n: *const Gather) Info {
++        return .{ n.first.info(0), n.first.info(1), n.second.info(0), n.second.info(1) };
++    }
++    pub fn connect(n: *Gather, all: *const [4]Info) !void {
++        const g = n.rank;
++        const mine = n.info();
++        var a: [2]rdma.Info = undefined;
++        var b: [2]rdma.Info = undefined;
++        a[g % 2] = mine[g % 2];
++        a[1 - g % 2] = all[g ^ 1][g % 2];
++        b[g / 2] = mine[2 + g / 2];
++        b[1 - g / 2] = all[g ^ 3][2 + g / 2];
++        try n.first.connect(&a);
++        try n.second.connect(&b);
++    }
++    pub fn start(n: *Gather) !void {
++        try n.first.start();
++        errdefer n.first.stop();
++        try n.second.start();
++    }
++    /// Caller must destroy graphs and finish their streams before closing.
++    pub fn deinit(n: *Gather) void {
++        n.first.stop();
++        n.second.stop();
++        n.first.failure_peer = null;
++        n.second.failure_peer = null;
++        n.first.destroy(n.gpa);
++        n.second.destroy(n.gpa);
++        n.scratch.free();
++        n.mod.unload();
++    }
++    pub fn abort(n: *const Gather, why: []const u8) void {
++        n.first.abort(why); // propagates to both local stages
++    }
++    pub fn check(n: *const Gather) !void {
++        if (n.first.failure() != null or n.second.failure() != null) return error.NeighborTransportFailed;
++    }
++    pub fn takes(n: *const Gather, src: u64, dst: u64, bytes: usize) bool {
++        return eligible(src, dst, bytes) and apart(src, bytes, n.scratch.ptr, 2 * cutoff) and apart(dst, 4 * bytes, n.scratch.ptr, 2 * cutoff);
++    }
++    pub fn run(n: *Gather, stream: cuda.Stream, src: u64, dst: u64, bytes: usize) !void {
++        if (!n.takes(src, dst, bytes)) return error.NeighborBuffers;
++        try n.check();
++        // GLM has one execution CUDA stream; logical serving lanes share it.
++        // The imported protocol and scratch are ordered by that stream. Refuse
++        // another stream before enqueue instead of racing its device sequence.
++        if (n.bound_stream) |bound| {
++            if (bound != stream.handle) return error.NeighborConcurrentStream;
++        } else n.bound_stream = stream.handle;
++        // Any enqueue failure aborts BOTH local rings. Never fall back after stage one.
++        errdefer n.abort("GLM neighbor gather enqueue failed");
++        try n.first.gather(stream, src, @intCast(bytes / 16), n.scratch.ptr);
++        try n.second.gather(stream, n.scratch.ptr, @intCast(bytes / 8), dst);
++    }
++};
++
++pub fn eligible(src: u64, dst: u64, bytes: usize) bool {
++    return bytes > 0 and bytes <= cutoff and bytes % 16 == 0 and src != 0 and dst != 0 and src % 16 == 0 and dst % 16 == 0 and apart(src, bytes, dst, 4 * bytes);
++}
++fn apart(a: u64, an: usize, b: u64, bn: usize) bool {
++    const ae = std.math.add(u64, a, an) catch return false;
++    const be = std.math.add(u64, b, bn) catch return false;
++    return ae <= b or be <= a;
++}
++fn devices(text: []const u8) ![2][]const u8 {
++    var it = std.mem.splitScalar(u8, text, ',');
++    const a = it.next() orelse return error.BadNeighborDevices;
++    const b = it.next() orelse return error.BadNeighborDevices;
++    if (a.len == 0 or b.len == 0 or it.next() != null or std.mem.eql(u8, a, b)) return error.BadNeighborDevices;
++    for (a) |c| if (c <= ' ' or c == ':' or c == '=') return error.BadNeighborDevices;
++    for (b) |c| if (c <= ' ' or c == ':' or c == '=') return error.BadNeighborDevices;
++    return .{ a, b };
++}
++
++test "neighbor dispatch excludes size alignment and every alias before enqueue" {
++    try std.testing.expect(eligible(0x100000, 0x300000, cutoff));
++    for ([_]usize{ 0, 4, 8, 15, cutoff + 16 }) |b| try std.testing.expect(!eligible(0x100000, 0x300000, b));
++    try std.testing.expect(!eligible(0x100004, 0x300000, 16));
++    try std.testing.expect(!eligible(0x100000, 0x100000, 16));
++    try std.testing.expect(!eligible(0x100010, 0x100000, 16)); // in-place rank one
++    try std.testing.expect(!eligible(0x100000, 0x100010, 32));
++    try std.testing.expect(!eligible(std.math.maxInt(u64) - 15, 16, 16));
++}
++test "two matchings retain global rank order" {
++    for (0..4) |g| {
++        var out: [4]usize = undefined;
++        for (0..2) |p| {
++            const owner = if (p == g / 2) g else g ^ 3;
++            out[2 * p] = owner & ~@as(usize, 1);
++            out[2 * p + 1] = owner | 1;
++        }
++        try std.testing.expectEqual([4]usize{ 0, 1, 2, 3 }, out);
++    }
++    _ = try devices("rocep1s0f0,roceP2p1s0f0");
++    for ([_][]const u8{ "", "a", "a,a", "a,b,c", "a, b", "a:1,b" }) |v| try std.testing.expectError(error.BadNeighborDevices, devices(v));
++}
++
++pub fn validateProfile(first_text: []const u8, second_text: []const u8, gid: u8) !void {
++    if (gid != 3) return error.BadNeighborTopology;
++    const first = try devices(first_text);
++    const second = try devices(second_text);
++    for (first) |a| for (second) |b| if (std.mem.eql(u8, a, b)) return error.NeighborDevicesOverlap;
++}
+diff --git a/zig/src/families/glm_cuda/cuda_sampler.zig b/zig/src/families/glm_cuda/cuda_sampler.zig
+index 508134c..92aadbf 100644
+--- a/zig/src/families/glm_cuda/cuda_sampler.zig
++++ b/zig/src/families/glm_cuda/cuda_sampler.zig
+@@ -163,6 +163,7 @@ pub const Sampler = struct {
+         const n = bytes * s.world();
+         try recv.downloadAsync(0, x.host.?.bytes[0..n], s.th.s.handle);
+         try s.th.s.synchronize();
++        if (s.comm) |cm| try cm.check();
+         return x.host.?.slice(f32)[0 .. n / 4];
+     }
+     fn checkGreedy(s: *Sampler, i: usize, p: Part, q: Plan, dst: u64) !void {
+diff --git a/zig/src/families/glm_cuda/neighbor_rdma.zig b/zig/src/families/glm_cuda/neighbor_rdma.zig
+new file mode 100644
+index 0000000..f2c5fc8
+--- /dev/null
++++ b/zig/src/families/glm_cuda/neighbor_rdma.zig
+@@ -0,0 +1,562 @@
++//! The family's one-hop RDMA all-gather of small fp32 slices (TP decode on GB10), host half: the Python build's
++//! cuda/rdma_gather.cu v7 in Zig. The staging kernel copies this rank's slice into a slot of pinned host memory and
++//! rings a doorbell; the proxy thread splits the slot over the node's RDMA devices and writes the parts, with an
++//! immediate, into every peer's receive slot for this rank; a peer's proxy sees each part's receive completion and,
++//! once all of a sequence's parts are in, publishes it in that peer's flag; the collecting kernel waits for the flags
++//! and copies the slots out in rank order (or straight into the caller's views). The kernel pair is rdma_gather.cu's
++//! and runs in graphs like any other kernel; a failed write or `abort` sets an abort word every wait also reads.
++const std = @import("std");
++const cuda = @import("cuda");
++const fabric = @import("fabric");
++const seqs = @import("neighbor_rdma_seq.zig");
++
++const vabi = fabric.verbs_abi;
++const Verbs = fabric.verbs.Verbs;
++const DevicePtr = cuda.abi.DevicePtr;
++
++pub const max_ranks = seqs.max_ranks;
++pub const max_devices = seqs.max_devices;
++const recv_depth = 256; // receive requests kept posted on every QP (a write with immediate consumes one)
++const send_depth = 512;
++const cq_depth = 4096;
++const stage_threads = 512;
++const collect_threads = 256;
++const mtu_4096 = 5;
++const wc_recv_rdma_with_imm = 129;
++const host_register_portable = 0x01;
++const host_register_devicemap = 0x02;
++
++pub const Error = error{ VerbsFailed, PostFailed, BadInfo, TooLarge, Failed, NoHostRegister } || cuda.Error || fabric.verbs.Error || std.posix.MMapError || std.Thread.SpawnError;
++
++/// The Python build's switches, with their defaults (TF_RDMA_SLOTS, TF_RDMA_STAGE_BLOCKS, ..., TF_RDMA_PDL as served).
++pub const Settings = struct {
++    slots: u32 = 4,
++    max_bytes: usize,
++    gid_index: u8 = 5,
++    stage_blocks: u32 = 16,
++    collect_blocks: u32 = 48,
++    collect_grain: u32 = 4,
++    pdl: bool = true,
++    own_early: bool = true,
++    unroll: bool = true,
++    fence: bool = true,
++    probing: bool = false,
++};
++
++/// What the other side's queue pairs toward this rank need (a device each), and where this rank's receive ring is.
++pub const Info = extern struct {
++    devices: u32,
++    qpn: [max_devices]u32,
++    psn: [max_devices]u32,
++    rkey: [max_devices]u32,
++    gid: [max_devices][16]u8,
++    recv: u64,
++};
++
++/// The kernel pair, from the family's rdma_gather fatbin.
++pub const Kernels = struct {
++    stage: cuda.Function,
++    collect: cuda.Function,
++    collect_into: cuda.Function,
++
++    pub fn load(m: cuda.Module) cuda.Error!Kernels {
++        return .{ .stage = try m.function("dsv41_rdma_stage"), .collect = try m.function("dsv41_rdma_collect"), .collect_into = try m.function("dsv41_rdma_collect_into") };
++    }
++};
++
++/// cuMemHostRegister / cuMemHostUnregister, which the runtime's driver table does not hold.
++const HostReg = struct {
++    lib: std.DynLib,
++    register: *const fn (?*anyopaque, usize, c_uint) callconv(.c) cuda.abi.Result,
++    unregister: *const fn (?*anyopaque) callconv(.c) cuda.abi.Result,
++
++    fn open() Error!HostReg {
++        var lib = std.DynLib.open("libcuda.so.1") catch return error.NoHostRegister;
++        errdefer lib.close();
++        return .{
++            .lib = lib,
++            .register = lib.lookup(*const fn (?*anyopaque, usize, c_uint) callconv(.c) cuda.abi.Result, "cuMemHostRegister_v2") orelse return error.NoHostRegister,
++            .unregister = lib.lookup(*const fn (?*anyopaque) callconv(.c) cuda.abi.Result, "cuMemHostUnregister") orelse return error.NoHostRegister,
++        };
++    }
++};
++
++extern "c" fn mlock(addr: *const anyopaque, len: usize) c_int;
++
++/// Zeroed pages registered with CUDA (mapped, portable). On GB10 the GPU reaches them over the coherent path of its own
++/// memory, where cuMemHostAlloc memory goes through an uncached one; mlock keeps them resident (best effort).
++const Pinned = struct {
++    mem: []align(std.heap.page_size_min) u8,
++    dev: DevicePtr,
++
++    fn alloc(d: *const cuda.Driver, hr: *const HostReg, len: usize) Error!Pinned {
++        const n = std.mem.alignForward(usize, len, 1 << 16);
++        const mem = try std.posix.mmap(null, n, .{ .READ = true, .WRITE = true }, .{ .TYPE = .PRIVATE, .ANONYMOUS = true }, -1, 0);
++        var registered = false;
++        errdefer {
++            if (!registered or hr.unregister(mem.ptr) == cuda.abi.success) std.posix.munmap(mem);
++        }
++        @memset(mem, 0);
++        _ = mlock(mem.ptr, mem.len);
++        try d.check(hr.register(mem.ptr, mem.len, host_register_portable | host_register_devicemap), "cuMemHostRegister");
++        registered = true;
++        var dev: DevicePtr = 0;
++        try d.check(d.api.cuMemHostGetDevicePointer_v2(&dev, mem.ptr, 0), "cuMemHostGetDevicePointer");
++        return .{ .mem = mem, .dev = dev };
++    }
++
++    fn free(p: *Pinned, hr: *const HostReg) void {
++        if (hr.unregister(p.mem.ptr) == cuda.abi.success) std.posix.munmap(p.mem);
++    }
++};
++
++/// One RDMA device: its context, protection domain, one completion queue for every QP, the rings' registrations and an
++/// RC queue pair per peer.
++const Nic = struct {
++    ctx: *vabi.Context,
++    pd: *vabi.Pd,
++    cq: *vabi.Cq,
++    mr_send: *vabi.Mr,
++    mr_recv: *vabi.Mr,
++    gid: [16]u8,
++    qps: [max_ranks]?*vabi.Qp = @splat(null),
++    psns: [max_ranks]u32 = @splat(0),
++};
++
++const Peer = struct {
++    qpn: [max_devices]u32 = @splat(0),
++    psn: [max_devices]u32 = @splat(0),
++    rkey: [max_devices]u32 = @splat(0),
++    gid: [max_devices][16]u8 = @splat(@splat(0)),
++    recv: u64 = 0,
++};
++
++pub const Ring = struct {
++    d: *const cuda.Driver,
++    verbs: Verbs,
++    v: *const Verbs = undefined,
++    k: Kernels,
++    s: Settings,
++    rank: u32,
++    world: u32,
++    hr: HostReg,
++    send: Pinned,
++    recv: Pinned,
++    meta: Pinned,
++    scalars: cuda.DeviceBuffer, // seq (u64), staged (u32), probe (8 x u64)
++    nics: [max_devices]Nic = undefined,
++    nd: u32 = 0,
++    peers: [max_ranks]Peer = @splat(.{}),
++    proxy: ?std.Thread = null,
++    failure_peer: ?*Ring = null,
++    running: std.atomic.Value(bool) = .init(false),
++    failed: std.atomic.Value(bool) = .init(false),
++    why: [128]u8 = @splat(0),
++
++    // the metadata block: flags [slots][world], doorbell, sizes [slots], sent [slots], abort word
++    fn flags(r: *const Ring) [*]u64 {
++        return @ptrCast(@alignCast(r.meta.mem.ptr));
++    }
++    fn doorbell(r: *const Ring) *u64 {
++        return &r.flags()[r.s.slots * r.world];
++    }
++    fn sizes(r: *const Ring) [*]u64 {
++        return r.flags() + r.s.slots * r.world + 1;
++    }
++    fn sent(r: *const Ring) [*]u64 {
++        return r.sizes() + r.s.slots;
++    }
++    fn abortWord(r: *const Ring) *u64 {
++        return &r.sent()[r.s.slots];
++    }
++    fn metaDev(r: *const Ring, p: anytype) DevicePtr {
++        return r.meta.dev + (@intFromPtr(p) - @intFromPtr(r.meta.mem.ptr));
++    }
++
++    /// Rings, metadata and queue pairs (in INIT, receives posted) on `devices`; `connect` with every rank's `info` next.
++    pub fn create(gpa: std.mem.Allocator, d: *const cuda.Driver, k: Kernels, devices: []const []const u8, rank: u32, world: u32, s: Settings) Error!*Ring {
++        if (world < 2 or world > max_ranks or rank >= world or devices.len == 0 or devices.len > max_devices) return error.BadInfo;
++        if (s.slots < 2 or s.slots > seqs.max_slots or s.max_bytes == 0 or s.max_bytes % 64 != 0) return error.BadInfo;
++        const r = try gpa.create(Ring);
++        errdefer gpa.destroy(r);
++        var verbs = try Verbs.open(null);
++        errdefer verbs.close();
++        var hr = try HostReg.open();
++        errdefer hr.lib.close();
++        var send = try Pinned.alloc(d, &hr, s.slots * s.max_bytes);
++        errdefer send.free(&hr);
++        var recv = try Pinned.alloc(d, &hr, s.slots * world * s.max_bytes);
++        errdefer recv.free(&hr);
++        var meta = try Pinned.alloc(d, &hr, (s.slots * world + 1 + 2 * s.slots + 1) * 8);
++        errdefer meta.free(&hr);
++        var scalars = try cuda.DeviceBuffer.alloc(d, 80);
++        errdefer scalars.free();
++        try scalars.fill8(0, null);
++        r.* = .{ .d = d, .verbs = verbs, .k = k, .s = s, .rank = rank, .world = world, .hr = hr, .send = send, .recv = recv, .meta = meta, .scalars = scalars };
++        r.v = &r.verbs;
++        errdefer for (r.nics[0..r.nd]) |*n| r.closeNic(n);
++        for (devices) |name| {
++            r.nics[r.nd] = try r.openNic(name);
++            r.nd += 1;
++        }
++        return r;
++    }
++
++    fn openNic(r: *Ring, name: []const u8) Error!Nic {
++        const api = r.v.api;
++        const ctx = try r.v.openDevice(name);
++        errdefer _ = api.ibv_close_device(ctx);
++        const pd = api.ibv_alloc_pd(ctx) orelse return error.VerbsFailed;
++        errdefer _ = api.ibv_dealloc_pd(pd);
++        const cq = api.ibv_create_cq(ctx, cq_depth, null, null, 0) orelse return error.VerbsFailed;
++        errdefer _ = api.ibv_destroy_cq(cq);
++        const access = vabi.access_local_write | vabi.access_remote_write;
++        const mr_send = api.ibv_reg_mr(pd, r.send.mem.ptr, r.send.mem.len, access) orelse return error.VerbsFailed;
++        errdefer _ = api.ibv_dereg_mr(mr_send);
++        const mr_recv = api.ibv_reg_mr(pd, r.recv.mem.ptr, r.recv.mem.len, access) orelse return error.VerbsFailed;
++        errdefer _ = api.ibv_dereg_mr(mr_recv);
++        const gid = try r.v.gid(ctx, 1, r.s.gid_index);
++        var nic: Nic = .{ .ctx = ctx, .pd = pd, .cq = cq, .mr_send = mr_send, .mr_recv = mr_recv, .gid = gid.raw };
++        errdefer for (nic.qps) |q| if (q) |qp| {
++            _ = api.ibv_destroy_qp(qp);
++        };
++        for (0..r.world) |p| {
++            if (p == r.rank) continue;
++            var init: vabi.QpInitAttr = .{ .send_cq = cq, .recv_cq = cq, .cap = .{ .max_send_wr = send_depth, .max_recv_wr = recv_depth, .max_send_sge = 1, .max_recv_sge = 1, .max_inline_data = 0 }, .qp_type = vabi.qpt_rc };
++            const qp = api.ibv_create_qp(pd, &init) orelse return error.VerbsFailed;
++            nic.qps[p] = qp;
++            var a: vabi.QpAttr = .{ .qp_state = vabi.qps_init, .port_num = 1, .qp_access_flags = vabi.access_remote_write };
++            const m = vabi.mask;
++            if (api.ibv_modify_qp(qp, &a, m.state | m.pkey_index | m.port | m.access_flags) != 0) return error.VerbsFailed;
++            for (0..recv_depth) |_| try postRecv(ctx, qp);
++            nic.psns[p] = (qp.qp_num *% 2654435761) & 0xFF_FFFF;
++        }
++        return nic;
++    }
++
++    fn closeNic(r: *Ring, n: *Nic) void {
++        const api = r.v.api;
++        for (n.qps) |q| if (q) |qp| {
++            _ = api.ibv_destroy_qp(qp);
++        };
++        _ = api.ibv_dereg_mr(n.mr_recv);
++        _ = api.ibv_dereg_mr(n.mr_send);
++        _ = api.ibv_destroy_cq(n.cq);
++        _ = api.ibv_dealloc_pd(n.pd);
++        _ = api.ibv_close_device(n.ctx);
++    }
++
++    pub fn destroy(r: *Ring, gpa: std.mem.Allocator) void {
++        r.stop();
++        for (r.nics[0..r.nd]) |*n| r.closeNic(n);
++        r.scalars.free();
++        r.meta.free(&r.hr);
++        r.recv.free(&r.hr);
++        r.send.free(&r.hr);
++        r.hr.lib.close();
++        r.verbs.close();
++        gpa.destroy(r);
++    }
++
++    /// What peer `p`'s queue pairs toward this rank need.
++    pub fn info(r: *const Ring, p: u32) Info {
++        var out: Info = std.mem.zeroes(Info);
++        out.devices = r.nd;
++        out.recv = @intFromPtr(r.recv.mem.ptr);
++        for (r.nics[0..r.nd], 0..) |n, d| {
++            out.qpn[d] = if (n.qps[p]) |qp| qp.qp_num else 0;
++            out.psn[d] = n.psns[p];
++            out.rkey[d] = n.mr_recv.rkey;
++            out.gid[d] = n.gid;
++        }
++        return out;
++    }
++
++    /// `remote[p]`: what rank p's `info(rank)` gave. Moves every QP to RTR and RTS (the Python build's attributes).
++    pub fn connect(r: *Ring, remote: []const Info) Error!void {
++        if (remote.len != r.world) return error.BadInfo;
++        const api = r.v.api;
++        const m = vabi.mask;
++        for (remote, 0..) |ri, p| {
++            if (p == r.rank) continue;
++            if (ri.devices != r.nd) return error.BadInfo;
++            const peer = &r.peers[p];
++            peer.* = .{ .qpn = ri.qpn, .psn = ri.psn, .rkey = ri.rkey, .gid = ri.gid, .recv = ri.recv };
++            for (r.nics[0..r.nd], 0..) |n, d| {
++                const qp = n.qps[p].?;
++                var a: vabi.QpAttr = .{ .qp_state = vabi.qps_rtr, .path_mtu = mtu_4096, .dest_qp_num = ri.qpn[d], .rq_psn = ri.psn[d], .max_dest_rd_atomic = 1, .min_rnr_timer = 12 };
++                a.ah_attr = .{ .grh = .{ .dgid = .{ .raw = ri.gid[d] }, .sgid_index = r.s.gid_index, .hop_limit = 64 }, .is_global = 1, .port_num = 1 };
++                if (api.ibv_modify_qp(qp, &a, m.state | m.av | m.path_mtu | m.dest_qpn | m.rq_psn | m.max_dest_rd_atomic | m.min_rnr_timer) != 0) return error.VerbsFailed;
++                a = .{ .qp_state = vabi.qps_rts, .timeout = 14, .retry_cnt = 7, .rnr_retry = 7, .sq_psn = n.psns[p], .max_rd_atomic = 1 };
++                if (api.ibv_modify_qp(qp, &a, m.state | m.timeout | m.retry_cnt | m.rnr_retry | m.sq_psn | m.max_qp_rd_atomic) != 0) return error.VerbsFailed;
++            }
++        }
++    }
++
++    pub fn start(r: *Ring) Error!void {
++        if (r.running.swap(true, .acq_rel)) return;
++        r.proxy = try std.Thread.spawn(.{}, proxyLoop, .{r});
++    }
++
++    pub fn stop(r: *Ring) void {
++        if (r.running.swap(false, .acq_rel)) if (r.proxy) |t| t.join();
++        r.proxy = null;
++    }
++
++    /// Every wait on this rank gives up from now on (a watchdog lost a peer); `failure` says why.
++    pub fn abort(r: *Ring, why: []const u8) void {
++        r.fail(why);
++    }
++
++    pub fn registeredBytes(r: *const Ring) usize {
++        return r.send.mem.len + r.recv.mem.len + r.meta.mem.len;
++    }
++
++    /// Highest sequence whose local NIC writes have completed (including graphs).
++    pub fn completedWrites(r: *const Ring) u64 {
++        var q: u64 = 0;
++        for (0..r.s.slots) |slot| q = @max(q, @atomicLoad(u64, &@constCast(r).sent()[slot], .acquire));
++        return q;
++    }
++
++    pub fn failure(r: *const Ring) ?[]const u8 {
++        if (!r.failed.load(.acquire)) return null;
++        return std.mem.sliceTo(&r.why, 0);
++    }
++
++    fn fail(r: *Ring, why: []const u8) void {
++        r.failLocal(why);
++        if (r.failure_peer) |peer| peer.failLocal(why);
++    }
++
++    fn failLocal(r: *Ring, why: []const u8) void {
++        if (!r.failed.swap(true, .acq_rel)) {
++            const n = @min(why.len, r.why.len - 1);
++            @memcpy(r.why[0..n], why[0..n]);
++        }
++        @atomicStore(u64, r.abortWord(), 1, .release);
++    }
++
++    fn proxyLoop(r: *Ring) void {
++        const nd = r.nd;
++        const need: u32 = (r.world - 1) * nd;
++        var sends: seqs.Sends = .{ .need = need, .slots = r.s.slots };
++        var arrivals: seqs.Arrivals = .{ .nd = nd };
++        var posted: u64 = 0;
++        var wc: [64]vabi.Wc = undefined;
++        while (r.running.load(.monotonic)) {
++            const ring = @atomicLoad(u64, r.doorbell(), .acquire);
++            while (posted < ring) {
++                const q = posted + 1;
++                const slot: usize = @intCast(q % r.s.slots);
++                const n = @atomicLoad(u64, &r.sizes()[slot], .acquire);
++                for (r.nics[0..nd], 0..) |nic, d| {
++                    const pt = seqs.part(n, nd, @intCast(d));
++                    const off: usize = @intCast(pt.off);
++                    const len: usize = @intCast(pt.len);
++                    for (0..r.world) |p| {
++                        if (p == r.rank) continue;
++                        const local = r.send.mem[slot * r.s.max_bytes + off ..][0..len];
++                        const at: u64 = @intCast((slot * r.world + r.rank) * r.s.max_bytes + off);
++                        postWrite(nic.ctx, nic.qps[p].?, local, nic.mr_send.lkey, r.peers[p].recv + at, r.peers[p].rkey[d], q) catch {
++                            r.fail("ibv_post_send failed");
++                            return;
++                        };
++                    }
++                }
++                posted = q;
++            }
++            for (r.nics[0..nd], 0..) |nic, d| {
++                const k = nic.ctx.ops.poll_cq(nic.cq, wc.len, &wc);
++                if (k < 0) {
++                    r.fail("ibv_poll_cq failed");
++                    return;
++                }
++                for (wc[0..@intCast(k)]) |w| {
++                    if (w.status != vabi.wc_success) {
++                        r.fail(r.v.statusText(w.status));
++                        return;
++                    }
++                    if (w.opcode == wc_recv_rdma_with_imm) {
++                        const p = r.peerOf(nic, w.qp_num) orelse {
++                            r.fail("receive completion on an unknown QP");
++                            return;
++                        };
++                        const got = arrivals.arrive(p, d, w.imm_data);
++                        var q = got.from;
++                        while (q <= got.to) : (q += 1) @atomicStore(u64, r.flagAt(q, p), q, .release);
++                        postRecv(nic.ctx, nic.qps[p].?) catch {
++                            r.fail("ibv_post_recv failed");
++                            return;
++                        };
++                    } else if (sends.complete(w.wr_id)) |q| {
++                        @atomicStore(u64, &r.sent()[@as(usize, @intCast(q % r.s.slots))], q, .release);
++                    }
++                }
++            }
++        }
++    }
++
++    fn flagAt(r: *const Ring, q: u64, p: usize) *u64 {
++        const slot: usize = @intCast(q % r.s.slots);
++        return &r.flags()[slot * r.world + p];
++    }
++
++    fn peerOf(r: *const Ring, nic: Nic, qpn: u32) ?usize {
++        for (0..r.world) |p| if (nic.qps[p]) |qp| if (qp.qp_num == qpn) return p;
++        return null;
++    }
++
++    fn scalar(r: *const Ring, offset: usize) DevicePtr {
++        return r.scalars.ptr + offset;
++    }
++
++    /// recv [world x n4 float4] <- every rank's send [n4 float4] (fp32, 16-byte aligned), on `stream`.
++    pub fn gather(r: *Ring, stream: cuda.Stream, send: DevicePtr, n4: u32, recv: DevicePtr) Error!void {
++        if (r.failure() != null) return error.Failed;
++        if (@as(usize, n4) * 16 > r.s.max_bytes) return error.TooLarge;
++        const own: DevicePtr = if (r.s.own_early) recv + @as(u64, r.rank) * n4 * 16 else 0;
++        try r.stage(stream, send, n4, own, n4, n4);
++        var a: cuda.Args = .{};
++        a.add(send);
++        a.add(recv);
++        a.add(@as(c_int, @intCast(n4)));
++        a.add(r.recv.dev);
++        a.add(r.metaDev(r.flags()));
++        a.add(r.scalar(0));
++        a.add(@as(c_int, @intCast(r.rank)));
++        a.add(@as(c_int, @intCast(r.world)));
++        a.add(@as(c_int, @intCast(r.s.slots)));
++        a.add(@as(u64, r.s.max_bytes));
++        a.add(r.probe());
++        a.add(r.metaDev(r.abortWord()));
++        a.add(@as(c_int, @intFromBool(r.s.own_early)));
++        a.add(@as(c_int, @intFromBool(r.s.unroll)));
++        a.add(@as(c_int, @intFromBool(r.s.pdl)));
++        const per = collect_threads * r.s.collect_grain;
++        const blocks = std.math.clamp((@as(u64, n4) * r.world + per - 1) / per, 1, r.s.collect_blocks);
++        try cuda.launch.launch(r.k.collect, .{ .grid = .{ .x = @intCast(blocks), .y = 1, .z = 1 }, .block = .{ .x = collect_threads, .y = 1, .z = 1 }, .pdl = r.s.pdl }, stream, &a);
++    }
++
++    /// A rank's slice in `dsts` (its rows `row4` float4 wide, `stride4` apart; ptr 0: not copied out).
++    pub const Dst = struct { ptr: DevicePtr = 0, row4: u32 = 0, stride4: u64 = 0 };
++
++    /// Every rank's [rows, w_p] fp32 slice straight into dsts[p]; `send` is this rank's slice, contiguous. Every rank
++    /// names the same widths, so each peer's ring slot holds rows x w_p floats.
++    pub fn gatherInto(r: *Ring, stream: cuda.Stream, send: DevicePtr, rows: u32, own_row4: u32, dsts: []const Dst) Error!void {
++        if (r.failure() != null) return error.Failed;
++        if (dsts.len != r.world) return error.BadInfo;
++        const n4 = rows * own_row4;
++        if (@as(usize, n4) * 16 > r.s.max_bytes) return error.TooLarge;
++        const D = extern struct { ptr: [8]u64, stride4: [8]i64, row4: [8]c_int };
++        var dd: D = std.mem.zeroes(D);
++        var copy4: u64 = 0;
++        for (dsts, 0..) |t, p| {
++            if (t.ptr == 0) continue;
++            if (@as(usize, rows) * t.row4 * 16 > r.s.max_bytes) return error.TooLarge;
++            dd.ptr[p] = t.ptr;
++            dd.row4[p] = @intCast(t.row4);
++            dd.stride4[p] = @intCast(t.stride4);
++            if (p != r.rank) copy4 += @as(u64, rows) * t.row4;
++        }
++        const mine = dsts[r.rank];
++        try r.stage(stream, send, n4, mine.ptr, if (mine.ptr != 0) mine.row4 else n4, if (mine.ptr != 0) mine.stride4 else n4);
++        var a: cuda.Args = .{};
++        a.add(dd);
++        a.add(@as(c_int, @intCast(rows)));
++        a.add(r.recv.dev);
++        a.add(r.metaDev(r.flags()));
++        a.add(r.scalar(0));
++        a.add(@as(c_int, @intCast(r.rank)));
++        a.add(@as(c_int, @intCast(r.world)));
++        a.add(@as(c_int, @intCast(r.s.slots)));
++        a.add(@as(u64, r.s.max_bytes));
++        a.add(r.probe());
++        a.add(r.metaDev(r.abortWord()));
++        a.add(@as(c_int, @intFromBool(r.s.pdl)));
++        const per = collect_threads * r.s.collect_grain;
++        const blocks = std.math.clamp((copy4 + per - 1) / per, 1, r.s.collect_blocks);
++        try cuda.launch.launch(r.k.collect_into, .{ .grid = .{ .x = @intCast(blocks), .y = 1, .z = 1 }, .block = .{ .x = collect_threads, .y = 1, .z = 1 }, .pdl = r.s.pdl }, stream, &a);
++    }
++
++    fn probe(r: *const Ring) DevicePtr {
++        return if (r.s.probing) r.scalar(16) else 0;
++    }
++
++    fn stage(r: *Ring, stream: cuda.Stream, send: DevicePtr, n4: u32, own: DevicePtr, own_row4: u32, own_stride4: u64) Error!void {
++        var a: cuda.Args = .{};
++        a.add(send);
++        a.add(@as(c_int, @intCast(n4)));
++        a.add(r.send.dev);
++        a.add(r.metaDev(r.sizes()));
++        a.add(r.metaDev(r.doorbell()));
++        a.add(r.metaDev(r.sent()));
++        a.add(r.scalar(0));
++        a.add(@as(c_int, @intCast(r.s.slots)));
++        a.add(@as(u64, r.s.max_bytes));
++        a.add(r.probe());
++        a.add(r.metaDev(r.abortWord()));
++        a.add(r.scalar(8));
++        a.add(@as(c_int, @intFromBool(r.s.fence)));
++        a.add(own);
++        a.add(@as(c_int, @intCast(own_row4)));
++        a.add(@as(c_longlong, @intCast(own_stride4)));
++        a.add(@as(c_int, @intFromBool(r.s.pdl)));
++        const blocks = std.math.clamp((@as(u64, n4) + 1023) / 1024, 1, r.s.stage_blocks);
++        try cuda.launch.launch(r.k.stage, .{ .grid = .{ .x = @intCast(blocks), .y = 1, .z = 1 }, .block = .{ .x = stage_threads, .y = 1, .z = 1 }, .pdl = r.s.pdl }, stream, &a);
++    }
++
++    /// (stage, doorbell to every flag, copy-out) mean ns over the probed gathers and their count; resets the sums.
++    pub fn probes(r: *Ring) Error![4]f64 {
++        var host: [8]u64 = undefined;
++        try r.scalars.download(16, std.mem.sliceAsBytes(&host));
++        try r.d.check(r.d.api.cuMemsetD8_v2(r.scalar(16), 0, 64), "cuMemsetD8");
++        const n: f64 = if (host[3] > 0) @floatFromInt(host[3]) else 1;
++        return .{ @as(f64, @floatFromInt(host[0])) / n, @as(f64, @floatFromInt(host[1])) / n, @as(f64, @floatFromInt(host[2])) / n, @floatFromInt(host[3]) };
++    }
++};
++
++fn postRecv(ctx: *vabi.Context, qp: *vabi.Qp) Error!void {
++    var wr: vabi.RecvWr = .{};
++    var bad: ?*vabi.RecvWr = null;
++    if (ctx.ops.post_recv(qp, &wr, &bad) != 0) return error.PostFailed;
++}
++
++fn postWrite(ctx: *vabi.Context, qp: *vabi.Qp, local: []const u8, lkey: u32, remote: u64, rkey: u32, q: u64) Error!void {
++    var sge: vabi.Sge = .{ .addr = @intFromPtr(local.ptr), .length = @intCast(local.len), .lkey = lkey };
++    var wr: vabi.SendWr = .{ .wr_id = q, .sg_list = @ptrCast(&sge), .num_sge = @intFromBool(local.len > 0), .opcode = vabi.wr_rdma_write_imm, .send_flags = vabi.send_signaled, .imm_data = seqs.immediate(q), .remote_addr = remote, .rkey = rkey };
++    var bad: ?*vabi.SendWr = null;
++    if (ctx.ops.post_send(qp, &wr, &bad) != 0) return error.PostFailed;
++}
++
++test "every declaration compiles (the GPU and verbs paths run only on the nodes)" {
++    std.testing.refAllDecls(@This());
++    std.testing.refAllDecls(Ring);
++    std.testing.refAllDecls(Kernels);
++}
++
++test "the info a peer reads is a plain extern struct (it crosses the link as bytes)" {
++    try std.testing.expectEqual(@as(usize, 128), @sizeOf(Info));
++    try std.testing.expectEqual(@as(usize, 120), @offsetOf(Info, "recv"));
++}
++
++test "a failed neighbor stage releases both local stages' device waits" {
++    var first: Ring = undefined;
++    var second: Ring = undefined;
++    var first_meta: [32]u64 align(std.heap.page_size_min) = @splat(0);
++    var second_meta: [32]u64 align(std.heap.page_size_min) = @splat(0);
++    for ([_]*Ring{ &first, &second }, [_][]u64{ &first_meta, &second_meta }) |r, meta| {
++        r.s.slots = 4;
++        r.world = 2;
++        r.meta.mem = @alignCast(std.mem.sliceAsBytes(meta));
++        r.failed = .init(false);
++        r.why = @splat(0);
++    }
++    first.failure_peer = &second;
++    second.failure_peer = &first;
++    first.abort("peer failed");
++    try std.testing.expectEqualStrings("peer failed", first.failure().?);
++    try std.testing.expectEqualStrings("peer failed", second.failure().?);
++    try std.testing.expectEqual(@as(u64, 1), first.abortWord().*);
++    try std.testing.expectEqual(@as(u64, 1), second.abortWord().*);
++}
+diff --git a/zig/src/families/glm_cuda/neighbor_rdma_seq.zig b/zig/src/families/glm_cuda/neighbor_rdma_seq.zig
+new file mode 100644
+index 0000000..535ccf9
+--- /dev/null
++++ b/zig/src/families/glm_cuda/neighbor_rdma_seq.zig
+@@ -0,0 +1,119 @@
++//! The RDMA ring's sequence bookkeeping (rdma.zig's proxy thread), apart from the verbs so it can be tested: a
++//! slot's parts over the devices, a peer's parts back to whole sequences, and when a slot's writes have all been sent.
++const std = @import("std");
++
++pub const max_ranks = 8;
++pub const max_devices = 4;
++pub const max_slots = 16;
++
++/// Device `d`'s part of an `n`-byte slot over `nd` devices: whole 16-byte units each, the last device takes the rest.
++pub fn part(n: u64, nd: u32, d: u32) struct { off: u64, len: u64 } {
++    const unit = n / 16 / nd * 16;
++    const off = unit * d;
++    return .{ .off = off, .len = if (d == nd - 1) n - off else unit };
++}
++
++/// The immediate a write carries: its sequence's low 32 bits, in network order as the Python build's ring sends it.
++pub fn immediate(q: u64) u32 {
++    return std.mem.nativeToBig(u32, @truncate(q));
++}
++
++/// A receive completion's immediate back to a sequence. A device delivers a peer's parts in order, so it extends `last`,
++/// the sequence that device delivered from that peer before.
++pub fn extend(last: u64, imm: u32) u64 {
++    var q = (last & ~@as(u64, 0xffff_ffff)) | std.mem.bigToNative(u32, imm);
++    if (q <= last) q += 1 << 32;
++    return q;
++}
++
++/// What each peer has delivered: the last sequence each device brought and the last one published in the flags.
++pub const Arrivals = struct {
++    nd: u32,
++    got: [max_ranks][max_devices]u64 = @splat(@splat(0)),
++    published: [max_ranks]u64 = @splat(0),
++
++    /// A receive completion from `peer` on device `d`: the sequences `from`..`to` (inclusive; none when from > to) whose
++    /// every part is now in, to publish in order (a peer may already be a gather ahead on one device).
++    pub fn arrive(a: *Arrivals, peer: usize, d: usize, imm: u32) struct { from: u64, to: u64 } {
++        a.got[peer][d] = extend(a.got[peer][d], imm);
++        var in = a.got[peer][0];
++        for (a.got[peer][1..a.nd]) |g| in = @min(in, g);
++        const from = a.published[peer] + 1;
++        if (in > a.published[peer]) a.published[peer] = in;
++        return .{ .from = from, .to = in };
++    }
++};
++
++/// Write completions a gather's slot still owes: one a peer and device.
++pub const Sends = struct {
++    need: u32,
++    slots: u32,
++    seq: [max_slots]u64 = @splat(0),
++    done: [max_slots]u32 = @splat(0),
++
++    /// One completed write of sequence `q`: q when it was the last its slot owed (the slot may be staged again), else null.
++    pub fn complete(s: *Sends, q: u64) ?u64 {
++        const slot: usize = @intCast(q % s.slots);
++        if (s.seq[slot] != q) {
++            s.seq[slot] = q;
++            s.done[slot] = 0;
++        }
++        s.done[slot] += 1;
++        return if (s.done[slot] == s.need) q else null;
++    }
++};
++
++test "a slot's parts: whole 16-byte units a device, the rest on the last" {
++    const a = part(120_000, 2, 0);
++    const b = part(120_000, 2, 1);
++    try std.testing.expectEqual(@as(u64, 0), a.off);
++    try std.testing.expectEqual(@as(u64, 60_000), a.len);
++    try std.testing.expectEqual(@as(u64, 60_000), b.off);
++    try std.testing.expectEqual(@as(u64, 60_000), b.len);
++    const c = part(48, 2, 1);
++    try std.testing.expectEqual(@as(u64, 16), c.off);
++    try std.testing.expectEqual(@as(u64, 32), c.len);
++    try std.testing.expectEqual(@as(u64, 0), part(0, 2, 0).len);
++    try std.testing.expectEqual(@as(u64, 0), part(0, 2, 1).len);
++    try std.testing.expectEqual(@as(u64, 4096), part(4096, 1, 0).len);
++}
++
++test "immediates extend a device's last sequence, across the 32-bit wrap" {
++    try std.testing.expectEqual(@as(u64, 1), extend(0, immediate(1)));
++    try std.testing.expectEqual(@as(u64, 7), extend(6, immediate(7)));
++    try std.testing.expectEqual(@as(u64, 1 << 32), extend(0xffff_ffff, immediate(1 << 32)));
++    try std.testing.expectEqual(@as(u64, (1 << 32) + 3), extend((1 << 32) + 2, immediate((1 << 32) + 3)));
++    // the Python build's htonl: the wire bytes are big-endian
++    try std.testing.expectEqual(@as(u32, 0x0102_0304), std.mem.bigToNative(u32, immediate(0x0102_0304)));
++}
++
++test "a sequence is published once every device has delivered its part" {
++    var a: Arrivals = .{ .nd = 2 };
++    var r = a.arrive(1, 0, immediate(1));
++    try std.testing.expect(r.from > r.to);
++    r = a.arrive(1, 0, immediate(2));
++    try std.testing.expect(r.from > r.to);
++    r = a.arrive(1, 1, immediate(1));
++    try std.testing.expectEqual(@as(u64, 1), r.from);
++    try std.testing.expectEqual(@as(u64, 1), r.to);
++    r = a.arrive(1, 1, immediate(2));
++    try std.testing.expectEqual(@as(u64, 2), r.from);
++    try std.testing.expectEqual(@as(u64, 2), r.to);
++    // another peer is independent
++    r = a.arrive(3, 1, immediate(1));
++    try std.testing.expect(r.from > r.to);
++    // one device: every completion publishes its sequence
++    var b: Arrivals = .{ .nd = 1 };
++    r = b.arrive(0, 0, immediate(1));
++    try std.testing.expectEqual(@as(u64, 1), r.to);
++}
++
++test "a slot is sent after its last write: peers x devices completions" {
++    var s: Sends = .{ .need = 6, .slots = 4 };
++    for (0..5) |_| try std.testing.expectEqual(@as(?u64, null), s.complete(1));
++    try std.testing.expectEqual(@as(?u64, 1), s.complete(1));
++    // sequence 5 reuses slot 1 and starts its own count
++    for (0..5) |_| try std.testing.expectEqual(@as(?u64, null), s.complete(5));
++    try std.testing.expectEqual(@as(?u64, null), s.complete(2));
++    try std.testing.expectEqual(@as(?u64, 5), s.complete(5));
++}
+diff --git a/zig/tests/cuda/glm_transport_probe.zig b/zig/tests/cuda/glm_transport_probe.zig
+new file mode 100644
+index 0000000..e1013ed
+--- /dev/null
++++ b/zig/tests/cuda/glm_transport_probe.zig
+@@ -0,0 +1,205 @@
++//! Weight-free production GLM Comm qualifier. One process on each of four hosts.
++//! tf-glm-transport-probe RANK MASTER_IP PORT [REPLAYS=64]
++//! Explicit TF_GLM_TRANSPORT=nccl|roce|neighbor is mandatory for a named profile.
++//! Run behind an external fleet-wide deadline. No model/checkpoint or Torch.
++const std = @import("std");
++const cuda = @import("cuda");
++const glm = @import("glm_cuda");
++const Comm = glm.comm.Comm;
++const guard: usize = 64;
++const sentinel: u8 = 0xa7;
++
++pub fn main(init: std.process.Init) !u8 {
++    const args = try init.minimal.args.toSlice(init.arena.allocator());
++    if (args.len < 4 or args.len > 5) return error.ExpectedRankMasterPortReplays;
++    const rank = try std.fmt.parseInt(u32, args[1], 10);
++    const master = try std.Io.net.IpAddress.parse(args[2], try std.fmt.parseInt(u16, args[3], 10));
++    const replays = if (args.len == 5) try std.fmt.parseInt(usize, args[4], 10) else 64;
++    if (rank >= 4 or replays < 8) return error.BadProbeArguments;
++    if (std.c.getenv("TF_GLM_TRANSPORT") == null) return error.ExplicitProfileRequired;
++    run(init.gpa, init.io, rank, master, replays) catch |e| {
++        std.debug.print("FAIL rank={d} error={t}\n", .{ rank, e });
++        // Do not unwind transport/graph resources after a failed CUDA operation:
++        // a failed peer can leave a stream pending. The supervisor stops the fleet.
++        std.c._exit(1);
++    };
++    return 0;
++}
++
++fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddress, replays: usize) !void {
++    var driver = try cuda.Driver.open();
++    defer driver.close();
++    var ctx = try cuda.Context.init(&driver, 0);
++    defer ctx.deinit();
++    var server: ?glm.link.Server = null;
++    defer if (server) |s| s.close();
++    const link = if (rank == 0) blk: {
++        server = try glm.link.Server.open(master); // exact named interface
++        break :blk try server.?.acceptRanks(gpa, 4, 180_000);
++    } else blk: {
++        const l = try glm.link.Link.join(io, master, 180_000);
++        try l.hello(rank);
++        break :blk l;
++    };
++    defer link.close();
++    const agreement = try std.fmt.allocPrint(gpa, "glm-transport-probe-v1 replays={d}", .{replays});
++    defer gpa.free(agreement);
++    try link.agreeRanks(gpa, rank, agreement);
++    var comm = try Comm.init(gpa, link, rank, 4);
++    defer comm.deinit();
++    var stream = try cuda.Stream.init(&driver, true);
++    defer stream.deinit();
++    errdefer die(error.ProbeOperationFailed, rank);
++    for ([_]usize{ 8, 16, 68, 4096, 16384, 98304, 262144, 524288, 524304, 1048576 }) |bytes| {
++        var c = try Case.init(&driver, bytes, 0, false, rank);
++        defer c.deinit();
++        errdefer die(error.ProbeOperationFailed, rank);
++        for (0..3) |seed| {
++            try c.prepare(gpa, rank, @intCast(seed));
++            try c.enqueue(&comm, stream);
++            c.check(gpa, &comm, stream, rank, @intCast(seed)) catch |e| die(e, rank);
++        }
++        std.debug.print("PASS rank={d} eager bytes={d} backend={s} guard=true oracle=nccl changing=3\n", .{ rank, bytes, @tagName(try comm.gatherBackend(c.src(), c.dst(), bytes, .u8)) });
++    }
++    // Four-byte alignment is accepted by the relay and rejected before enqueue
++    // by neighbor. In-place rank slices exercise the production general API.
++    for ([_]bool{ false, true }) |alias| {
++        var c = try Case.init(&driver, 16384, if (alias) 0 else 4, alias, rank);
++        defer c.deinit();
++        errdefer die(error.ProbeOperationFailed, rank);
++        try c.prepare(gpa, rank, 17);
++        try c.enqueue(&comm, stream);
++        c.check(gpa, &comm, stream, rank, 17) catch |e| die(e, rank);
++        std.debug.print("PASS rank={d} layout alias={} offset={d} backend={s}\n", .{ rank, alias, c.offset, @tagName(try comm.gatherBackend(c.src(), c.dst(), c.bytes, .u8)) });
++        if (alias) {
++            try c.prepare(gpa, rank, 18);
++            try comm.allGatherInPlace(c.src(), c.dst(), c.bytes, .u8, stream.handle);
++            c.check(gpa, &comm, stream, rank, 18) catch |e| die(e, rank);
++            std.debug.print("PASS rank={d} explicit-in-place backend=nccl\n", .{rank});
++        }
++    }
++    var mixed: [3]Case = undefined;
++    var opened: usize = 0;
++    defer for (mixed[0..opened]) |*c| c.deinit();
++    errdefer die(error.ProbeOperationFailed, rank);
++    for ([_]usize{ 16384, 524304, 32768 }, 0..) |bytes, i| {
++        mixed[i] = try Case.init(&driver, bytes, 0, false, rank);
++        opened += 1;
++        try mixed[i].prepare(gpa, rank, 0);
++        // Warm all collective shapes before entering capture.
++        try mixed[i].enqueue(&comm, stream);
++    }
++    try stream.synchronize();
++    try comm.check();
++    const first_backend = try comm.gatherBackend(mixed[0].src(), mixed[0].dst(), mixed[0].bytes, .u8);
++    const middle_backend = try comm.gatherBackend(mixed[1].src(), mixed[1].dst(), mixed[1].bytes, .u8);
++    const last_backend = try comm.gatherBackend(mixed[2].src(), mixed[2].dst(), mixed[2].bytes, .u8);
++    const requested_profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
++    if (middle_backend != .nccl) return error.ProbeRequiresFallbackMiddle;
++    if (!std.mem.eql(u8, requested_profile, "nccl") and (first_backend == .nccl or last_backend == .nccl)) return error.ProbeRequiresCustomGraph;
++    std.debug.print("GRAPH rank={d} backends={s},{s},{s}\n", .{ rank, @tagName(first_backend), @tagName(middle_backend), @tagName(last_backend) });
++    try cuda.graph.beginCapture(stream, .global);
++    for (&mixed) |*c| try c.enqueue(&comm, stream);
++    var graph = try cuda.graph.endCapture(stream);
++    defer graph.deinit();
++    errdefer die(error.ProbeOperationFailed, rank);
++    var exec = try graph.instantiate();
++    defer exec.deinit(); // graphs die before buffers, stream and Comm
++    errdefer die(error.ProbeOperationFailed, rank);
++    const t0 = std.Io.Clock.awake.now(io).toNanoseconds();
++    for (0..replays) |iteration| {
++        const seed: u32 = @intCast(iteration + 100);
++        for (&mixed) |*c| try c.prepare(gpa, rank, seed);
++        try exec.launchOn(stream);
++        for (&mixed) |*c| c.check(gpa, &comm, stream, rank, seed) catch |e| die(e, rank);
++    }
++    const elapsed = std.Io.Clock.awake.now(io).toNanoseconds() - t0;
++    const counts = comm.stats();
++    std.debug.print("COUNTERS rank={d} nccl_enqueues={d} roce_enqueues={d} neighbor_enqueues={d} roce_gpu_ops={d} relayed_stripes={d} neighbor_first_completed={d} neighbor_second_completed={d} registered_host_bytes={d}\n", .{ rank, counts.nccl_enqueues, counts.roce_enqueues, counts.neighbor_enqueues, counts.roce_ops, counts.relayed_stripes, counts.neighbor_first_completed, counts.neighbor_second_completed, counts.registered_host_bytes });
++    const profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
++    if (std.mem.eql(u8, profile, "roce") and (counts.roce_ops == 0 or counts.roce_enqueues == 0)) return error.NoRoceExecution;
++    if (std.mem.eql(u8, profile, "roce") and std.c.getenv("TF_ROCE_RING") != null and std.mem.eql(u8, std.mem.span(std.c.getenv("TF_ROCE_RING").?), "1") and counts.relayed_stripes == 0) return error.NoRelayExecution;
++    if (std.mem.eql(u8, profile, "neighbor") and (counts.neighbor_enqueues == 0 or counts.neighbor_first_completed == 0 or counts.neighbor_second_completed == 0)) return error.NoNeighborExecution;
++    try link.agreeRanks(gpa, rank, "glm-transport-probe-v1 passed");
++    std.debug.print("PASS rank={d} mixed-graph=true replays={d} slot-reuse=true guards=true exact=true elapsed_ns={d} (includes host checks; not a benchmark)\n", .{ rank, replays, elapsed });
++}
++
++const Case = struct {
++    send: cuda.DeviceBuffer,
++    recv: cuda.DeviceBuffer,
++    oracle: cuda.DeviceBuffer,
++    bytes: usize,
++    offset: usize,
++    alias: bool,
++    rank: u32,
++    fn init(d: *const cuda.Driver, bytes: usize, offset: usize, alias: bool, rank: u32) !Case {
++        var send = try cuda.DeviceBuffer.alloc(d, bytes + 2 * guard + offset);
++        errdefer send.free();
++        var recv = try cuda.DeviceBuffer.alloc(d, 4 * bytes + 2 * guard + offset);
++        errdefer recv.free();
++        return .{ .send = send, .recv = recv, .oracle = try cuda.DeviceBuffer.alloc(d, 4 * bytes), .bytes = bytes, .offset = offset, .alias = alias, .rank = rank };
++    }
++    fn deinit(c: *Case) void {
++        c.oracle.free();
++        c.recv.free();
++        c.send.free();
++    }
++    fn src(c: *const Case) u64 {
++        return if (c.alias) c.dst() + c.rank * c.bytes else c.send.ptr + guard + c.offset;
++    }
++    fn dst(c: *const Case) u64 {
++        return c.recv.ptr + guard + c.offset;
++    }
++    fn prepare(c: *Case, gpa: std.mem.Allocator, rank: u32, seed: u32) !void {
++        const input = try gpa.alloc(u8, c.bytes);
++        defer gpa.free(input);
++        pattern(input, rank, seed);
++        try c.send.fill8(sentinel, null);
++        try c.recv.fill8(sentinel, null);
++        try c.oracle.fill8(0, null);
++        if (c.alias) try c.recv.upload(guard + c.offset + rank * c.bytes, input) else try c.send.upload(guard + c.offset, input);
++    }
++    fn enqueue(c: *Case, comm: *Comm, stream: cuda.Stream) !void {
++        try comm.allGatherThen(c.src(), c.dst(), c.bytes, .u8, stream.handle, .{});
++    }
++    fn check(c: *Case, gpa: std.mem.Allocator, comm: *Comm, stream: cuda.Stream, rank: u32, seed: u32) !void {
++        try stream.synchronize();
++        try comm.check(); // proxy/abort failures cannot masquerade as returned bytes
++        try comm.lib.check(comm.lib.api.ncclAllGather(c.src(), c.oracle.ptr, c.bytes, .u8, comm.comm, stream.handle), "probe NCCL oracle");
++        try stream.synchronize();
++        try comm.check();
++        const actual = try gpa.alloc(u8, c.recv.len);
++        defer gpa.free(actual);
++        try c.recv.download(0, actual);
++        const expected = try gpa.alloc(u8, 4 * c.bytes);
++        defer gpa.free(expected);
++        for (0..4) |p| pattern(expected[p * c.bytes ..][0..c.bytes], @intCast(p), seed);
++        const payload = actual[guard + c.offset ..][0 .. 4 * c.bytes];
++        if (!std.mem.eql(u8, expected, payload)) return error.WrongRankBytes;
++        for (actual[0 .. guard + c.offset]) |b| if (b != sentinel) return error.GuardBefore;
++        for (actual[guard + c.offset + 4 * c.bytes ..]) |b| if (b != sentinel) return error.GuardAfter;
++        try c.oracle.download(0, expected);
++        if (!std.mem.eql(u8, expected, payload)) return error.NcclOracleMismatch;
++        if (!c.alias) {
++            const source = try gpa.alloc(u8, c.send.len);
++            defer gpa.free(source);
++            try c.send.download(0, source);
++            pattern(expected[0..c.bytes], rank, seed);
++            if (!std.mem.eql(u8, expected[0..c.bytes], source[guard + c.offset ..][0..c.bytes])) return error.SourceChanged;
++            for (source[0 .. guard + c.offset]) |b| if (b != sentinel) return error.SourceGuardBefore;
++            for (source[guard + c.offset + c.bytes ..]) |b| if (b != sentinel) return error.SourceGuardAfter;
++        }
++    }
++};
++fn pattern(out: []u8, rank: u32, seed: u32) void {
++    for (out, 0..) |*b, i| b.* = @truncate((@as(u64, seed) *% 104729) ^ (@as(u64, rank + 1) *% 65497) ^ (@as(u64, i) *% 251) ^ (i >> 7));
++    // These are bytes, not arithmetic: preserve signed zero/NaN payloads/subnormals.
++    if (out.len >= 64) for ([_]u32{ 0, 0x80000000, 0x7fc01234 | rank, 1, 0x7f800000, 0xff800000 }, 0..) |word, i| {
++        std.mem.writeInt(u32, out[4 * i ..][0..4], word, .little);
++    };
++}
++
++fn die(e: anyerror, rank: u32) noreturn {
++    std.debug.print("FAIL rank={d} error={t} (fleet supervisor must stop peers)\n", .{ rank, e });
++    std.c._exit(1);
++}

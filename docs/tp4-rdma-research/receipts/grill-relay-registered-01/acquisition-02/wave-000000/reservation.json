@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "plan_sha256": "55405b24e6ce2b753065d5efe61086c1cb4ce0620e7cff52b5090010cca1db52",
+  "wave": {
+    "index": 0,
+    "phase": "warmup",
+    "cell": "structured-1",
+    "case": "structured",
+    "trial": 0,
+    "concurrency": 1
+  },
+  "requests": [
+    "{\"model\":\"GLM-5.3-Flash-EXL3\",\"messages\":[{\"role\":\"user\",\"content\":\"Count from 1 to 200. Output only the numbers, separated by spaces. No other text.\"}],\"stream\":true,\"max_tokens\":400,\"temperature\":0.0,\"top_p\":1.0,\"chat_template_kwargs\":{\"thinking\":false},\"stream_options\":{\"include_usage\":true},\"min_tokens\":400,\"ignore_eos\":true}"
+  ],
+  "request_sha256": [
+    "a2f5b03db1e268c4acc95a21cd1160875a1a24491cab0284c4e2dc6d3130bd54"
+  ]
+}

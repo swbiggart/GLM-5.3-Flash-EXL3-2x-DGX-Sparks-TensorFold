@@ -1,0 +1,38 @@
+{
+  "spark": {
+    "Status": "exited",
+    "Running": false,
+    "Pid": 0,
+    "ExitCode": 3,
+    "OOMKilled": false,
+    "StartedAt": "2026-10-22T09:56:00.393626356Z",
+    "FinishedAt": "2026-10-22T10:03:43.568805039Z"
+  },
+  "spark-peer": {
+    "Status": "exited",
+    "Running": false,
+    "Pid": 0,
+    "ExitCode": 3,
+    "OOMKilled": false,
+    "StartedAt": "2026-10-22T09:55:59.433261711Z",
+    "FinishedAt": "2026-10-22T10:03:45.915892165Z"
+  },
+  "msi-b9dc": {
+    "Status": "exited",
+    "Running": false,
+    "Pid": 0,
+    "ExitCode": 3,
+    "OOMKilled": false,
+    "StartedAt": "2026-10-22T09:55:58.628804182Z",
+    "FinishedAt": "2026-10-22T10:03:46.007123381Z"
+  },
+  "msi-c21f": {
+    "Status": "exited",
+    "Running": false,
+    "Pid": 0,
+    "ExitCode": 137,
+    "OOMKilled": false,
+    "StartedAt": "2026-10-22T09:55:57.639528353Z",
+    "FinishedAt": "2026-10-22T10:03:41.551193758Z"
+  }
+}

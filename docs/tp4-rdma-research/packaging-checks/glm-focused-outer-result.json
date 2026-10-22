@@ -1,0 +1,32 @@
+{
+  "worktree": "/Users/swb/Documents/ChatGPT/GLM-5.3-Flash-TensorFold-tp4-rdma-selected",
+  "branch": "feat/tp4-registered-relay",
+  "commit": "7a7308098e4c6b1ea711a1a4a4a401dd8ecf28cf",
+  "native_commit": "c0b1568c94397195f37fcc13079afdbc7b989627",
+  "files_sha256": {
+    "docs/zig-engine.md": "df9256a113e08e4534053ccdcfea19bd33a8e071d736b53c8cebad625a1cc84c",
+    "scripts/config.sh": "fc43754525b08bc20b5cec1c276a854f45d75b0c649582fe8629d6446b406a72",
+    "start.sh": "9b3b0938321c9e006087d691bdb92fae8d63da513d0f3125140f66ea4d663c58",
+    "tests/test_tp4_network.py": "6f94f6a1b105ec0ee3e8975e999682afb8aa790198cfd397b329fa09ef6189ec",
+    "tests/verify_tp4_native_patch.py": "a335c47ad7f3e0e91d7120ae494673b5fe18a3bdf171c8ca4af707a1d4ff09b9",
+    "zig/TRANSPORT_SOURCE.json": "5aa7b89aa90968f7202c35e3ce0fb4d2105416413e0e3c7b4ce29bf910c88857",
+    "zig/patches/0014-zig-glm-tp4-registered-relay.patch": "6113205a34c8cdfaf3a4f2e290b3de45b7fff8dea734e0546d656e5cdf3cf68f"
+  },
+  "logs_sha256": {
+    "/tmp/glm-focused-outer-config-tests.log": "bbb52d66f64e2b0fcd1921677b3af7d6600c3d53947ff11e02fa1230ef65f052",
+    "/tmp/glm-focused-outer-patch-verify.log": "202f482ec9c5ff7eb86d5c57e9a121c236d7ef88867817c0243dbb9301fa8a6f"
+  },
+  "checks": {
+    "offline_launcher_tests": "6/6 passed, including invalid-profile subcases and defaults compared against pinned recipe",
+    "patch_reconstruction": "2889 files byte-identical; omitted engine guide and six known mode differences explicitly verified",
+    "native_host_tests": "39/39 passed on newly reconstructed source",
+    "host_probe_build": "passed",
+    "bash_syntax": "passed",
+    "diff_check": "passed excluding nested patch artifact; applied native-source diff already passed"
+  },
+  "proof_limits": [
+    "No SSH, GPU, NVCC or inference execution",
+    "No push or PR",
+    "Actual runtime model/effort/Fast unavailable; requested Astra High/Fast off"
+  ]
+}

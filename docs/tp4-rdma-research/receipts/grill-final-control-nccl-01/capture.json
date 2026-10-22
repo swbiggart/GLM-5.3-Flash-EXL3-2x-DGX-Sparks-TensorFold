@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "kind": "performance-capture-v1",
+  "metric_contract": "generated-text-arrival-v2",
+  "collector_sha256": "2b48429f5b97cc949a221b8fcef20cbcbb583432ceb766a18d8b1bf3a10b9310",
+  "workload_sha256": "a2eb10e38e7c351c91a3dc78452af3e99b505d718342c3344517375f8567c959",
+  "deployment_sha256": "1221d3667bcc44285d5742decd04c62958fa03ad58167a2d36c95f091c390b68",
+  "endpoint": "http://127.0.0.1:40053/v1/chat/completions",
+  "model": "GLM-5.3-Flash-EXL3",
+  "auth_env": null,
+  "local_http": true,
+  "seconds": 300,
+  "request_ceiling": 32,
+  "output_token_ceiling": 12800,
+  "baseline_sha256": null,
+  "change": null,
+  "status": "complete",
+  "stop_reason": null,
+  "acquisitions": [
+    {
+      "directory": "acquisition-00",
+      "plan_sha256": "39bdf2e6a2ce18f5428c1a44fb64fa6d05c83aabf8cea61491dbbb5880b7b2a3",
+      "evidence_sha256": "a7b4f759276b8143dc0cfca42d7768adb9b46e5a1b386dcdd4415cf3068a2a72",
+      "started_unix_ms": 1792665968322,
+      "finished_unix_ms": 1792665978775,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.80819854950357
+    },
+    {
+      "directory": "acquisition-01",
+      "plan_sha256": "8434a02ce6b4512a361082b0c9b7eae2694f3c9054414ab6c00dd2aa13fec8bf",
+      "evidence_sha256": "b59a3b3ed361dc8adfdbe011a0177d894a96f947a584524a31f4da5999103785",
+      "started_unix_ms": 1792665978776,
+      "finished_unix_ms": 1792665989218,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.4248518898302
+    },
+    {
+      "directory": "acquisition-02",
+      "plan_sha256": "cd5660bdc83b015f31b7acb815b1db3c9cfc52c0996858c5057e01b29742d3ef",
+      "evidence_sha256": "d54646c50245e082873017027f585b062bb920127a36f2706a800b5b50b4968d",
+      "started_unix_ms": 1792665989219,
+      "finished_unix_ms": 1792665999583,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.80770866695806
+    },
+    {
+      "directory": "acquisition-03",
+      "plan_sha256": "ffab26cc6ae98971156a7369535920ae89af843eed47500b81de916b51aee6a5",
+      "evidence_sha256": "e662afe939afda723311a18832d4bf869e7f9f1d2c0c9c54fb0fbb5ebe00657b",
+      "started_unix_ms": 1792665999583,
+      "finished_unix_ms": 1792666009931,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 157.44461098585518
+    },
+    {
+      "directory": "acquisition-04",
+      "plan_sha256": "8b65edcdb08028a09947b9dbbaa1da5a7d8bdffab7319b8796208a37e9f508e0",
+      "evidence_sha256": "a5b06e019b0918e20ee950eca338706443f865da4a337c05538c4639b1aeedca",
+      "started_unix_ms": 1792666009932,
+      "finished_unix_ms": 1792666020306,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.45657156714725
+    },
+    {
+      "directory": "acquisition-05",
+      "plan_sha256": "51d9f4f529052daa2b5f4c8da5cb4ee02e88469fd2380565e223fc7b70fed0b7",
+      "evidence_sha256": "29f0a0f6c2c81a3880e2f143a351ccf20f222af406c1f6c074b2810af3578e44",
+      "started_unix_ms": 1792666020306,
+      "finished_unix_ms": 1792666030688,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.87559412956924
+    },
+    {
+      "directory": "acquisition-06",
+      "plan_sha256": "8182413b48a7043c393d3357652a627be3a59a083c8d2a7f67636e5ec204b628",
+      "evidence_sha256": "5ff5353249e2d230b6c8655a2f1f7d891dddddbf12c8b9981433b650e29b5dfe",
+      "started_unix_ms": 1792666030689,
+      "finished_unix_ms": 1792666041071,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.07807025073942
+    },
+    {
+      "directory": "acquisition-07",
+      "plan_sha256": "722a9ba5a4548a25223d0a66b054ec86918a83ed043b1dcb1fb2341bd4ea37ac",
+      "evidence_sha256": "67e2dc0390ad53884534533f20d22678933f884eaae2d94a10418fce78b1aac8",
+      "started_unix_ms": 1792666041072,
+      "finished_unix_ms": 1792666051443,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.79768942924858
+    }
+  ]
+}

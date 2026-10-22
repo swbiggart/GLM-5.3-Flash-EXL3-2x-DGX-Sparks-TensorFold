@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "kind": "performance-capture-v1",
+  "metric_contract": "generated-text-arrival-v2",
+  "collector_sha256": "2b48429f5b97cc949a221b8fcef20cbcbb583432ceb766a18d8b1bf3a10b9310",
+  "workload_sha256": "a2eb10e38e7c351c91a3dc78452af3e99b505d718342c3344517375f8567c959",
+  "deployment_sha256": "5a8e0f232c2b8fcaa821082bff57ed6ccecd427e38ef64481aa95ef8206960f4",
+  "endpoint": "http://127.0.0.1:40053/v1/chat/completions",
+  "model": "GLM-5.3-Flash-EXL3",
+  "auth_env": null,
+  "local_http": true,
+  "seconds": 300,
+  "request_ceiling": 32,
+  "output_token_ceiling": 12800,
+  "baseline_sha256": "20d4cfb648b5a65ac7581a282447b94146648d726b899fd861c54201ac942a5a",
+  "change": "settings",
+  "status": "complete",
+  "stop_reason": null,
+  "acquisitions": [
+    {
+      "directory": "acquisition-00",
+      "plan_sha256": "7842051a83daf79b582e0ff97d57ce3ac66bed2d2de682ed5b3dbc083990adff",
+      "evidence_sha256": "75a8a712d7e835518332cb463224a448390e75196fe4e433bc00a3020715cb73",
+      "started_unix_ms": 1792663064469,
+      "finished_unix_ms": 1792663073504,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 181.1607330487902
+    },
+    {
+      "directory": "acquisition-01",
+      "plan_sha256": "f6af124baeb81cf4e492331e52c02f296dc557310b26994e79634b29b86bf8d5",
+      "evidence_sha256": "1631dfb9ee11632d366a56986aba30d19355cded6e2a8948e581b8a79973eb38",
+      "started_unix_ms": 1792663073504,
+      "finished_unix_ms": 1792663082488,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.49352344114513
+    },
+    {
+      "directory": "acquisition-02",
+      "plan_sha256": "3ecc100961971840657dc4b0695584315aebce393f90036b4945e06ab05f2c4a",
+      "evidence_sha256": "56ba0b59af7436c52e39fc755c96f9f5951c8e9645d34362f54d5ab8d7500007",
+      "started_unix_ms": 1792663082489,
+      "finished_unix_ms": 1792663091470,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.29729220511703
+    },
+    {
+      "directory": "acquisition-03",
+      "plan_sha256": "6675ff57fb110c68787dfb281c7d4b8a193c4537ad08ea5dcc051bfa4463542c",
+      "evidence_sha256": "fdb765a9a99fba257b7913712fc0a838195072038dfbe9a83eff7cbdb691df24",
+      "started_unix_ms": 1792663091471,
+      "finished_unix_ms": 1792663100457,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.305256799762
+    },
+    {
+      "directory": "acquisition-04",
+      "plan_sha256": "9dd5f1f91888d6d1fc06e88849d47da25ea91c2f44e4194de458f9a2b26b83f8",
+      "evidence_sha256": "78531be1916eccccb306c0ee9d31280a5e0ddac4285c7b9b13b74b206dff1a04",
+      "started_unix_ms": 1792663100458,
+      "finished_unix_ms": 1792663109441,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 180.710426901277
+    },
+    {
+      "directory": "acquisition-05",
+      "plan_sha256": "afb31d95d52b7d37ab6ab8b747792a1bf40bf93b4d1616532e0cbed187cd4e71",
+      "evidence_sha256": "195dcf434796290f11b900c45bc51193a88bdbcf8e084133ec5b40738b207589",
+      "started_unix_ms": 1792663109442,
+      "finished_unix_ms": 1792663118470,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 179.2052069864942
+    },
+    {
+      "directory": "acquisition-06",
+      "plan_sha256": "e770c132bf81ab34ae39271e87447f9b6926e096cd958ce52b6c738ddf2957a5",
+      "evidence_sha256": "547ce49a466e6250b2d92e9ea3f7335e30abe73624e91fb02953e1b8cca6c0f1",
+      "started_unix_ms": 1792663118471,
+      "finished_unix_ms": 1792663127511,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 179.5302322178671
+    },
+    {
+      "directory": "acquisition-07",
+      "plan_sha256": "af3a31e969405eb882efb41dcdaed0b9a66d2cfd09136b29de9f902860eed6c3",
+      "evidence_sha256": "c58900f861be4b713640ec63e685897530a10286463ec2464074f6d954060e86",
+      "started_unix_ms": 1792663127512,
+      "finished_unix_ms": 1792663136479,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 181.0014538941784
+    }
+  ]
+}

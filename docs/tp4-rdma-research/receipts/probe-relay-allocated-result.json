@@ -1,0 +1,46 @@
+{
+  "spark": {
+    "passed": true,
+    "sha256": "2cc311b4d4e40c53ae63dabd23e462d5b4804e747d69ac56f17d34e479ee37ed",
+    "result": [
+      "PASS rank=0 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=224582494 (includes host checks; not a benchmark)"
+    ],
+    "counters": [
+      "GRAPH_COUNTERS rank=0 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true",
+      "COUNTERS rank=0 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=0"
+    ]
+  },
+  "spark-peer": {
+    "passed": true,
+    "sha256": "313153ef135cf6804a9480b9c99f4fc4cb94722a91cef50fba32841b2115e0a0",
+    "result": [
+      "PASS rank=1 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=224412375 (includes host checks; not a benchmark)"
+    ],
+    "counters": [
+      "GRAPH_COUNTERS rank=1 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true",
+      "COUNTERS rank=1 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=0"
+    ]
+  },
+  "msi-b9dc": {
+    "passed": true,
+    "sha256": "f52a3ea8a21ed249f8ca829cb902bdf1ebeeabdfe159f0b50576ae9f2c67912d",
+    "result": [
+      "PASS rank=2 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=224376591 (includes host checks; not a benchmark)"
+    ],
+    "counters": [
+      "GRAPH_COUNTERS rank=2 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true",
+      "COUNTERS rank=2 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=0"
+    ]
+  },
+  "msi-c21f": {
+    "passed": true,
+    "sha256": "df1f6cb151094ea3886392d68a7cd6252499a4fc6b01fbbd0f62d8cb179b8210",
+    "result": [
+      "PASS rank=3 mixed-graph=true replays=64 slot-reuse=true guards=true exact=true elapsed_ns=224397537 (includes host checks; not a benchmark)"
+    ],
+    "counters": [
+      "GRAPH_COUNTERS rank=3 replays=64 neighbor_first_delta=0 neighbor_second_delta=0 roce_ops_delta=128 relay_stripes_delta=256 enqueue_counts_unchanged=true",
+      "COUNTERS rank=3 nccl_enqueues=9 roce_enqueues=30 neighbor_enqueues=0 roce_gpu_ops=156 relayed_stripes=312 neighbor_first_completed=0 neighbor_second_completed=0 registered_host_bytes=0"
+    ]
+  }
+}

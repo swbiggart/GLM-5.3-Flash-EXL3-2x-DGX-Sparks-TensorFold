@@ -1,0 +1,11 @@
+{
+  "source_path": "/private/tmp/glm-tp4-rdma-candidates-20261022",
+  "commit": "a8dcb54e4eede070524589f783732a6361a31364",
+  "baseline": "a628d29e4076e470f25fe40d65c1548f9f6cbfba",
+  "patches": {
+    "/tmp/glm-rdma-combined-reviewed-fixes.patch": "16d87a7d21807ce9fd0c67f9068b7292250aa88ae673feb74cbbb622b739e4b8",
+    "/tmp/glm-rdma-stage2-neighbor-probe.patch": "6f83733288d7da78c27d7a0b02583a378bca99d2f98ff2e37596037ec6ff10c1"
+  },
+  "zig/kernels/cuda/glm_neighbor_rdma.cu": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4",
+  "zig/src/families/glm_cuda/neighbor_rdma_seq.zig": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6"
+}
