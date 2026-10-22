@@ -1,7 +1,12 @@
 {
   "schema_version": 1,
-  "description": "Local source packaging/build/review evidence; not new GPU or model qualification. Historical captured benchmark bytes are indexed separately.",
+  "description": "Local source packaging/build/review evidence; not new GPU/model qualification. Historical benchmark bytes have a separate manifest.",
   "files": [
+    {
+      "path": "README.md",
+      "bytes": 1648,
+      "sha256": "feeca85776d2fe475a12db8e38b4b011f0927d0d2515b9900471c800b6e92314"
+    },
     {
       "path": "glm-focused-native-host.log",
       "bytes": 690,
@@ -43,9 +48,24 @@
       "sha256": "70388efe81e27338dfc7cd251c094678ad73fe0787cd7bd6b0c8bee3740623f7"
     },
     {
+      "path": "glm-publication-focused-launcher.log",
+      "bytes": 839,
+      "sha256": "fade4ce8ac2f0a21da7e201926edbbe390fdf41b7d769ebce5e7327db32a212c"
+    },
+    {
+      "path": "glm-publication-research-launcher.log",
+      "bytes": 1060,
+      "sha256": "e6aa3cda896ba44ae6378635e3ab92d9bb791b8584037da45ec59bfd5a4663db"
+    },
+    {
       "path": "independent-review-initial.md",
       "bytes": 8682,
       "sha256": "746043765888368b296fbb49aab778664b8581e962b068370ff32b4f8bcdf945"
+    },
+    {
+      "path": "integrator-checks.json",
+      "bytes": 1443,
+      "sha256": "0cfd443509349d3275f4ac1a6db2b815cddfb4eb09918f826a8b0fb2fa885b0f"
     },
     {
       "path": "publication-secret-scan.json",

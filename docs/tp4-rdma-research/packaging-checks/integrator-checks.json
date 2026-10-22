@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "command": "python3 -m unittest discover -s tests -p test_zig_transport_launcher.py -v",
+      "environment": "default macOS /bin/bash 3",
+      "result": "unsupported shell: associative arrays fail before launcher tests; not a source regression"
+    },
+    {
+      "command": "PATH=/opt/homebrew/bin:/usr/bin:/bin python3 -m unittest discover -s tests -p test_zig_transport_launcher.py -v",
+      "environment": "GNU Bash5.3.20",
+      "result": "8/8 passed"
+    },
+    {
+      "command": "BASH=/opt/homebrew/bin/bash PATH=/opt/homebrew/bin:/usr/bin:/bin python3 -m unittest discover -s tests -p test_tp4_network.py -v",
+      "environment": "GNU Bash5.3.20",
+      "result": "8/8 passed"
+    },
+    {
+      "command": "python3 -m unittest discover -s tools/tp4-rdma-bench -p test_*.py",
+      "result": "12/12 passed"
+    },
+    {
+      "command": "python3 tools/tp4-rdma-bench/verify_receipts.py",
+      "result": "2423 files,75715362bytes pass; mutated manifests with wrong hash,duplicate,escape,missing entry rejected"
+    },
+    {
+      "command": "python3 tools/tp4-rdma-bench/bench_glm.py --help",
+      "result": "portable vendor import succeeds; no model traffic"
+    }
+  ],
+  "limits": [
+    "No new GPU,NVCC,model traffic or live mutation",
+    "Receipt scans find no high-confidence credential values; nonsecret provenance remains",
+    "Bash4+ is a prerequisite of the existing upstream recipe"
+  ]
+}

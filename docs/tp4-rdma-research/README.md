@@ -1,6 +1,6 @@
 # GLM Flash TP4: transport research and retained receipts
 
-The selected profile is **GLM's existing neighbor-relay all-gather with registered host memory, 512 KiB per-rank slots, L2 prefetch and the shared-expert side stream**. On our four-GB10 ring, the final same-binary A/B/A/B comparison measured **+16.57% and +16.18%** over matched NCCL controls using the public Grill C1/exact400 protocol. This is the fastest profile observed in this study; the short sequential captures do not establish a global optimum or causal attribution.
+The selected profile is **GLM's existing ring-relay all-gather with registered host memory, 512 KiB per-rank slots, L2 prefetch and the shared-expert side stream**. On our four-GB10 ring, the final same-binary A/B/A/B comparison measured **+16.57% and +16.18%** over matched NCCL controls using the public Grill C1/exact400 protocol. This is the fastest profile observed in this study; the short sequential captures do not establish a global optimum or causal attribution.
 
 This branch preserves the experiments, including alternatives and failures. The smaller intended submission is [`feat/tp4-registered-relay`](https://github.com/swbiggart/GLM-5.3-Flash-EXL3-2x-DGX-Sparks-TensorFold/tree/feat/tp4-registered-relay), with a single opt-in installer setting. Its cleaned source has separate CPU/semantic checks and still needs GPU qualification. No PR to MiaAI is authorized by publishing these branches.
 
@@ -14,17 +14,17 @@ Their **17 parity / 4 resume / 428 sweep / 56 main-set** fixture scripts are exc
 
 [Protocol, commands and interpretation](receipts/grill-protocol.md) · [Grill source/release pins](receipts/grill-source-pins.json) · [stock baseline](receipts/grill-stock-nccl-01/report.json)
 
-## A/B/C/D transport comparison
+## Four-candidate transport comparison
 
 All transport candidates use the same native Flash math and rank-major gather layout. Each initial comparison below uses the fresh original ported-NCCL baseline, not a comparison capture as a new baseline.
 
 | Initial profile | Median acquisition tokens/s | Official change versus ported NCCL | Nominal model-based 95% interval |
 | --- | ---: | ---: | ---: |
 | Ported NCCL | 155.22 | — | — |
-| A: allocated-memory GLM relay, 512 KiB | 178.74 | +14.99% | +14.49% to +15.49% |
-| B: registered-memory GLM relay, 512 KiB | **180.88** | **+16.45%** | **+16.00% to +16.91%** |
-| C: DeepSeek-style two-stage neighbor, 512 KiB | 178.41 | +14.92% | +14.46% to +15.38% |
-| D: registered-memory GLM relay, 1024 KiB | 180.40 | +16.12% | +15.57% to +16.68% |
+| Candidate 1: allocated-memory GLM relay, 512 KiB | 178.74 | +14.99% | +14.49% to +15.49% |
+| Candidate 2: registered-memory GLM relay, 512 KiB | **180.88** | **+16.45%** | **+16.00% to +16.91%** |
+| Candidate 3: DeepSeek-style two-stage neighbor, 512 KiB | 178.41 | +14.92% | +14.46% to +15.38% |
+| Candidate 4: registered-memory GLM relay, 1024 KiB | 180.40 | +16.12% | +15.57% to +16.68% |
 
 Raw captures and official reports: [NCCL](receipts/grill-ported-nccl-baseline-03/), [allocated relay](receipts/grill-relay-allocated-01/), [registered relay](receipts/grill-relay-registered-01/), [neighbor](receipts/grill-neighbor-01/), [1024 KiB relay](receipts/grill-relay-registered-1024-01/). The earlier stock-to-ported NCCL runtime comparison measured −0.96% [−1.32%, −0.59%]; the source change is not a controlled explanation of that sequential difference. Its [raw capture](receipts/grill-ported-nccl-01/) is retained.
 
@@ -66,7 +66,7 @@ DeepSeek TP4 has a 2-D split and specialized pair/quarter/Markov/diagonal consum
 
 The logical topology remains a cycle of four hosts, each connected to its two neighbors. The relay discovers devices and subnets; it supports one or two rails per neighbor without hardcoding our NIC names, addresses, GID index or ports. **GPU measurements cover our two-rail/dual-PCI-domain layout only**. The focused source adds CPU route tests for one- and two-rail layouts, shuffled NIC order and non-/24 masks. The research-only DeepSeek neighbor adapter currently requires two rails per edge and GID3; its launcher rejects unsupported layouts. **Switched TP4 is refused by these Zig launcher profiles.** The registered-host-memory approach could be adapted to the existing direct all-peer RoCE path for switched networks, but needs a separate startup/profile implementation and byte/graph/exact-token/performance qualification. Ring relay is not assumed to be the best switched schedule.
 
-Build recipe base: MiaAI `zig-engine` **a6c7e08ae864239125d45fc15146d26ec74c7f6d**, TensorFold **e7c523ebfa16b8094cf9e35e3773a7d25befcc5b** plus patches0001–0013. Patch 0014 preserves the tested production source **c8b5f94b24524fbf776181efc6ba4937c62c1c05**, with the probe-only fixes through **44cd03144b1701be22449bea3d8f99bf44046056** and three explicit publication-only attribution comment prefixes. Applied production bytes differ by those recorded prefixes; removing exactly those prefixes reproduces the pinned tested files. [Exact provenance](../../zig/TRANSPORT_SOURCE.json). CPU reconstruction verifies the tested blobs, accounting for any explicitly recorded publication-only attribution headers, with six documented pre-existing executable-mode differences; original upstream modes are preserved.
+Build recipe base: MiaAI `zig-engine` **a6c7e08ae864239125d45fc15146d26ec74c7f6d**, TensorFold **e7c523ebfa16b8094cf9e35e3773a7d25befcc5b** plus patches0001–0013. Patch 0014 packages the tested production source **c8b5f94b24524fbf776181efc6ba4937c62c1c05**, with the probe-only fixes through **44cd03144b1701be22449bea3d8f99bf44046056** and three explicit publication-only attribution comment prefixes. Applied production bytes differ by those recorded prefixes; removing exactly those prefixes reproduces the pinned tested files. [Exact provenance](../../zig/TRANSPORT_SOURCE.json). CPU reconstruction verifies the tested blobs, accounting for any explicitly recorded publication-only attribution headers, with six documented pre-existing executable-mode differences; original upstream modes are preserved.
 
 The accepted historical engine SHA-256 is `a2c4b936bab2da7b4cfa4318ea4bb0619621340152e0182f4634550b128d6f7f`. Model revision: `078455ffe6472f9a52fbc1139f58b9db2881b25c`; DFlash2: `bf582e4eacc1810f76656d1811693ff6c6737d2a`. Effective arena: context 131072, parallel 8, max output 32768, FP8 KV, 24 GiB reserve. The production engine binary and model weights are not redistributed.
 
@@ -76,7 +76,7 @@ For research launcher syntax and invalid-setting gates, see [Zig engine document
 
 ## Evidence index and failures retained
 
-[The manifest](receipts-manifest.json) hashes every unmodified exported receipt. [Offline verifier and retained clients](../../tools/tp4-rdma-bench/README.md) explain integrity checking, matched request identities and reproduction commands. Original reports retain producer-local paths; excluded private lifecycle files referenced by them are not required for offline benchmark analysis.
+[The manifest](receipts-manifest.json) hashes every unmodified exported receipt. [Offline verifier and retained clients](../../tools/tp4-rdma-bench/README.md) explain integrity checking, matched request identities and reproduction commands. Original reports retain producer-local paths, nonsecret hardware addresses, consumer key labels and credential-file paths. Source-review notes describe lifecycle/gateway design and failure handling; actual gateway configurations, private controller/checkpoint files and credential values are excluded. These retained provenance details are not access credentials. Excluded operational files referenced by notes are not required for offline benchmark analysis.
 
 | Evidence | Location / interpretation |
 | --- | --- |

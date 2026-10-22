@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "8561bb5fa7efc150bde477579fc6c39322307a23cb48eb0e058c8fe0bcae4650"
+      "sha256": "df351262da72fc0bf0697ac43df41d4c5ae6245ccbdadeaf8684a1bac1163a4f"
     },
     {
       "path": "analyze_glm_runs.py",

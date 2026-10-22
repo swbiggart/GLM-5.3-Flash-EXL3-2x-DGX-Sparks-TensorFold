@@ -38,4 +38,4 @@ Screen mode uses two repetitions at 1/4/8 streams and a 30-second four-stream ad
 - `vendor/qualify_glm_native.py` is the **unchanged, site-specific original producer**, retained for auditability. It expects existing mode-0600 proxy key files at its original deployment paths and never contains key values. Do not run it as an offline verifier or copy its private gateway layout into an installer. Qualification JSONL records fixture identities and output IDs/text; it does not retain every full HTTP request body.
 - Grill is an external tool by PlotArmor. No Grill binary is redistributed; its pinned source, release license and verification hashes are linked in the protocol.
 
-No credentials, model weights, serving binaries or deployment controllers are shipped here. Raw receipts retain nonsecret original producer paths and hardware settings to preserve their hash chains.
+No credential values, model weights, serving binaries or deployment controllers are shipped here. Nonsecret key labels/paths and lifecycle review notes remain as provenance. Raw receipts retain nonsecret original producer paths and hardware settings to preserve their hash chains.

@@ -12121,9 +12121,9 @@
   "file_count": 2423,
   "total_bytes": 75715362,
   "excluded_categories": [
-    "Private lifecycle/checkpoint/gate/SSH/boot/user-account artifacts and consumer credentials.",
+    "Operational lifecycle/controller/checkpoint/gate/SSH/boot/user-account files and credential values. Source review notes may describe these systems; nonsecret key labels/paths, producer paths, hostnames and hardware addresses remain as provenance.",
     "Gateway configuration and operational control helpers.",
-    "Weight and image transfers; no model weights, binaries or tokens are included."
+    "Weight and image transfers; no model weights, serving binaries or credential values are included."
   ],
-  "preservation_note": "Legacy producer paths and nonsecret hardware/localhost settings remain in raw receipts so their original hash chains can be checked. Export does not rewrite invalid captures, confounded trials or source reports."
+  "preservation_note": "Legacy producer paths and nonsecret hardware/localhost settings remain in raw receipts so their original hash chains can be checked. Export does not rewrite invalid captures, confounded trials or source reports. Source-review notes are retained and may discuss operational design; they are not private configuration/controller files."
 }
