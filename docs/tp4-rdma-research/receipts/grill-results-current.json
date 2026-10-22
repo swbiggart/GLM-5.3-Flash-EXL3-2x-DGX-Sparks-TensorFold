@@ -1,0 +1,146 @@
+[
+  {
+    "capture": "grill-final-control-nccl-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 156.26732090894333,
+    "change_pct": null,
+    "interval_pct": null,
+    "baseline": "grill-final-control-nccl-01",
+    "valid": true
+  },
+  {
+    "capture": "grill-final-control-nccl-02",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 156.13632361091157,
+    "change_pct": -0.2387801781522085,
+    "interval_pct": [
+      -0.880201414699685,
+      0.40679180535567505
+    ],
+    "baseline": "grill-final-control-nccl-01",
+    "valid": true
+  },
+  {
+    "capture": "grill-final-relay-registered-512-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 182.1580908716773,
+    "change_pct": 16.567932994889507,
+    "interval_pct": [
+      15.588459469507828,
+      17.555706383348575
+    ],
+    "baseline": "grill-final-control-nccl-01",
+    "valid": true
+  },
+  {
+    "capture": "grill-final-relay-registered-512-02",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 181.7056296302492,
+    "change_pct": 16.17759199028686,
+    "interval_pct": [
+      15.574794668491506,
+      16.783533290076775
+    ],
+    "baseline": "grill-final-control-nccl-01",
+    "valid": true
+  },
+  {
+    "capture": "grill-neighbor-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 178.40577645104437,
+    "change_pct": 14.92069311748178,
+    "interval_pct": [
+      14.458628059646268,
+      15.38462351409771
+    ],
+    "baseline": "grill-ported-nccl-baseline-03",
+    "valid": true
+  },
+  {
+    "capture": "grill-ported-nccl-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 154.15360448887452,
+    "change_pct": -0.9599527707493734,
+    "interval_pct": [
+      -1.3246351034274844,
+      -0.5939226527967215
+    ],
+    "baseline": "grill-stock-nccl-01",
+    "valid": true
+  },
+  {
+    "capture": "grill-ported-nccl-baseline-01",
+    "complete_acquisitions": 6,
+    "complete_requests": 27,
+    "median_acquisition_tps": 154.8297602685949,
+    "change_pct": null,
+    "interval_pct": null,
+    "baseline": "grill-ported-nccl-baseline-01",
+    "valid": false
+  },
+  {
+    "capture": "grill-ported-nccl-baseline-03",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 155.21686896136924,
+    "change_pct": null,
+    "interval_pct": null,
+    "baseline": "grill-ported-nccl-baseline-03",
+    "valid": true
+  },
+  {
+    "capture": "grill-relay-allocated-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 178.73513929188852,
+    "change_pct": 14.991015480886546,
+    "interval_pct": [
+      14.49075427534898,
+      15.493462550910289
+    ],
+    "baseline": "grill-ported-nccl-baseline-03",
+    "valid": true
+  },
+  {
+    "capture": "grill-relay-registered-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 180.8807276519367,
+    "change_pct": 16.453376431791675,
+    "interval_pct": [
+      16.00270158387177,
+      16.905802168404467
+    ],
+    "baseline": "grill-ported-nccl-baseline-03",
+    "valid": true
+  },
+  {
+    "capture": "grill-relay-registered-1024-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 180.39939012045357,
+    "change_pct": 16.12375700967049,
+    "interval_pct": [
+      15.570699327627812,
+      16.6794613210184
+    ],
+    "baseline": "grill-ported-nccl-baseline-03",
+    "valid": true
+  },
+  {
+    "capture": "grill-stock-nccl-01",
+    "complete_acquisitions": 8,
+    "complete_requests": 32,
+    "median_acquisition_tps": 155.64051978549543,
+    "change_pct": null,
+    "interval_pct": null,
+    "baseline": "grill-stock-nccl-01",
+    "valid": true
+  }
+]

@@ -1,0 +1,138 @@
+{
+  "spark": {
+    "ibv_devices": "    device          \t   node GUID\n    ------          \t----------------\n    rocep1s0f0      \t4cbb4703002e4e05\n    rocep1s0f1      \t4cbb4703002e4e06\n    roceP2p1s0f0    \t4cbb4703002e4e09\n    roceP2p1s0f1    \t4cbb4703002e4e0a\n",
+    "rdma": "link rocep1s0f0/1 state ACTIVE physical_state LINK_UP netdev enp1s0f0np0 \nlink rocep1s0f1/1 state ACTIVE physical_state LINK_UP netdev enp1s0f1np1 \nlink roceP2p1s0f0/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f0np0 \nlink roceP2p1s0f1/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f1np1 \n",
+    "hcas": {
+      "rocep1s0f1": {
+        "netdevs": [
+          "enp1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:030b",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f0": {
+        "netdevs": [
+          "enP2p1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:040a",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f1": {
+        "netdevs": [
+          "enP2p1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:070b",
+        "gid3_type": "RoCE v2"
+      },
+      "rocep1s0f0": {
+        "netdevs": [
+          "enp1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:000a",
+        "gid3_type": "RoCE v2"
+      }
+    }
+  },
+  "spark-peer": {
+    "ibv_devices": "    device          \t   node GUID\n    ------          \t----------------\n    rocep1s0f0      \t4cbb4703002e133d\n    rocep1s0f1      \t4cbb4703002e133e\n    roceP2p1s0f0    \t4cbb4703002e1341\n    roceP2p1s0f1    \t4cbb4703002e1342\n",
+    "rdma": "link rocep1s0f0/1 state ACTIVE physical_state LINK_UP netdev enp1s0f0np0 \nlink rocep1s0f1/1 state ACTIVE physical_state LINK_UP netdev enp1s0f1np1 \nlink roceP2p1s0f0/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f0np0 \nlink roceP2p1s0f1/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f1np1 \n",
+    "hcas": {
+      "roceP2p1s0f0": {
+        "netdevs": [
+          "enP2p1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:050a",
+        "gid3_type": "RoCE v2"
+      },
+      "rocep1s0f0": {
+        "netdevs": [
+          "enp1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:010a",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f1": {
+        "netdevs": [
+          "enP2p1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:040b",
+        "gid3_type": "RoCE v2"
+      },
+      "rocep1s0f1": {
+        "netdevs": [
+          "enp1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:000b",
+        "gid3_type": "RoCE v2"
+      }
+    }
+  },
+  "msi-b9dc": {
+    "ibv_devices": "    device          \t   node GUID\n    ------          \t----------------\n    rocep1s0f0      \tfc9d0503007ab9dd\n    rocep1s0f1      \tfc9d0503007ab9de\n    roceP2p1s0f0    \tfc9d0503007ab9e1\n    roceP2p1s0f1    \tfc9d0503007ab9e2\n",
+    "rdma": "link rocep1s0f0/1 state ACTIVE physical_state LINK_UP netdev enp1s0f0np0 \nlink rocep1s0f1/1 state ACTIVE physical_state LINK_UP netdev enp1s0f1np1 \nlink roceP2p1s0f0/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f0np0 \nlink roceP2p1s0f1/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f1np1 \n",
+    "hcas": {
+      "rocep1s0f1": {
+        "netdevs": [
+          "enp1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:010b",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f0": {
+        "netdevs": [
+          "enP2p1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:060a",
+        "gid3_type": "RoCE v2"
+      },
+      "rocep1s0f0": {
+        "netdevs": [
+          "enp1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:020a",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f1": {
+        "netdevs": [
+          "enP2p1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:050b",
+        "gid3_type": "RoCE v2"
+      }
+    }
+  },
+  "msi-c21f": {
+    "ibv_devices": "    device          \t   node GUID\n    ------          \t----------------\n    rocep1s0f0      \tfc9d0503007ac220\n    rocep1s0f1      \tfc9d0503007ac221\n    roceP2p1s0f0    \tfc9d0503007ac224\n    roceP2p1s0f1    \tfc9d0503007ac225\n",
+    "rdma": "link rocep1s0f0/1 state ACTIVE physical_state LINK_UP netdev enp1s0f0np0 \nlink rocep1s0f1/1 state ACTIVE physical_state LINK_UP netdev enp1s0f1np1 \nlink roceP2p1s0f0/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f0np0 \nlink roceP2p1s0f1/1 state ACTIVE physical_state LINK_UP netdev enP2p1s0f1np1 \n",
+    "hcas": {
+      "rocep1s0f0": {
+        "netdevs": [
+          "enp1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:030a",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f1": {
+        "netdevs": [
+          "enP2p1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:060b",
+        "gid3_type": "RoCE v2"
+      },
+      "rocep1s0f1": {
+        "netdevs": [
+          "enp1s0f1np1"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:020b",
+        "gid3_type": "RoCE v2"
+      },
+      "roceP2p1s0f0": {
+        "netdevs": [
+          "enP2p1s0f0np0"
+        ],
+        "gid3": "0000:0000:0000:0000:0000:ffff:0a54:070a",
+        "gid3_type": "RoCE v2"
+      }
+    }
+  }
+}

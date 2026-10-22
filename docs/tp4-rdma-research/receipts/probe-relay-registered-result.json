@@ -1,0 +1,26 @@
+{
+  "spark": {
+    "passed": false,
+    "sha256": "7e5a152390fee1a69f31e570527c27e9d2c924a321243ae0d4ade54d16f8a93c",
+    "result": [],
+    "counters": []
+  },
+  "spark-peer": {
+    "passed": false,
+    "sha256": "ba67f05b37916a13010a758228cb696576ad90f97a7981af9fa3b6a8b55d9d40",
+    "result": [],
+    "counters": []
+  },
+  "msi-b9dc": {
+    "passed": false,
+    "sha256": "656eab7f2beab393fa09ed22b839fa92f08dabe57165bf4c063d107c2fe36dbc",
+    "result": [],
+    "counters": []
+  },
+  "msi-c21f": {
+    "passed": false,
+    "sha256": "e13c8c311f91494e4c44370b09bb1b8609d4395d81ee2f577c6d7892c3e462c5",
+    "result": [],
+    "counters": []
+  }
+}

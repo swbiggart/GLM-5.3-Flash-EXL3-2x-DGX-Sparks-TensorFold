@@ -1,0 +1,18 @@
+health200
+Qualification passed; evidence saved in the new output file.
+{"streams": 1, "rep": 0, "aggregate_tps": 82.62246825769321, "per_stream_decode_tps": [86.66]}
+{"streams": 4, "rep": 0, "aggregate_tps": 132.35481940024175, "per_stream_decode_tps": [43.022, 35.834, 68.325, 43.908]}
+{"streams": 8, "rep": 0, "aggregate_tps": 172.511891262335, "per_stream_decode_tps": [28.098, 23.979, 50.688, 28.649, 26.071, 39.699, 31.787, 24.977]}
+{"stage": "warmup", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-l2off-side1-screen01/warmup.json"}
+{"streams": 1, "rep": 0, "aggregate_tps": 83.24049021878677, "per_stream_decode_tps": [86.571]}
+{"streams": 1, "rep": 1, "aggregate_tps": 83.47079571151086, "per_stream_decode_tps": [86.806]}
+{"streams": 4, "rep": 0, "aggregate_tps": 132.06606704219908, "per_stream_decode_tps": [40.709, 35.821, 75.075, 41.527]}
+{"streams": 4, "rep": 1, "aggregate_tps": 131.01169946926584, "per_stream_decode_tps": [42.496, 35.466, 74.111, 40.306]}
+{"streams": 8, "rep": 0, "aggregate_tps": 172.67448287502665, "per_stream_decode_tps": [28.125, 24.01, 50.688, 28.674, 26.1, 46.314, 28.151, 25.004]}
+{"streams": 8, "rep": 1, "aggregate_tps": 173.5482333326569, "per_stream_decode_tps": [25.325, 24.146, 51.269, 28.836, 26.269, 46.753, 31.971, 25.159]}
+{"stage": "concurrent", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-l2off-side1-screen01/concurrent.json"}
+{"streams": 4, "seconds": 30, "max_tokens": 256, "set": "a", "requests": 20, "aggregate_tps": 149.93, "per_stream_tps_p50": 42.688, "per_stream_tps_p95": 73.262, "per_stream_tps_p05": 25.896, "ttft_s_p50": 0.199, "ttft_s_p95": 0.663}
+{"stage": "steady", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-l2off-side1-screen01/steady.json"}
+{"length": 8192, "rep": 0, "prompt_tokens": 8192, "ttft_s": 4.877676093950868, "prefill_tps": 1679.4883141501437}
+{"length": 8192, "rep": 1, "prompt_tokens": 8192, "ttft_s": 4.8767258850857615, "prefill_tps": 1679.8155551562104}
+{"stage": "prefill8k", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-l2off-side1-screen01/prefill8k.json"}

@@ -1,0 +1,824 @@
+{
+  "acceptance": {
+    "canonical_request_identities": 12,
+    "client_sha256": "bbae3c2a5086c27207445b07e306a8f5a72cfebffcfc7ba925da46a2676349bc",
+    "directory": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/accept-cache3-pool32-relay-512-01",
+    "four_client_request_intervals_overlap_s": 2.7582370340824127,
+    "full_generations": 18,
+    "independent_raw_integrity_passed": true,
+    "intentional_partial_cancellations": [
+      "cancel-essay"
+    ],
+    "needle_timings": [
+      {
+        "cached_tokens": 0,
+        "completion_tokens": 128,
+        "draft": false,
+        "elapsed_s": 22.082918972009793,
+        "label": "needle-serial",
+        "prompt_tokens": 32752,
+        "server_decode_s": 2.343517264,
+        "server_prefill_s": 19.716597951,
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b",
+        "ttft_s": 19.7397801252082
+      },
+      {
+        "cached_tokens": 32704,
+        "completion_tokens": 128,
+        "draft": true,
+        "elapsed_s": 1.384525211993605,
+        "label": "needle-draft",
+        "prompt_tokens": 32752,
+        "server_decode_s": 1.217268884,
+        "server_prefill_s": 0.134260197,
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b",
+        "ttft_s": 0.16746645793318748
+      },
+      {
+        "cached_tokens": 32704,
+        "completion_tokens": 128,
+        "draft": true,
+        "elapsed_s": 1.4174162950366735,
+        "label": "needle-reuse-1",
+        "prompt_tokens": 32752,
+        "server_decode_s": 1.252829994,
+        "server_prefill_s": 0.133554514,
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b",
+        "ttft_s": 0.165036910912022
+      },
+      {
+        "cached_tokens": 32704,
+        "completion_tokens": 128,
+        "draft": true,
+        "elapsed_s": 1.391015876783058,
+        "label": "needle-reuse-2",
+        "prompt_tokens": 32752,
+        "server_decode_s": 1.224897011,
+        "server_prefill_s": 0.134725077,
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b",
+        "ttft_s": 0.1664302118588239
+      }
+    ],
+    "report_comparisons_verified": 12,
+    "report_sha256": "e1c78ac67e33f304811d4829e6b9ba885dc6f3353a641b953d00f7cd54ca78d3",
+    "reported_ok": true,
+    "requests": 31,
+    "source_records": [
+      {
+        "label": "after-cancel-draft",
+        "raw_sha256": "ca6a48d66a064de6b8dacdb17a0605f5aaf88c05fd2105fe3cb41e7f1e0cb6cf",
+        "request_sha256": "1f07d0ce669317e9e5763604138fedf248333172492055829e20b821dd854f39",
+        "result_sha256": "1d87ed1eacf7d1d8a9cfea3f318853f626fcdfa13e66e7f8b84795533f4cb872"
+      },
+      {
+        "label": "after-cancel-serial",
+        "raw_sha256": "a046da883f2b09bc10e17ab36fda3a1be1acacefa8a944b04496c9279d9af320",
+        "request_sha256": "f3009f961881443b3e03fedd546a291d18cf90ad430ee4e68c7da697b82e7f7a",
+        "result_sha256": "a27a5e99d10e149c5fea96425afe6dca23a7a0ed00e0d77ad4a32b62c9e106e4"
+      },
+      {
+        "label": "cancel-essay",
+        "raw_sha256": "90ee5ba9a7daa34cd230c4b26ca71ae6f810a2d5643853cb1f193eb495e5f84d",
+        "request_sha256": "01977355f8855c6b73cdfeaa811802b5cf243e173fb95587753a6cfd0d965910",
+        "result_sha256": "ae0fe9701dc656f369c55fb49181d48a0bc20737168ba135e3f21e9019860f88"
+      },
+      {
+        "label": "needle-draft",
+        "raw_sha256": "76105baa714c6f9f6a45ac8a4f2e96a7eb00b277c2aaaa0230c4c5666ce5d1e3",
+        "request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "result_sha256": "659dbd61e57a7762c262ca21af0ca41c1dc76213b6cfee623985fd39ddd36e46"
+      },
+      {
+        "label": "needle-reuse-1",
+        "raw_sha256": "c10ff55c25eb11492c458a0fd253e08ee249ca0cf8f052e3f635949cc13c78b6",
+        "request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "result_sha256": "5e957e3bba8553e732beed8137b7aeb24880fa1ebbe3eba421b9bb34a7ff2d2e"
+      },
+      {
+        "label": "needle-reuse-2",
+        "raw_sha256": "854ee9865e383797efe0291047839763f227a69367ef6fcbfd916d6f3c4f11d1",
+        "request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "result_sha256": "d0d1f443a57dc618cff37618d6696fc03e5e176adee8322e2f3ce721c13c16e3"
+      },
+      {
+        "label": "needle-serial",
+        "raw_sha256": "cae661af48740b9290b9ffeb61e395138c52f3eaa62774a6a3c3507b6ac04f74",
+        "request_sha256": "dfb3c0caaea10016eaf900a8f1d4711c25a03a1764c774771b27fd191faad12a",
+        "result_sha256": "15807d80be1afbd347808543cc5b3dc150e8721de4f85af752bbd13a4a27a1b4"
+      },
+      {
+        "label": "needle-size-00",
+        "raw_sha256": "68b41602cf0ae26a2f2c0a85bb2e66f4053272c066197d44541cdaab77e3e19e",
+        "request_sha256": "3def151ea22e1e8049a10cb582d4ebfad2db1719fddec83a36fbe76b88deeba4",
+        "result_sha256": "b2c7a9272eb276568f821542baf54f3f6b38836e5175e1104e75004175fe9185"
+      },
+      {
+        "label": "needle-size-01",
+        "raw_sha256": "88f0e4feb1f2b735c1f4301c4cf0ed4805354daf4e58b672014a3f753466cd39",
+        "request_sha256": "f7bb1b4d7b55564f2a999d61f4cb7e89996e1cba0cb1d730d5b7985eb0ec8a21",
+        "result_sha256": "f066cf2d2aa6507b9e122498b5f8252ff6ae07abb49924cb4dc37b459fe0577c"
+      },
+      {
+        "label": "needle-size-02",
+        "raw_sha256": "c5b0c6c6b75e3970aeda5373ebf74d4ca098bd866fd9ee48b6ed0df71ed4c1a3",
+        "request_sha256": "2bcf98029de2f0e52274029dfc657bd550052ce617250f5195408be837d41b0a",
+        "result_sha256": "cf57e13d34ef30432e017ed49d727893567b7ed565791c91de550bac9cec8074"
+      },
+      {
+        "label": "needle-size-03",
+        "raw_sha256": "cba1ec203bede52a2690a5f01455382ef0ddf3d3953221ab37d2e9c60fbb0e2b",
+        "request_sha256": "c699cbeb838357d90585190156a1626d8429b42bb885138a4e2cae392f85552f",
+        "result_sha256": "c7f4a4fb44a1596be2fc6d1a9cabdf2dbbc6962bebcf8e6e874c8539659dc18a"
+      },
+      {
+        "label": "needle-size-04",
+        "raw_sha256": "02250e193d35786b3dfc9cd4617631a80ded526f8aa3d46906ea96ee454ec2ad",
+        "request_sha256": "275e83bc8a766c89b07732396373053d4f6925b2d9abea741fa76cca692b33e2",
+        "result_sha256": "1abff7471d9efb8a7f3b8cfd39445662a14d89cf3f36101cc700e121e6892d06"
+      },
+      {
+        "label": "needle-size-05",
+        "raw_sha256": "f9d9f81fe11e97a98ed43080bd9449819fa12c25cdb03032be7940b35589080e",
+        "request_sha256": "373e86260378e46cc376a34cfc5d0f35af2c230660e2e5fbededef01fb1e3e54",
+        "result_sha256": "9dd694004b15e92ec20338025bddca47e4c6562346f2eb8be3ef90208aaa3c83"
+      },
+      {
+        "label": "needle-size-06",
+        "raw_sha256": "ea27655a51d0146afb458f2b07565af1c93b98b5b7b5d0c9b21419e5e53198a2",
+        "request_sha256": "275a471cfe4933c5267b7b64b9b5e0e5419873564c82a5738830b3b73a4974e4",
+        "result_sha256": "4851830d389f43e90a1e1f8b61756c66283e6bcec610d998e14822f313bd96d8"
+      },
+      {
+        "label": "needle-size-07",
+        "raw_sha256": "5c9c3e52932cd92ca2f18c6ddb2d02bdfbebbdc9a953e63a3d43b6630ff4008c",
+        "request_sha256": "6de74056162932f52fbb160677e3266f2dbe39e9c8c21c2e41d30a580a908078",
+        "result_sha256": "220d312986de71fc364d1dd62eaf7e6c584bcfcd4375f7d2b1eb400326cf32eb"
+      },
+      {
+        "label": "needle-size-08",
+        "raw_sha256": "2f1200e3fc102f91613f1b026f8b0b1a82659d4c38c0c4ffe2af860fcfe4650c",
+        "request_sha256": "d832d3cb699f96fefa4f25c00155cac8b644e5e4d476ec54ba775ea729b13128",
+        "result_sha256": "86f9da7c1858c64233d9c9200a8634b30a1e693a20f29a3cdbc3c9e432d9d63e"
+      },
+      {
+        "label": "needle-size-09",
+        "raw_sha256": "daeaf7debfec531f4c2719e0e83c34f43efee514541377567b284e6a679ea068",
+        "request_sha256": "2f913cb8d6f780575698ce6d5b679adadc6c9957098504754534b16977225ba7",
+        "result_sha256": "6ce95a9fb4b66192251e24eb1708fd5018684195bde1a8d14914a4b93b99a7ca"
+      },
+      {
+        "label": "needle-size-10",
+        "raw_sha256": "b537e5e8382dc595eb8e3d2ace172e50a3c649fa6e5ce907312248ae1347f871",
+        "request_sha256": "da52dae9002835bc8f0d10ed1bbb09d2d4427c2996bd80e3bc342e3c7047bb0e",
+        "result_sha256": "e248399055f684c3ecf43bb60eab9b6a4cd81d447fd160e1728eeaea152904ae"
+      },
+      {
+        "label": "needle-size-11",
+        "raw_sha256": "2c1e5d04fd04c64f446e640a64f9e7d3889ea48bf2f6370c1746bae3b027a4ec",
+        "request_sha256": "0951b04318212edb56e9b7e7795f5591b4cbceb8e0543b6db0bd99e042c5aa1d",
+        "result_sha256": "06a938a9758f781f5da7d2bb7537e5e27be3b5e2d65b125565e3b0da618e41f9"
+      },
+      {
+        "label": "overlap-code",
+        "raw_sha256": "4d5f6df07eb128ebfb715d43c2f0980a2ced84b272a6e0998f18d52db42d9c90",
+        "request_sha256": "3710918a875689f310dde19efe672c3b2259512c203c4140beef8c38f6e7e446",
+        "result_sha256": "9edce9557ddc9b7aac7ce64e63d6fbeb63a8d314f6d957371cecf17e20b599b1"
+      },
+      {
+        "label": "overlap-nonce",
+        "raw_sha256": "4be09655a1e128e940b0e7d8623d865731d45724a0022ab58afcb0c74b06a41d",
+        "request_sha256": "b8ddf44c99ef2e8054ca4e9a71c2661c08762cbd65c39d4735c11764021b1248",
+        "result_sha256": "1c5578de45768dc4234cf8c7841215f3f377bdc01f43afe3311b3ece8d54a5e0"
+      },
+      {
+        "label": "overlap-prose",
+        "raw_sha256": "913daa074e11673c5ade6b4ec160ae55de66f1eb7c599896d5b6bbb8c314ab5f",
+        "request_sha256": "9096bdf00c23d7ce8d955ab6037defe48a4acfc4f532058539ca058e50711b21",
+        "result_sha256": "070004fc71bdd3889cd67f5267e9cfce95e8eaf4909a904c6170af4f14a38330"
+      },
+      {
+        "label": "overlap-structured",
+        "raw_sha256": "465aa336fbfbf3b4dc276b600d901c5a578895dbc960c5026d1de211f9923372",
+        "request_sha256": "91a2d8e5c14fb30fdae1337575aed02be173acc2cd3e7e6b2982b8adfce727f3",
+        "result_sha256": "82f1d90997ffa527e12a15e8705cb10a043132bcf1bff0343396076754a8f7c6"
+      },
+      {
+        "label": "solo-code-draft",
+        "raw_sha256": "da19fab272e0cb33ca5f70bb21c2f72469fc2db65786363c0ee3009e8de77075",
+        "request_sha256": "3710918a875689f310dde19efe672c3b2259512c203c4140beef8c38f6e7e446",
+        "result_sha256": "18ff0e910fd780717bc77bbdb0e08f40cc66cafe67b9848b94f2733e11ae8844"
+      },
+      {
+        "label": "solo-code-serial",
+        "raw_sha256": "ad378174d1047c325db3c4dff2360023e73def78bad9412894f083cf4621f716",
+        "request_sha256": "6fab14be64bb609b55e34b62cc2ff7c37e76112aa275b7219164217e3d340d40",
+        "result_sha256": "96c5ef5974fed4ab6c9a5218c77ed33919ed1220d9d17da5de3afe67162997a5"
+      },
+      {
+        "label": "solo-nonce-draft",
+        "raw_sha256": "3b53e114b77d836eefdac22c1e35aad075edc342133551378f439649ca5e39a5",
+        "request_sha256": "b8ddf44c99ef2e8054ca4e9a71c2661c08762cbd65c39d4735c11764021b1248",
+        "result_sha256": "11fe5458b5f4cb5995652814f08ad1f4ae3123e0e48978137c1ee062bf4ae224"
+      },
+      {
+        "label": "solo-nonce-serial",
+        "raw_sha256": "414f02dab0bc64a3dd13a221ceff7f2bb0d0661c20daeed87864493714d397fb",
+        "request_sha256": "f0fbcd4566183e18fba6c215216614566a73682e9651fc11a73b49559d56d4cf",
+        "result_sha256": "27c25748488d359ca28fbd51c93feaf0a5023e2bda3f04bbd2ee72f2723fecc9"
+      },
+      {
+        "label": "solo-prose-draft",
+        "raw_sha256": "1910d1ba8433a032153f665953f71b2b37373168beb48d4b60fb680ef857ebd3",
+        "request_sha256": "9096bdf00c23d7ce8d955ab6037defe48a4acfc4f532058539ca058e50711b21",
+        "result_sha256": "8730ff5b23c274beff6d72f470124176d5a662cc8a1aef3e83000ea079a6d1e7"
+      },
+      {
+        "label": "solo-prose-serial",
+        "raw_sha256": "7d7be91c4a2c0960bec05d01e756f0adcec6a0f0791e6f7d33c0181b6a031afa",
+        "request_sha256": "b92e5ab715dd7a850f543d87c44bca1396cb5667d2c293dd8aad19908f562699",
+        "result_sha256": "a727c50ad38d716b2a05f5784abd5f411786e5867fadd5501ee1261a47df0d00"
+      },
+      {
+        "label": "solo-structured-draft",
+        "raw_sha256": "242a95bb16b63ece2f237d3d4ce2e0f25e91ddba1bc6a1bfb1350508e0b3c4c4",
+        "request_sha256": "91a2d8e5c14fb30fdae1337575aed02be173acc2cd3e7e6b2982b8adfce727f3",
+        "result_sha256": "14711429281fffb392eacef4f0425dac6798e5fa6dcd1159d827a1f08687c8cf"
+      },
+      {
+        "label": "solo-structured-serial",
+        "raw_sha256": "426107ecd1797d2682ab372b61ddbfee33facd54aac9b27e640545f3860ad9f0",
+        "request_sha256": "67ce834acb89b8e3a717623132add7ce030a1c8d74918fb34b5f1335b722e9c2",
+        "result_sha256": "a636acd3754e88116a784a590d79d5c1315bbc10c6ade9daae1f7c1858e0aa66"
+      }
+    ],
+    "tokenizer_requests": 12,
+    "warm_draft_needle_median_server_prefill_s": 0.134260197,
+    "warm_draft_needle_median_ttft_s": 0.1664302118588239,
+    "within_run_token_divergences": 0
+  },
+  "analyzed_unix_s": 1792666088.6776938,
+  "clean_config_comparison": {
+    "candidate_profile": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/profile-model-cache3-pool32.json",
+    "candidate_sha256": "96cbaa0b91bb74437093fdb059892c9a86ea4140afd05547e4c4d82cc7064d2c",
+    "control_profile": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/profile-model-screen-l2on-side1.json",
+    "control_sha256": "1321846c056a5536304c95908a28f010e9c164b12a8449506e065f7e42a55aca",
+    "hosts": {
+      "msi-b9dc": {
+        "TF_GLM_CACHE_GIB": "32",
+        "argv_differences": [
+          {
+            "candidate": "3",
+            "control": "0",
+            "index": 22
+          }
+        ],
+        "candidate_prompt_cache_gib": "3",
+        "control_prompt_cache_gib": "0",
+        "effective_fields_equal_except_prompt_cache_gib": true
+      },
+      "msi-c21f": {
+        "TF_GLM_CACHE_GIB": "32",
+        "argv_differences": [
+          {
+            "candidate": "3",
+            "control": "0",
+            "index": 22
+          }
+        ],
+        "candidate_prompt_cache_gib": "3",
+        "control_prompt_cache_gib": "0",
+        "effective_fields_equal_except_prompt_cache_gib": true
+      },
+      "spark": {
+        "TF_GLM_CACHE_GIB": "32",
+        "argv_differences": [
+          {
+            "candidate": "3",
+            "control": "0",
+            "index": 22
+          }
+        ],
+        "candidate_prompt_cache_gib": "3",
+        "control_prompt_cache_gib": "0",
+        "effective_fields_equal_except_prompt_cache_gib": true
+      },
+      "spark-peer": {
+        "TF_GLM_CACHE_GIB": "32",
+        "argv_differences": [
+          {
+            "candidate": "3",
+            "control": "0",
+            "index": 22
+          }
+        ],
+        "candidate_prompt_cache_gib": "3",
+        "control_prompt_cache_gib": "0",
+        "effective_fields_equal_except_prompt_cache_gib": true
+      }
+    }
+  },
+  "kind": "offline-clean-cache3-pool32-evidence-analysis",
+  "limits": [
+    "This run removes the earlier env3 KV-pool confound: env TF_GLM_CACHE_GIB remains32; only CLI prompt-cache0to3 differs from the L2on/SIDE1 control profile.",
+    "Copied worker logs directly show5619712KVpool tokens on spark-peer,msi-b9dc,msi-c21f; the bounded head log contains cache activity but no retained startup pool line. Integrator separately reports complete live fleet binding.",
+    "Head cache logs report a3072MiBbudget and up to699MiB retained/8states, with1eviction and0refused/failed in the final observed lines; budget is not actual used bytes.",
+    "Cold needle is serial and cached needles are drafted: their timing difference is not an isolated same-mode cache effect. These are descriptive single-observation timings, not a statistical comparison.",
+    "Stock qualification uses NCCL and differs in serving configuration; its cross-cache17cases prove observed output invariance, not identical observed cache state or general speed improvement.",
+    "No reproduction of unpublished17/4/428/56 suites, full1M quality, sustained capacity or reboot recovery."
+  ],
+  "qualification_vs_stock": {
+    "all_statuses_passed": true,
+    "candidate_boundary_median_ttft_s": 0.151977592962794,
+    "candidate_cached_counts_histogram": {
+      "0": 23,
+      "960": 6,
+      "1472": 6,
+      "1984": 3,
+      "2048": 2
+    },
+    "candidate_sha256": "1f74ecc00d08185d3ea7ab92e1b2613ad0d70e72bde84fe510579732de805439",
+    "candidate_source": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/cache3-pool32-relay-512-01-qualification.jsonl",
+    "cross_cache_details": [
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.13010776811279356,
+        "case": "boundary-1023-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.8008879330009222
+      },
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.1291255869437009,
+        "case": "boundary-1024-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.7076348420232534
+      },
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.12839396903291345,
+        "case": "boundary-1024-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.7097744150087237
+      },
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.16512188292108476,
+        "case": "boundary-1025-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.7438187580555677
+      },
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.16441882401704788,
+        "case": "boundary-1025-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.7430764690507203
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.11908213514834642,
+        "case": "boundary-1535-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.036710332147777
+      },
+      {
+        "candidate_cached_tokens": 960,
+        "candidate_ttft_s": 0.46714559104293585,
+        "case": "boundary-1535-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.0834964299574494
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.11480960389599204,
+        "case": "boundary-1536-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 0.9684010529890656
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.11646778788417578,
+        "case": "boundary-1536-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.0074986719992012
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.1504616579040885,
+        "case": "boundary-1537-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.022945455973968
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.15349352802149951,
+        "case": "boundary-1537-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.0235648821108043
+      },
+      {
+        "candidate_cached_tokens": 1984,
+        "candidate_ttft_s": 0.15424152906052768,
+        "case": "boundary-2050-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3459884678013623
+      },
+      {
+        "candidate_cached_tokens": 1472,
+        "candidate_ttft_s": 0.49340529297478497,
+        "case": "boundary-2050-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3386441180482507
+      },
+      {
+        "candidate_cached_tokens": 2048,
+        "candidate_ttft_s": 0.06219352479092777,
+        "case": "boundary-2051-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3326733538415283
+      },
+      {
+        "candidate_cached_tokens": 1984,
+        "candidate_ttft_s": 0.1566428178921342,
+        "case": "boundary-2051-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3302819090895355
+      },
+      {
+        "candidate_cached_tokens": 2048,
+        "candidate_ttft_s": 0.06854564696550369,
+        "case": "boundary-2052-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3279768810607493
+      },
+      {
+        "candidate_cached_tokens": 1984,
+        "candidate_ttft_s": 0.16048619407229125,
+        "case": "boundary-2052-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0,
+        "stock_ttft_s": 1.3518129149451852
+      }
+    ],
+    "cross_cache_output_parity_cases": 17,
+    "exact_token_text_finish_count_matches": 40,
+    "matching_scope": "Recorded fixture case/key/path/promptSHA/max_tokens/draft/prompt_tokens/server thinking. Complete canonical request JSON is absent from qualification rows; this is fixture parity, not a full-request reconstruction.",
+    "mismatches": [],
+    "same_observed_cache_state_cases": 23,
+    "shared_recorded_fixture_cases": 40,
+    "stock_boundary_median_ttft_s": 1.0232551690423861,
+    "stock_cached_counts_histogram": {
+      "0": 40
+    },
+    "stock_sha256": "3ea020687656165c987c81c0e15c1d5ed1d059a4c2e4a8862eb97d79ef99cd28",
+    "stock_source": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/nccl-baseline-qualification.jsonl",
+    "unmatched_candidate_cases": 0,
+    "unmatched_stock_cases": 0
+  },
+  "runtime_log_witnesses": [
+    {
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/cache3-pool32-qualified-msi-b9dc.log",
+      "selected_lines": [
+        {
+          "line": 100,
+          "text": "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+        }
+      ],
+      "sha256": "7107ec3dd29a052886c8c57d7835ec3d1c1d309d61b81d656656ef37d8ef1b3e"
+    },
+    {
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/cache3-pool32-qualified-msi-c21f.log",
+      "selected_lines": [
+        {
+          "line": 100,
+          "text": "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+        }
+      ],
+      "sha256": "f4318c7e9cfda2fa8a640272db1dbee53d2284ab6ea6420c6080dac3fad748a4"
+    },
+    {
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/cache3-pool32-qualified-spark-peer.log",
+      "selected_lines": [
+        {
+          "line": 100,
+          "text": "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+        }
+      ],
+      "sha256": "b68a30411505835a2243b9bb053f24dd1905283b44dc58fca8a8d42f056b87b5"
+    },
+    {
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/cache3-pool32-qualified-spark.log",
+      "selected_lines": [
+        {
+          "line": 84,
+          "text": "info: prompt cache: 30 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 26, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 85,
+          "text": "info: prompt cache: 30 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 27, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 86,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 28, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 87,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 29, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 88,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 30, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 89,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 31, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 90,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 32, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 91,
+          "text": "info: prompt cache: 30 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 35, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 92,
+          "text": "info: prompt cache: 32 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 35, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 93,
+          "text": "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 35, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 94,
+          "text": "info: prompt cache: 25 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 36, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 95,
+          "text": "info: prompt cache: 29 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 37, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 96,
+          "text": "info: prompt cache: 29 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 38, evicted 0, refused 0, failed 0)"
+        },
+        {
+          "line": 97,
+          "text": "info: prompt cache: 32752 tokens, resumed at 0, kept 1; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 39, evicted 1, refused 0, failed 0)"
+        },
+        {
+          "line": 98,
+          "text": "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 18, misses 39, evicted 1, refused 0, failed 0)"
+        },
+        {
+          "line": 99,
+          "text": "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 19, misses 39, evicted 1, refused 0, failed 0)"
+        },
+        {
+          "line": 100,
+          "text": "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 20, misses 39, evicted 1, refused 0, failed 0)"
+        }
+      ],
+      "sha256": "285fea2859dd41926478386fa87a98c93fad723fd2e35b9b13bd1b52d671da7b"
+    }
+  ],
+  "same_canonical_request_outputs_vs_confounded_cache3": {
+    "comparisons": [
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "1f07d0ce669317e9e5763604138fedf248333172492055829e20b821dd854f39",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "after-cancel-draft",
+        "right": "after-cancel-draft",
+        "token_ids_sha256": "6213198e956694415f715b288669b672cab6388229a703be7b21bff6c5b9f540"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "f3009f961881443b3e03fedd546a291d18cf90ad430ee4e68c7da697b82e7f7a",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "after-cancel-serial",
+        "right": "after-cancel-serial",
+        "token_ids_sha256": "6213198e956694415f715b288669b672cab6388229a703be7b21bff6c5b9f540"
+      },
+      {
+        "cached_tokens": [
+          32704,
+          32704
+        ],
+        "comparison_request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "needle-draft",
+        "right": "needle-draft",
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b"
+      },
+      {
+        "cached_tokens": [
+          32704,
+          32704
+        ],
+        "comparison_request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "needle-reuse-1",
+        "right": "needle-reuse-1",
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b"
+      },
+      {
+        "cached_tokens": [
+          32704,
+          32704
+        ],
+        "comparison_request_sha256": "cc74ee70bb6a54c8200005e5a388bd40a3bbfa5691c79d3261bdf7307c356fe0",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "needle-reuse-2",
+        "right": "needle-reuse-2",
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "dfb3c0caaea10016eaf900a8f1d4711c25a03a1764c774771b27fd191faad12a",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "needle-serial",
+        "right": "needle-serial",
+        "token_ids_sha256": "5464bd55c850fae5846ac7f36f79d5337cd13471e1cea8bd59a6e7c1351fac5b"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "3710918a875689f310dde19efe672c3b2259512c203c4140beef8c38f6e7e446",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "overlap-code",
+        "right": "overlap-code",
+        "token_ids_sha256": "22d027f5bca63ec696ceeb24b8e6254c0d4e32681c94e556318cc19a93a45612"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "b8ddf44c99ef2e8054ca4e9a71c2661c08762cbd65c39d4735c11764021b1248",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "overlap-nonce",
+        "right": "overlap-nonce",
+        "token_ids_sha256": "c068bc10938212e0228af9d3653975eacee41cef27320f1bbf3eaa13f64e16ba"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "9096bdf00c23d7ce8d955ab6037defe48a4acfc4f532058539ca058e50711b21",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "overlap-prose",
+        "right": "overlap-prose",
+        "token_ids_sha256": "ff8023d8cee1b77335587e7221932515365711d1f73459e2fef306d357a11113"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "91a2d8e5c14fb30fdae1337575aed02be173acc2cd3e7e6b2982b8adfce727f3",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "overlap-structured",
+        "right": "overlap-structured",
+        "token_ids_sha256": "6d0806854ea2d4a8a0a2ce5e8ef6d62191f18fe25588a20e093b1f0ef65c514f"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "3710918a875689f310dde19efe672c3b2259512c203c4140beef8c38f6e7e446",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-code-draft",
+        "right": "solo-code-draft",
+        "token_ids_sha256": "22d027f5bca63ec696ceeb24b8e6254c0d4e32681c94e556318cc19a93a45612"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "6fab14be64bb609b55e34b62cc2ff7c37e76112aa275b7219164217e3d340d40",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-code-serial",
+        "right": "solo-code-serial",
+        "token_ids_sha256": "22d027f5bca63ec696ceeb24b8e6254c0d4e32681c94e556318cc19a93a45612"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "b8ddf44c99ef2e8054ca4e9a71c2661c08762cbd65c39d4735c11764021b1248",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-nonce-draft",
+        "right": "solo-nonce-draft",
+        "token_ids_sha256": "c068bc10938212e0228af9d3653975eacee41cef27320f1bbf3eaa13f64e16ba"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "f0fbcd4566183e18fba6c215216614566a73682e9651fc11a73b49559d56d4cf",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-nonce-serial",
+        "right": "solo-nonce-serial",
+        "token_ids_sha256": "c068bc10938212e0228af9d3653975eacee41cef27320f1bbf3eaa13f64e16ba"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "9096bdf00c23d7ce8d955ab6037defe48a4acfc4f532058539ca058e50711b21",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-prose-draft",
+        "right": "solo-prose-draft",
+        "token_ids_sha256": "ff8023d8cee1b77335587e7221932515365711d1f73459e2fef306d357a11113"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "b92e5ab715dd7a850f543d87c44bca1396cb5667d2c293dd8aad19908f562699",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-prose-serial",
+        "right": "solo-prose-serial",
+        "token_ids_sha256": "ff8023d8cee1b77335587e7221932515365711d1f73459e2fef306d357a11113"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "91a2d8e5c14fb30fdae1337575aed02be173acc2cd3e7e6b2982b8adfce727f3",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-structured-draft",
+        "right": "solo-structured-draft",
+        "token_ids_sha256": "6d0806854ea2d4a8a0a2ce5e8ef6d62191f18fe25588a20e093b1f0ef65c514f"
+      },
+      {
+        "cached_tokens": [
+          0,
+          0
+        ],
+        "comparison_request_sha256": "67ce834acb89b8e3a717623132add7ce030a1c8d74918fb34b5f1335b722e9c2",
+        "exact_match": true,
+        "ignore_draft_only": false,
+        "left": "solo-structured-serial",
+        "right": "solo-structured-serial",
+        "token_ids_sha256": "6d0806854ea2d4a8a0a2ce5e8ef6d62191f18fe25588a20e093b1f0ef65c514f"
+      }
+    ],
+    "exact_matches": 18,
+    "scope": "Full canonical request+path including draft unchanged; this supports output parity only, not timing attribution.",
+    "shared_phase_observations": 18,
+    "unmatched_phase_observations": 0
+  }
+}

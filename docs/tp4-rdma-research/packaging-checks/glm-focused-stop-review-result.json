@@ -1,0 +1,20 @@
+{
+  "commit": "31ce9e733d754fecfc7747b6e3ff55ce7cf8f7bb",
+  "files_sha256": {
+    "docs/zig-engine.md": "169052f7a4bd91b5c5a70f2a871d4862e20a44c6d7bd17278e84fc26879e0355",
+    "scripts/config.sh": "092a00d6fe6d48639c20dc904610992e0a7bdf7739c8c8d5ac5a18810d1fc06e",
+    "scripts/prepare.sh": "f575caf7934153bbce023cc39a574c20d7f6c995bc885e90569995cd7091388d",
+    "start.sh": "b0e9abd4b9dc36df28561e14fcad57ba508099065fcac58ec680e4a17c78f04a",
+    "tests/test_tp4_network.py": "91005d28e6cc55ea6931fe987f9f9e36268bdc6bd69e11c2b3160a0482131e9b"
+  },
+  "checks": {
+    "offline_tests": "8/8 passed, including complete stop dry-run across four ranks with stale settings; launch/prepare fail before host calls",
+    "bash_syntax": "passed for config.sh start.sh scripts/prepare.sh",
+    "diff_check": "passed"
+  },
+  "native_source": "unchanged c0b1568c94397195f37fcc13079afdbc7b989627",
+  "log": "/tmp/glm-focused-stop-review-tests.log",
+  "log_sha256": "70388efe81e27338dfc7cd251c094678ad73fe0787cd7bd6b0c8bee3740623f7",
+  "runtime_evidence": "Requested Astra High/Fast off; actual settings not independently exposed",
+  "live_actions": "none"
+}

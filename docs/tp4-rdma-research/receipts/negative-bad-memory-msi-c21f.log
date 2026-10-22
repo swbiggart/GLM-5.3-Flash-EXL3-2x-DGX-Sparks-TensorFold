@@ -1,0 +1,2 @@
+error: invalid GLM transport profile rank 3: BadRoceMemory
+FAIL rank=3 error=InvalidTransportProfile

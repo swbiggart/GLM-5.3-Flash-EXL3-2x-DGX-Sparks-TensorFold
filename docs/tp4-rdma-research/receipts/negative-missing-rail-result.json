@@ -1,0 +1,94 @@
+{
+  "spark": {
+    "health": {
+      "candidate_id": "cd072e44b628b5c9a1c37ad384a01e1270a968e309bfe4afa1e79b76caacbc82",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0072-candidate.log",
+      "sha256": "a5f3ca2de61ff971f97868f8bceb2ea6b296c201abb901142845b37d3b30d925",
+      "bytes": 12252
+    },
+    "last_lines": [
+      "spark-4e04:1:63 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 0 Port 1 qp_num 2426 set_ece={supported=1, vendor_id=0x15b3, options=0x30000002, comp_mask=0x0}",
+      "spark-4e04:1:63 [0] NCCL INFO NET/IB RouteFinal side=send comm=0xed1314128000 mergedDev=0 qpIndex=0 qpNum=2426 devIndex=0 ibDev=0 hca=rocep1s0f0 port=1 localGid=00000000000000000000ffff0a54000a remoteGid=00000000000000000000ffff0a54000b remoteQpNum=1201",
+      "spark-4e04:1:63 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xed1314298000 mergedDev=1 qpIndex=0 qpNum=1129 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54030b remoteGid=00000000000000000000ffff0a54030a remoteQpNum=617",
+      "spark-4e04:1:63 [0] NCCL INFO NET/IB: Subnet-aware routing: overriding dev 3 with dev 2 preserving PCI root pci0002:00",
+      "spark-4e04:1:63 [0] NCCL INFO NET/IB: ncclIbSenderQpsToRts: Set ECE: IbDev 2 Port 1 qp_num 913 set_ece={supported=1, vendor_id=0x15b3, optioerror: RoCE: no RDMA device missing-glm-test-device",
+      "warning: RoCE: RoceUnavailable",
+      "warning: RoCE all-gather off: this rank could not open it; some rank could not open it; NCCL carries every gather",
+      "FAIL rank=0 error=RequiredRoceUnavailable"
+    ]
+  },
+  "spark-peer": {
+    "health": {
+      "candidate_id": "6ee5b167e2c969ad854d31f5b35fe9282897dd5aa2f535e5ccf12dbae2312703",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0071-candidate.log",
+      "sha256": "781c5c412996dcaebcc86486b75a3f96388757c7b5ad3c5eab3083a9f6f956d5",
+      "bytes": 12357
+    },
+    "last_lines": [
+      "spark-133c:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so",
+      "spark-133c:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512",
+      "spark-133c:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer",
+      "spark-133c:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0",
+      "spark-133c:1:1 [0] NCCL INFO ncclCommInitRank comm 0xf097950 rank 1 nranks 4 cudaDev 0 nvmerror: RoCE: no RDMA device missing-glm-test-device",
+      "warning: RoCE: RoceUnavailable",
+      "warning: RoCE all-gather off: this rank could not open it; some rank could not open it; NCCL carries every gather",
+      "FAIL rank=1 error=RequiredRoceUnavailable"
+    ]
+  },
+  "msi-b9dc": {
+    "health": {
+      "candidate_id": "8e85e9c162df2a2a1da5aa56d3a331d33efc20dffed2014ace6fbc9470b32dd2",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0071-candidate.log",
+      "sha256": "7427b138a9be6047ea1dd55b1e0b1d97136f6c132c6717f8a8b15a89c7cc73dd",
+      "bytes": 12635
+    },
+    "last_lines": [
+      "edgexpert-b9dc:1:1 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so",
+      "edgexpert-b9dc:1:1 [0] NCCL INFO threadThresholds 8/8/64 | 32/8/64 | 512 | 512",
+      "edgexpert-b9dc:1:1 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 4 p2p channels per peer",
+      "edgexpert-b9dc:1:1 [0] NCCL INFO Symmetric memory is not supported. cuMemEnable 0, globalGinSupport 0, cuMemGdrSupport 0",
+      "edgexpert-b9dc:1:1 [0] NCCL INFO ncclCommInitRank comm 0x11e1ca20 rank 2 nranks 4 cudaDev 0 nvmlDev 0 busId f01000 commId 0xd7b9error: RoCE: no RDMA device missing-glm-test-device",
+      "warning: RoCE: RoceUnavailable",
+      "warning: RoCE all-gather off: this rank could not open it; some rank could not open it; NCCL carries every gather",
+      "FAIL rank=2 error=RequiredRoceUnavailable"
+    ]
+  },
+  "msi-c21f": {
+    "health": {
+      "candidate_id": "79dd7f8827e275c5dae10d694a39a08cb31b9b9df63a7ccb372f89f75aa1fdeb",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0074-candidate.log",
+      "sha256": "966dca2d7d8d6a2de79550ad195c0cde856c2260d54fbfe7a699c0bf4dd929d0",
+      "bytes": 12920
+    },
+    "last_lines": [
+      "edgexpert-c21f:1:14 [0] NCCL INFO NET/IB RouteFinal side=recv comm=0xea84582c4000 mergedDev=1 qpIndex=0 qpNum=1192 devIndex=0 ibDev=1 hca=rocep1s0f1 port=1 localGid=00000000000000000000ffff0a54020b remoteGid=00000000000000000000ffff0a54020a remoteQpNum=763",
+      "edgexpert-c21f:1:1 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 0",
+      "edgexpert-c21f:1:1 [0] NCCL INFO Tree transport setup disabled by NCCL_SWITCHLESS_RING_ONLY",
+      "edgexpert-c21f:1:1 [0] NCCL INFO PAT transport setup disabled by NCCL_SWITCHLESS_RING_ONLY",
+      "edgexpert-c21f:1:1 [0] NCCL INFO ncclOsDlopen(libnccl-tuner.so) failed: libnccl-tuner.so: cannot open sharerror: RoCE: no RDMA device missing-glm-test-device",
+      "warning: RoCE: RoceUnavailable",
+      "warning: RoCE all-gather off: this rank could not open it; some rank could not open it; NCCL carries every gather",
+      "FAIL rank=3 error=RequiredRoceUnavailable"
+    ]
+  }
+}

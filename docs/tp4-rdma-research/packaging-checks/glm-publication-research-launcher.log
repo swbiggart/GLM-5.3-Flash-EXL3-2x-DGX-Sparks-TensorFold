@@ -1,0 +1,13 @@
+test_default_nccl_and_legacy_tp2_tp3_are_preserved (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_explicit_relay_and_neighbor_resolve_the_legacy_switch (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_heterogeneous_rank_names_use_the_discovered_xor_edges (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_invalid_scopes_fail_before_external_actions (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_invalid_selection_blocks_real_start_and_restart_before_mutation (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_neighbor_discovery_refuses_one_rail_overlap_and_invalid_names (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_unexported_local_selector_and_memory_reach_rank_environment (test_zig_transport_launcher.LauncherTransportTest) ... ok
+test_unsupported_neighbor_gids_block_start_and_restart_before_mutation (test_zig_transport_launcher.LauncherTransportTest) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.699s
+
+OK

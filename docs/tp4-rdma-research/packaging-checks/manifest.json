@@ -1,0 +1,241 @@
+{
+  "schema_version": 1,
+  "description": "Local source packaging/build/review evidence; not new GPU/model qualification. Historical benchmark bytes have a separate manifest.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1648,
+      "sha256": "feeca85776d2fe475a12db8e38b4b011f0927d0d2515b9900471c800b6e92314"
+    },
+    {
+      "path": "glm-focused-native-host.log",
+      "bytes": 690,
+      "sha256": "ce4c17ccb2c57eeca8b2c3e6d4eba6923cddad9292af23ac97b3de6feaab2463"
+    },
+    {
+      "path": "glm-focused-native-linux-semantic.log",
+      "bytes": 440,
+      "sha256": "a653e907702707ee62336110154e47d7c3280285747cf1632d133c87677b093c"
+    },
+    {
+      "path": "glm-focused-native-result.json",
+      "bytes": 2810,
+      "sha256": "b1ff02e83626641868bb9ef55fc543bcd4c5deebcedb8b938d1e892c67d5563a"
+    },
+    {
+      "path": "glm-focused-outer-config-tests.log",
+      "bytes": 638,
+      "sha256": "bbb52d66f64e2b0fcd1921677b3af7d6600c3d53947ff11e02fa1230ef65f052"
+    },
+    {
+      "path": "glm-focused-outer-patch-verify.log",
+      "bytes": 2319,
+      "sha256": "202f482ec9c5ff7eb86d5c57e9a121c236d7ef88867817c0243dbb9301fa8a6f"
+    },
+    {
+      "path": "glm-focused-outer-result.json",
+      "bytes": 1922,
+      "sha256": "55ce3d59f5b378ec247bdd5a9712cdb16b4cd16cb8481b67fdf3be49ddf8f9ab"
+    },
+    {
+      "path": "glm-focused-stop-review-result.json",
+      "bytes": 1143,
+      "sha256": "a430d09056e70b9550b5a25db283060cd498377b8fc62d88ff60845427b2c711"
+    },
+    {
+      "path": "glm-focused-stop-review-tests.log",
+      "bytes": 839,
+      "sha256": "70388efe81e27338dfc7cd251c094678ad73fe0787cd7bd6b0c8bee3740623f7"
+    },
+    {
+      "path": "glm-publication-focused-launcher.log",
+      "bytes": 839,
+      "sha256": "fade4ce8ac2f0a21da7e201926edbbe390fdf41b7d769ebce5e7327db32a212c"
+    },
+    {
+      "path": "glm-publication-research-launcher.log",
+      "bytes": 1060,
+      "sha256": "e6aa3cda896ba44ae6378635e3ab92d9bb791b8584037da45ec59bfd5a4663db"
+    },
+    {
+      "path": "independent-review-final.md",
+      "bytes": 2841,
+      "sha256": "dbf5d4ba713d8e2f0285c5bf2b18d1a14fb5f8afa38eedd0e123ca90b6e751df"
+    },
+    {
+      "path": "independent-review-initial.md",
+      "bytes": 8682,
+      "sha256": "746043765888368b296fbb49aab778664b8581e962b068370ff32b4f8bcdf945"
+    },
+    {
+      "path": "integrator-checks.json",
+      "bytes": 1443,
+      "sha256": "0cfd443509349d3275f4ac1a6db2b815cddfb4eb09918f826a8b0fb2fa885b0f"
+    },
+    {
+      "path": "publication-secret-scan.json",
+      "bytes": 317,
+      "sha256": "a2ef4bef6c16f47ab915923c74e9662b5403a3cab8181cf83ea5b922484bb922"
+    },
+    {
+      "path": "research-checks.json",
+      "bytes": 4119,
+      "sha256": "81e9039e427f368f8de97bd1a7182b173e6d2f455575347159093ac0538fe1d9"
+    },
+    {
+      "path": "research-diff-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-diff-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-host-probe.stderr",
+      "bytes": 355,
+      "sha256": "1d785d0fe8e72e6ef2eff48fcf5e2a16beb1ad4b47d823f2e3db04b50377c3b3"
+    },
+    {
+      "path": "research-host-probe.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-host-transport.stderr",
+      "bytes": 166,
+      "sha256": "518883ca560b7eff1fef26268c834ae232cf808dde740a3ec7aeb9fc134313dc"
+    },
+    {
+      "path": "research-host-transport.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-launcher-tests.stderr",
+      "bytes": 930,
+      "sha256": "395f3c46d4e2fbf4c9a32fc4352a82f300d6becf80e397341956d61f0b0f47d3"
+    },
+    {
+      "path": "research-launcher-tests.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-python-syntax.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-python-syntax.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-checks.json",
+      "bytes": 4636,
+      "sha256": "84e2612be420f9c1a52409ce87119ea29abb5344da75d3022b473c8bdff82257"
+    },
+    {
+      "path": "research-reviewfix-cpp-prefix-parity.py",
+      "bytes": 1140,
+      "sha256": "c8bdd721850eeee78e153ce7843f30b611c897e5fddc7404e76d6dd75deee458"
+    },
+    {
+      "path": "research-reviewfix-cpp-prefix-parity.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-cpp-prefix-parity.stdout",
+      "bytes": 568,
+      "sha256": "18363ed50f3f4ee0b5fc1c9a8c96d004549ec66a3ffd0c445e8af24f0900aa16"
+    },
+    {
+      "path": "research-reviewfix-diff-check.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-diff-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-host-compiler-tests.stderr",
+      "bytes": 489,
+      "sha256": "3b345c399b42defe52abe8fd48679c636cf19c073829aeeda77cfeb2be617e63"
+    },
+    {
+      "path": "research-reviewfix-host-compiler-tests.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-launcher-tests.stderr",
+      "bytes": 1060,
+      "sha256": "794d53d9c5ff468d910ec576de91798bc40e1ecb270eab5e4f248dce51060518"
+    },
+    {
+      "path": "research-reviewfix-launcher-tests.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-python-syntax.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-python-syntax.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-shell-syntax.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-shell-syntax.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-reviewfix-source-verification.stderr",
+      "bytes": 607,
+      "sha256": "24e951a04dd9d6c47cfaa7cb0d990b0272016978098074c471658eddada2b925"
+    },
+    {
+      "path": "research-reviewfix-source-verification.stdout",
+      "bytes": 1986,
+      "sha256": "8c339ea0bdc3407eca7e28d56fe75263246697ba392f11e0e63726068114814d"
+    },
+    {
+      "path": "research-shell-syntax.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-shell-syntax.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "research-source-verification.stderr",
+      "bytes": 607,
+      "sha256": "df8e233f601448a4b90248f263cd52f11a5ea8a450050f6d663add39c9bc70cc"
+    },
+    {
+      "path": "research-source-verification.stdout",
+      "bytes": 700,
+      "sha256": "9fd5446a63624f4c9a7f7994d5a24872456253d77ca2e2deb60ce6727afa1345"
+    },
+    {
+      "path": "review-routing.json",
+      "bytes": 608,
+      "sha256": "ee86c58eaed4088b43a855594723000783fd444eb9f1f0ebbe569143d39a41ac"
+    }
+  ]
+}

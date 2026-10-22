@@ -1,0 +1,11 @@
+Error response from daemon: No such image: spark/glm-tp4-build:rdma02
+Traceback (most recent call last):
+  File "/home/spark/lab/glm-tp4-ring-20261022/build-probe04-remote.py", line 17, in <module>
+    actual = json.loads(subprocess.check_output(['docker', 'image', 'inspect', tag]))[0]['Id']
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['docker', 'image', 'inspect', 'spark/glm-tp4-build:rdma02']' returned non-zero exit status 1.

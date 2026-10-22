@@ -1,0 +1,137 @@
+{
+  "schema_version": 2,
+  "status": "research only; selected backend submission is separate",
+  "mia_recipe": {
+    "repository": "https://github.com/MiaAI-Lab/GLM-5.3-Flash-EXL3-2x-DGX-Sparks-TensorFold",
+    "commit": "a6c7e08ae864239125d45fc15146d26ec74c7f6d"
+  },
+  "tensorfold": {
+    "repository": "https://github.com/ashhart/TensorFold",
+    "commit": "e7c523ebfa16b8094cf9e35e3773a7d25befcc5b"
+  },
+  "reconstructed_baseline": {
+    "commit": "a628d29e4076e470f25fe40d65c1548f9f6cbfba",
+    "tree": "88f0bafad01ce6aa371de68cca7cd3dc60d35d08",
+    "patches": "0001-0013",
+    "upstream_plus_patches_tree": "41ff7bacfb517e165b2b9bdb3d8b182d225d5291",
+    "mode_only_differences": {
+      "tools/zig/test_fabric.sh": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      },
+      "tools/zig/test_lanes.sh": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      },
+      "tools/zig/triton_aot_manifest.py": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      },
+      "zig/tests/cuda/nemotron/test_aot_manifest.py": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      },
+      "zig/tests/server/build.sh": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      },
+      "zig/tests/server/zig_test.sh": {
+        "frozen_baseline": "100644",
+        "upstream_plus_patches": "100755"
+      }
+    },
+    "mode_note": "The local frozen-baseline reconstruction lost executable bits on these six pre-existing scripts. All tracked file blobs match upstream plus patches 0001-0013. Patch 0014 preserves the upstream file modes."
+  },
+  "production": {
+    "commit": "c8b5f94b24524fbf776181efc6ba4937c62c1c05",
+    "base": "a628d29e4076e470f25fe40d65c1548f9f6cbfba",
+    "source_paths": [
+      "glm-neighbor-source.json",
+      "zig/build/cuda.zig",
+      "zig/kernels/cuda/glm_neighbor_rdma.cu",
+      "zig/src/cuda/kernels.zig",
+      "zig/src/cuda/roce.zig",
+      "zig/src/cuda/roce_proxy.c",
+      "zig/src/cuda/roce_region.zig",
+      "zig/src/families/glm_cuda/cuda.zig",
+      "zig/src/families/glm_cuda/cuda_comm.zig",
+      "zig/src/families/glm_cuda/cuda_engine.zig",
+      "zig/src/families/glm_cuda/cuda_neighbor.zig",
+      "zig/src/families/glm_cuda/cuda_sampler.zig",
+      "zig/src/families/glm_cuda/neighbor_rdma.zig",
+      "zig/src/families/glm_cuda/neighbor_rdma_seq.zig",
+      "zig/tests/cuda/glm_transport_probe.zig"
+    ],
+    "sha256": {
+      "glm-neighbor-source.json": "b3efa24012a5e37fe00a10ae746f3bb36d97247370f7a523e1b14e8f54613ec5",
+      "zig/build/cuda.zig": "11851e4ae7d466d53f2f9cd3df2240599f33ce85494a8f25e25bcc1596b3c58f",
+      "zig/kernels/cuda/glm_neighbor_rdma.cu": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4",
+      "zig/src/cuda/kernels.zig": "6ee5420f2af246efea38c77274a8cdd5abc6ad9175aa0728d90f03a2044b21b1",
+      "zig/src/cuda/roce.zig": "a66f4b5b90c19334b758acf9a71494a5df7361edf9f22a6a7214a8afe2fa788c",
+      "zig/src/cuda/roce_proxy.c": "ed643a446321cfb21fe1cef3a4689b934b3dcfe3574fac1d3ee4e0306f85bde8",
+      "zig/src/cuda/roce_region.zig": "b97e2327056201b095af4f4681fdc57a419784a2d890ad37b24a5c0df79b1248",
+      "zig/src/families/glm_cuda/cuda.zig": "96358682426c9dca3fe09bcf81d5e0ac47c00242a7b58a968e4af170781c9a0a",
+      "zig/src/families/glm_cuda/cuda_comm.zig": "e9a642b09e5ce187e82e29f8bceefffd01449e2cd6fa04bb0bac8558fe7cfb72",
+      "zig/src/families/glm_cuda/cuda_engine.zig": "cc31641fe0a4bc922a407d09979ace9f127d9c6144f10703746574a96bb070fa",
+      "zig/src/families/glm_cuda/cuda_neighbor.zig": "e22aa2b2e1ae9e106a92aa2097a09169bf19cf10dfcf45617264385388d0f0ed",
+      "zig/src/families/glm_cuda/cuda_sampler.zig": "f933eff6ad1fd6f5ba80ff54881f42d91f0877fb198d823c64795c4c56569f82",
+      "zig/src/families/glm_cuda/neighbor_rdma.zig": "6f09f1e1d00f06b116f55c7ae51ad0ba7f1875798543775c0cfc69a066e2f6cd",
+      "zig/src/families/glm_cuda/neighbor_rdma_seq.zig": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
+      "zig/tests/cuda/glm_transport_probe.zig": "47a394cec25c7745222924d4a7744ef54be1a99324780948ad3dfb887116b3dd"
+    }
+  },
+  "probe": {
+    "commit": "44cd03144b1701be22449bea3d8f99bf44046056",
+    "base": "c8b5f94b24524fbf776181efc6ba4937c62c1c05",
+    "incremental_commits": [
+      "b733c37688c44772332f99515b26e7fe21f20ff7",
+      "44cd03144b1701be22449bea3d8f99bf44046056"
+    ],
+    "path": "zig/tests/cuda/glm_transport_probe.zig",
+    "sha256": "9ec6017bd7fdf8c82177456cc1ed36e6b95ba4b26ecb91bba76ddcfe50a06ffe",
+    "combined_patch_sha256": "b0737ad904be3bdd9fa903877c9a169ca6017395dbdccc74f0ef223eeca23142"
+  },
+  "neighbor_protocol": {
+    "upstream": "bertholomus/TensorFold",
+    "commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+    "sha256": {
+      "zig/src/families/dsv41/rdma.zig": "ef1560661c71135659e9688480cdd088df2f46a28c76d35d1aebf023daf1e920",
+      "zig/src/families/dsv41/rdma_seq.zig": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
+      "zig/kernels/cuda/dsv41/rdma_gather.cu": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4"
+    },
+    "adaptation": "Renamed sequence-helper import; fixed registered-memory cleanup on CUDA failure; added read-only completed-write counter. CUDA and wire/sequence protocol unchanged. Wrapper integration is separate."
+  },
+  "packaging": {
+    "patch": "zig/patches/0014-zig-glm-tp4-transport-research.patch",
+    "sha256": "9e57a723f1377609ef8e3b1d9b965c3e833afb4b8ff095cacd15c88a1f346eae",
+    "omitted_operations_note": "GLM_TRANSPORT_CANDIDATES.md",
+    "receipts": "docs/tp4-rdma-research/",
+    "source_modification": "Probe source is updated through probe04. Three imported source files receive exact prefixed Apache attribution/modification comments after frozen qualification; removing those declared prefixes reproduces tested production bytes. All other production source bytes and existing notices are retained. Frozen production/probe commits are unchanged."
+  },
+  "source_annotations": {
+    "zig/kernels/cuda/glm_neighbor_rdma.cu": {
+      "source_path": "zig/kernels/cuda/dsv41/rdma_gather.cu",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/kernels/cuda/dsv41/rdma_gather.cu\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// No kernel or wire-protocol changes; file relocated for the GLM adapter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "01443df854d2bc1b0a28bb41d31fdd3bb5263171bfbae8abd2b0c8d9067b0628",
+      "tested_sha256": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4",
+      "annotated_sha256": "c441d4c4e708560a4a87ba6548d72e9e4af85924772a4509926268526633e7e2"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma.zig": {
+      "source_path": "zig/src/families/dsv41/rdma.zig",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma.zig\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// Renamed sequence-helper import; fixed registered-memory cleanup on CUDA failure; added a read-only completed-write counter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "621d0ab6e330b8a38ad2a7d23709388677183f8582707ce2864d35bddda7ed38",
+      "tested_sha256": "6f09f1e1d00f06b116f55c7ae51ad0ba7f1875798543775c0cfc69a066e2f6cd",
+      "annotated_sha256": "ddf5e07d113f86c69b4147e13088f5035546bd4a51e499ec59ec62c4141779a1"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma_seq.zig": {
+      "source_path": "zig/src/families/dsv41/rdma_seq.zig",
+      "source_commit": "b8b115e7ed6c86d81b7575caa6f3d4ade52b323c",
+      "prefix_utf8": "// SPDX-License-Identifier: Apache-2.0\n// Source: bertholomus/TensorFold, zig/src/families/dsv41/rdma_seq.zig\n// Commit: b8b115e7ed6c86d81b7575caa6f3d4ade52b323c\n// Original RDMA transport by BertholomusAI (Albert Lee) and TensorFold contributors.\n// Modified for the GLM TP4 research integration (2026-10-22):\n// No sequence-protocol changes; file relocated for the GLM adapter.\n// This attribution/modification notice was prefixed after frozen GPU qualification;\n// the remaining file bytes match the pinned tested production source.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\n",
+      "prefix_sha256": "e32889df0484e28df226d1be8cde7a87ec8eccb442931f4d0e54b352fd3f5581",
+      "tested_sha256": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
+      "annotated_sha256": "9119743445085b9434e26d0f66ffe532b46c8f85aee6a0dd3f968c031969019c"
+    }
+  }
+}

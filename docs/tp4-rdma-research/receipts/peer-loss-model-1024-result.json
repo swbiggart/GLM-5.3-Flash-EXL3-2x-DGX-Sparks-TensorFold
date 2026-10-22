@@ -1,0 +1,94 @@
+{
+  "spark": {
+    "health": {
+      "candidate_id": "6a9c263b5fedb4e68a7b9d48ebb2c1a887c2be204325b56a31aeb24bddfee4a4",
+      "running": false,
+      "health_code": null,
+      "exit_code": 3
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0135-candidate.log",
+      "sha256": "bd281db0e0a036da59967b5d281053921f5a93d49bdd9663fba55f28b1b5ee17",
+      "bytes": 5531
+    },
+    "last_lines": [
+      "[tensorfold] 127.0.0.1 \"GET /health HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /v1/models HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /health HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /v1/models HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /health HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /v1/models HTTP/1.1\" 200 -",
+      "[tensorfold] 127.0.0.1 \"GET /health HTTP/1.1\" 200 -",
+      "error: rank 0: the other rank closed the control link (it exited, or the link is down); exiting"
+    ]
+  },
+  "spark-peer": {
+    "health": {
+      "candidate_id": "35e93036b29f42c26b2a5dd1d00bdae3fdd7ff9a5a9a6893346518ca77f5823f",
+      "running": false,
+      "health_code": null,
+      "exit_code": 3
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0136-candidate.log",
+      "sha256": "7b71c6e8b92e5c86091d67d11ee3f32606694f7e2a81c89aaacef3703b62e744",
+      "bytes": 11562
+    },
+    "last_lines": [
+      "info: rank 1: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 43048 ms (dense MSE quantize 186409 ms, expert stacks 351482 ms, dense reads 226785 ms, pack 444 ms, head 478 ms)",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)",
+      "error: rank 1: the other rank closed the control link (it exited, or the link is down); exiting"
+    ]
+  },
+  "msi-b9dc": {
+    "health": {
+      "candidate_id": "5b760f6201ae16a0882de1683948b2a0450e2844cfcff08f7ee8bcc83cec82a2",
+      "running": false,
+      "health_code": null,
+      "exit_code": 3
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0137-candidate.log",
+      "sha256": "640369013b409f8cf0c04adb70bbcd463f447c41f5ab5a3e4d2f096f47743c6a",
+      "bytes": 12539
+    },
+    "last_lines": [
+      "info: rank 2: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 43666 ms (dense MSE quantize 187950 ms, expert stacks 359153 ms, dense reads 225629 ms, pack 457 ms, head 505 ms)",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)",
+      "error: rank 2: the other rank closed the control link (it exited, or the link is down); exiting"
+    ]
+  },
+  "msi-c21f": {
+    "health": {
+      "candidate_id": "78e341d118102c82fa83d005b2a0c1e86b48fef62bbb3217321d460a7f64556c",
+      "running": false,
+      "health_code": null,
+      "exit_code": 137
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0147-candidate.log",
+      "sha256": "d148717459ede5918846a446a7b0a9c51e515a4e62beb4f90fc548cb0f387280",
+      "bytes": 12944
+    },
+    "last_lines": [
+      "info: rank 3: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 41151 ms (dense MSE quantize 188006 ms, expert stacks 335757 ms, dense reads 225060 ms, pack 444 ms, head 450 ms)",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)",
+      "tensorfold: stop signal: this rank follows rank 0 to its end (it stores its kept states first)"
+    ]
+  }
+}

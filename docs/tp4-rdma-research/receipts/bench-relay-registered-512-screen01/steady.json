@@ -1,0 +1,29 @@
+{
+  "cmd": "sustained",
+  "parameters": {
+    "set": "a",
+    "streams": "4",
+    "tokens": 256,
+    "seconds": 30
+  },
+  "started": 1792663940.470712,
+  "ended": 1792663975.8397233,
+  "result": [
+    {
+      "streams": 4,
+      "seconds": 30,
+      "max_tokens": 256,
+      "set": "a",
+      "requests": 20,
+      "aggregate_tps": 152.79,
+      "per_stream_tps_p50": 43.424,
+      "per_stream_tps_p95": 73.229,
+      "per_stream_tps_p05": 26.329,
+      "ttft_s_p50": 0.242,
+      "ttft_s_p95": 0.619
+    }
+  ],
+  "worker_errors": [],
+  "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+  "raw_sha256": "937fbc05b80272a48afb2e0d7e0251e3a1b43328b5d73ac3b006f44d7f6d7b29"
+}

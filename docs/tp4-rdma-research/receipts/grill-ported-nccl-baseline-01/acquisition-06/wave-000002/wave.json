@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "plan_sha256": "45a18bcc86954d8bb3444a6cb1016ab8c55422f8d4ffac4bf6abb42672d4a658",
+  "reservation_sha256": "83be51bef9a34fe03534322f32103699c3bc26d9c7e057b65a7f52863d8d04d8",
+  "spec": {
+    "index": 2,
+    "phase": "measured",
+    "cell": "structured-1",
+    "case": "structured",
+    "trial": 1,
+    "concurrency": 1
+  },
+  "attempts": [
+    {
+      "lane": 0,
+      "dispatched": true,
+      "status": "complete",
+      "detail": "complete SSE response",
+      "http_status": 200,
+      "finish_reason": "length",
+      "usage": {
+        "prompt_tokens": 27,
+        "completion_tokens": 400,
+        "total_tokens": 427,
+        "cached_prompt_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "timing": {
+        "dispatch_offset_us": 10,
+        "headers_us": 712,
+        "first_body_us": 715,
+        "first_generated_text_us": 104799,
+        "first_generated_channel": "answer",
+        "first_answer_text_us": 104799,
+        "last_generated_text_us": 2565977,
+        "terminal_us": 2566060,
+        "settle_us": 2566069,
+        "capture_parse_us": 544
+      },
+      "response_bytes": 13871,
+      "response_sha256": "628e41b766f67a6c3406096d77ff53dbefbe186d2699b8e19e8414788d6cac67",
+      "terminal_offset": 13871,
+      "surplus_observed_bytes": 0,
+      "eligibility_errors": []
+    }
+  ],
+  "elapsed_us": 2566069,
+  "dispatch_spread_us": 0,
+  "preparation_us": 3713,
+  "reservation_publication_us": 3695,
+  "body_publication_us": 13252,
+  "completion_tokens": 400,
+  "achieved_completion_tokens_per_second": 155.88045372123665,
+  "eligible": true
+}

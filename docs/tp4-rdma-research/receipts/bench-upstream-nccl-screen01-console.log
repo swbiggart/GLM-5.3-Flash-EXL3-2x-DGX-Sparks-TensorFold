@@ -1,0 +1,16 @@
+{"streams": 1, "rep": 0, "aggregate_tps": 73.38205637462555, "per_stream_decode_tps": [76.663]}
+{"streams": 4, "rep": 0, "aggregate_tps": 116.60337408081686, "per_stream_decode_tps": [37.553, 31.399, 65.25, 35.793]}
+{"streams": 8, "rep": 0, "aggregate_tps": 160.78040471928557, "per_stream_decode_tps": [26.248, 22.208, 49.073, 26.823, 24.245, 44.728, 29.895, 21.124]}
+{"stage": "warmup", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/warmup.json"}
+{"streams": 1, "rep": 0, "aggregate_tps": 74.49000223066302, "per_stream_decode_tps": [77.107]}
+{"streams": 1, "rep": 1, "aggregate_tps": 74.14449493206541, "per_stream_decode_tps": [76.809]}
+{"streams": 4, "rep": 0, "aggregate_tps": 116.2655711102823, "per_stream_decode_tps": [37.513, 31.397, 65.124, 35.652]}
+{"streams": 4, "rep": 1, "aggregate_tps": 116.33774021778238, "per_stream_decode_tps": [37.554, 31.373, 65.539, 35.743]}
+{"streams": 8, "rep": 0, "aggregate_tps": 159.8293225609674, "per_stream_decode_tps": [26.08, 22.104, 48.835, 26.646, 24.119, 44.354, 29.66, 20.993]}
+{"streams": 8, "rep": 1, "aggregate_tps": 159.00376611451796, "per_stream_decode_tps": [26.007, 21.97, 48.386, 26.555, 24.038, 44.213, 26.304, 22.937]}
+{"stage": "concurrent", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/concurrent.json"}
+{"streams": 4, "seconds": 30, "max_tokens": 256, "set": "a", "requests": 18, "aggregate_tps": 131.39, "per_stream_tps_p50": 36.614, "per_stream_tps_p95": 62.821, "per_stream_tps_p05": 22.583, "ttft_s_p50": 0.276, "ttft_s_p95": 0.652}
+{"stage": "steady", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/steady.json"}
+{"length": 8192, "rep": 0, "prompt_tokens": 8192, "ttft_s": 4.922012912807986, "prefill_tps": 1664.3597132146695}
+{"length": 8192, "rep": 1, "prompt_tokens": 8192, "ttft_s": 4.908542963908985, "prefill_tps": 1668.9270238099716}
+{"stage": "prefill8k", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/prefill8k.json"}

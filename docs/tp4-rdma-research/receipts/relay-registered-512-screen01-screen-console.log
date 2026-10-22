@@ -1,0 +1,17 @@
+health200
+{"streams": 1, "rep": 0, "aggregate_tps": 85.87929330629258, "per_stream_decode_tps": [90.295]}
+{"streams": 4, "rep": 0, "aggregate_tps": 136.22269980728046, "per_stream_decode_tps": [44.16, 37.0, 69.49, 45.041]}
+{"streams": 8, "rep": 0, "aggregate_tps": 174.22810890138342, "per_stream_decode_tps": [28.256, 24.16, 50.594, 28.798, 26.205, 46.461, 28.306, 25.141]}
+{"stage": "warmup", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-relay-registered-512-screen01/warmup.json"}
+{"streams": 1, "rep": 0, "aggregate_tps": 87.63333233055931, "per_stream_decode_tps": [91.325]}
+{"streams": 1, "rep": 1, "aggregate_tps": 87.42460767037919, "per_stream_decode_tps": [91.062]}
+{"streams": 4, "rep": 0, "aggregate_tps": 134.6338140941756, "per_stream_decode_tps": [41.229, 36.561, 76.491, 42.054]}
+{"streams": 4, "rep": 1, "aggregate_tps": 133.96367186514811, "per_stream_decode_tps": [40.248, 36.486, 76.011, 44.347]}
+{"streams": 8, "rep": 0, "aggregate_tps": 174.3131117425883, "per_stream_decode_tps": [28.213, 24.158, 50.733, 28.754, 26.161, 46.426, 31.792, 22.83]}
+{"streams": 8, "rep": 1, "aggregate_tps": 175.5415309589694, "per_stream_decode_tps": [28.461, 24.348, 51.217, 29.016, 26.4, 46.892, 32.104, 22.993]}
+{"stage": "concurrent", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-relay-registered-512-screen01/concurrent.json"}
+{"streams": 4, "seconds": 30, "max_tokens": 256, "set": "a", "requests": 20, "aggregate_tps": 152.79, "per_stream_tps_p50": 43.424, "per_stream_tps_p95": 73.229, "per_stream_tps_p05": 26.329, "ttft_s_p50": 0.242, "ttft_s_p95": 0.619}
+{"stage": "steady", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-relay-registered-512-screen01/steady.json"}
+{"length": 8192, "rep": 0, "prompt_tokens": 8192, "ttft_s": 4.852706631878391, "prefill_tps": 1688.130072851536}
+{"length": 8192, "rep": 1, "prompt_tokens": 8192, "ttft_s": 4.864686887012795, "prefill_tps": 1683.972718135282}
+{"stage": "prefill8k", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-relay-registered-512-screen01/prefill8k.json"}

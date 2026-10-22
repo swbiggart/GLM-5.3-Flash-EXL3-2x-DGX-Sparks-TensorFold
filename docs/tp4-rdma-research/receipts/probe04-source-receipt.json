@@ -1,0 +1,26 @@
+{
+  "source_path": "/tmp/glm-probe04-worktree",
+  "commit": "44cd03144b1701be22449bea3d8f99bf44046056",
+  "incremental_base": "b733c37688c44772332f99515b26e7fe21f20ff7",
+  "patch": "/tmp/glm-probe04-incremental.patch",
+  "sha256": "23eceb7b26e62f73f33f4555f9773b8d769fb30c0d4f8e85fb8c0e1f1c5d24b7",
+  "changed_paths": [
+    "zig/tests/cuda/glm_transport_probe.zig"
+  ],
+  "probe_source_sha256": "9ec6017bd7fdf8c82177456cc1ed36e6b95ba4b26ecb91bba76ddcfe50a06ffe",
+  "checks": {
+    "host_tests": "6/6 PASS",
+    "host_executable_build": "PASS",
+    "linux_aarch64_semantic_build": "PASS; placeholder fatbins and proxy stub, not runnable GPU qualification",
+    "git_diff_check": "PASS",
+    "NVCC": "not run",
+    "GPU": "not run"
+  },
+  "logs": [
+    "/tmp/glm-probe04-host.log",
+    "/tmp/glm-probe04-linux-semantic.log"
+  ],
+  "combined_base": "c8b5f94b24524fbf776181efc6ba4937c62c1c05",
+  "combined_patch": "/tmp/glm-probe03-04-combined.patch",
+  "combined_sha256": "b0737ad904be3bdd9fa903877c9a169ca6017395dbdccc74f0ef223eeca23142"
+}

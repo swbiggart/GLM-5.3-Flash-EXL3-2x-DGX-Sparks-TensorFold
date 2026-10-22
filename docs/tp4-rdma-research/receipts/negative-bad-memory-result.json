@@ -1,0 +1,70 @@
+{
+  "spark": {
+    "health": {
+      "candidate_id": "b92259b1c85e014584c09b9da12b29554d9cbe31ca393dbd0413d626923a9827",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0066-candidate.log",
+      "sha256": "0e35fe9e409e47fff33f5f7557481fc97e9eb5ab8cccc8a0de6006332f91dd21",
+      "bytes": 101
+    },
+    "last_lines": [
+      "error: invalid GLM transport profile rank 0: BadRoceMemory",
+      "FAIL rank=0 error=InvalidTransportProfile"
+    ]
+  },
+  "spark-peer": {
+    "health": {
+      "candidate_id": "b6e725206aaadaaeec2971522639f64236085d9e337477e7bc62ae88a3c8d085",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0065-candidate.log",
+      "sha256": "d5efc6b202e82bbd38088e73a5b96effad691d5e17d74de33f5e357b93f61493",
+      "bytes": 101
+    },
+    "last_lines": [
+      "error: invalid GLM transport profile rank 1: BadRoceMemory",
+      "FAIL rank=1 error=InvalidTransportProfile"
+    ]
+  },
+  "msi-b9dc": {
+    "health": {
+      "candidate_id": "b1555cb20d59050ecf78563130d5a4fee2277997bdc1c28aa3bd16c380b70062",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0065-candidate.log",
+      "sha256": "aaafdf15975c28273edba720b6e8a892088d664b41ac0bb35997008d5e81507a",
+      "bytes": 101
+    },
+    "last_lines": [
+      "error: invalid GLM transport profile rank 2: BadRoceMemory",
+      "FAIL rank=2 error=InvalidTransportProfile"
+    ]
+  },
+  "msi-c21f": {
+    "health": {
+      "candidate_id": "7d18e13c2aeb45d1dd0c03f1a34ef0fd15df2fc3639c96063f91c0cd9df7529f",
+      "running": false,
+      "health_code": null,
+      "exit_code": 1
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0068-candidate.log",
+      "sha256": "febea68c9ac7c2d00ffafccc01ac48db790d77693bbb6bb78aa344262fd9d476",
+      "bytes": 101
+    },
+    "last_lines": [
+      "error: invalid GLM transport profile rank 3: BadRoceMemory",
+      "FAIL rank=3 error=InvalidTransportProfile"
+    ]
+  }
+}

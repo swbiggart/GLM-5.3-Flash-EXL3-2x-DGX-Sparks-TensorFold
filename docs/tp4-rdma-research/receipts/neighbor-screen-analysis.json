@@ -1,0 +1,333 @@
+{
+  "comparisons": [
+    {
+      "coverage_status": "partial_request_coverage",
+      "exact_matches": 34,
+      "left": "nccl",
+      "matched_identity_sha256": [
+        "0655751f2b1fd1e87dfc4413313cbf99779906f71c7bade3f4edec99f772c252",
+        "0802d1c81937975e040d93db77b88ca7c183626f208f078bcade8b98a15a31dc",
+        "0abe3a09b745798fc55ae58fccf725379b00c28c96e483f01715e233461db10c",
+        "14204eaefd49ae4b3e260152ba2dddd4d348ca6a56136c53bce01327f3945eb7",
+        "145f2d92cdc07130e989c3a5197373df5d9337e3885015054943c73ed75806af",
+        "18c555db162a0f7e25300a683711d3e9258d552b578974937a7d24b729962efa",
+        "26ccc071e3ee7a1b6132c6a7e939a0784002f3459fd0ceed93fc941abe585abf",
+        "2d80fd1b2ede8d8e461292bd1758351dad56f0050b376136bfbd2709bab7c112",
+        "2f84d3ed0883e7a67892929c4e3228edee3c50158ec101e7cfc76be5827132d2",
+        "3a33f906dce821782abb564370735153b9813d2776004a3f855492c6c7421030",
+        "3e6ca68f7636f8a5f2181b7078c464ffedd2a0fff4c3a20f4b25411d97e8c794",
+        "46278f714544c1bead9f2044d4b4e8c7831e91647c758f72d24c72e585b870a2",
+        "53612c3f946a3856ae4a4dc14ac3ae0f41f11152cf0b30acc82658c7d520eed1",
+        "5722dd5eeebfba8f5be996d2be14d9d50fb92f65bb94bfdcec3ab0e9c222e53d",
+        "5e6855082beb9f62e59fe8251bc271b7a28fd0fe5e97350b10da3295c35d4d3c",
+        "5e80e88235c2d1aee16c99ef62dba1ac15ed6548d75e69de094d63b09011e920",
+        "7404742d2582f96b6a18c3b34315dc8f587dc80092d8b4dfe2ae9fdde061f43d",
+        "8530587874b588724092d4246da0a1af9156fceaa488985c764996a07ffd1f0a",
+        "8a1e7a4fc36a0713098f98efc1405b979d0694bf92023404b0f67feef6958725",
+        "91d9d8de2cac13a4eb1cf56b0107f541b8ecc143d3d74ac377f92df76ab14d5d",
+        "94cd4a5d6eeda4ae459e09da31a22865b78674b8d8cdc01793f197b7cde24297",
+        "adf1216532c8d9065cdbdc6703330a5d1ca325436a8308064c3e4b75942f3903",
+        "b1483f1317ed235a738b7d45338f3f54e8edc42de8ea0e54630bfbc5639af1eb",
+        "b90054a013668022ac4059e8298d9e4b6cfca6255c27f2e22605143fd6e477c2",
+        "c28ddeeef4427a4d66aad48364265fb4ddda950c28184aea18dd8e5e4747a585",
+        "c59ba5766707e443484468a2df1e184e8d30ace471a354e72798b7c4cfc9c32d",
+        "ccff0d7df7592161667796374c60c4133ffab5915291ae2ec4a1e0d46b6e73ea",
+        "d0689c6f51ad32c47ac8b40a24e4ace38bf5f5c39c83e2c190bfc0e230e960cb",
+        "d107fca03dae4cb946365cf6240f1ca5f39537cd5bb20e086ac49f2102393b01",
+        "da08fdb38314b7e2dc11995380704a2d18d15814ed81b717c64e9c92d3427534",
+        "e7a2d43cd11194661dc4d412ecb499671206b04a3a79849fc1bb5b8ae46e0024",
+        "e9b436bbe710aaae5adde8b3598fdbcf95a3d1ba9083f8dce525cc79e94ef0ef",
+        "ea2d77f896d193f2afb08b00d78d3412bc5d35749a7c9ed38963fdb8118f86b9",
+        "f2748864d06a304e27b52bc68745e8aac4607e3cfc2bb292efd2ac64863412d8"
+      ],
+      "ok": true,
+      "repetition_count_differences": [],
+      "right": "neighbor",
+      "shared_observations_left": 57,
+      "shared_observations_right": 57,
+      "shared_request_identities": 34,
+      "token_mismatches": [],
+      "unmatched_left": {
+        "by_workload": {
+          "prefill8k": {
+            "observations": 2,
+            "request_identities": 2
+          }
+        },
+        "identity_sha256": [
+          "3d16abcd73dd2c804914be5d759828da8da7e1936e2384ca775bcef6a882aa0d",
+          "9ba37b506f7aca098262c72e788fbc070ca7d73d4725110c33f2c72459c7a506"
+        ],
+        "observations": 2,
+        "request_identities": 2
+      },
+      "unmatched_right": {
+        "by_workload": {
+          "prefill8k": {
+            "observations": 2,
+            "request_identities": 2
+          },
+          "steady": {
+            "observations": 2,
+            "request_identities": 2
+          }
+        },
+        "identity_sha256": [
+          "6eda3aeb6ad76fcc40db19fcb316370afbc9f684c14b47b8a909461b43bd0d92",
+          "98e85b6e7e6b862ca7d0c27d5670ebe1d51b5343e8d4c9ed41148f7919367c5c",
+          "d3eed604fd99ca90da7d6bb66945603941e203fee7c8acf5b913ac574629bdce",
+          "dfd2cae4ce07089d8572bf867ed5f89c2318394c1444571eda384cb2f736ccd4"
+        ],
+        "observations": 4,
+        "request_identities": 4
+      }
+    }
+  ],
+  "limits": [
+    "Descriptive screening medians; no statistical significance or global optimum claim.",
+    "Token parity covers shared strict request identities only; unmatched requests are unverified.",
+    "Complete request coverage does not require equal repetition counts; these are listed separately.",
+    "Qualification fixture reports are not benchmark raw records and are not compared."
+  ],
+  "matching_mode": "strict",
+  "ok": true,
+  "runs": [
+    {
+      "benchmark_settings": {
+        "concurrent": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 2,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        },
+        "prefill8k": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "prefill",
+          "parameters": {
+            "fixed_words": false,
+            "lengths": "8192",
+            "reps": 2
+          }
+        },
+        "steady": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "sustained",
+          "parameters": {
+            "seconds": 30,
+            "set": "a",
+            "streams": "4",
+            "tokens": 256
+          }
+        },
+        "warmup": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 1,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        }
+      },
+      "directory": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01",
+      "draft_verified_observations": {
+        "false": 0,
+        "true": 59
+      },
+      "metrics": {
+        "cold_8k": {
+          "median_prefill_tps": 1666.6433685123206,
+          "median_ttft_s": 4.915277938358486,
+          "validated_requests": 2
+        },
+        "concurrent": {
+          "1": {
+            "median_aggregate_tps": 74.31724858136423,
+            "median_per_request_ttft_s": 0.131,
+            "repetitions": 2
+          },
+          "4": {
+            "median_aggregate_tps": 116.30165566403234,
+            "median_per_request_ttft_s": 0.673,
+            "repetitions": 2
+          },
+          "8": {
+            "median_aggregate_tps": 159.41654433774266,
+            "median_per_request_ttft_s": 1.273,
+            "repetitions": 2
+          }
+        },
+        "steady": {
+          "median_aggregate_tps": 131.39,
+          "reported_requests": 18,
+          "summary_rows": 1
+        }
+      },
+      "name": "nccl",
+      "ok": true,
+      "sources": [
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/concurrent-raw.jsonl",
+          "sha256": "d54877cb4c746d0c308fda70d4f71ad112f2a49b33f106c220e5d2df5d7d08d4"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/concurrent.json",
+          "sha256": "1fd108f2a7fd5cd742c2ce976e225c1ebd653364b53b2a9fb8a02decf2da7df3"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/prefill8k-raw.jsonl",
+          "sha256": "d5fdc2cefcdeb73aea619d877a64dec71fe8635d8907b9dfcb1aa897c04150be"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/prefill8k.json",
+          "sha256": "8b52fdf81652e88170da78635249e1a3754adb232ee699a2ce751c036f4e87ff"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/steady-raw.jsonl",
+          "sha256": "c5b0621edf402d0934682a22ab9f3ee2de8075b657ba5622e215bc488d3e5521"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/steady.json",
+          "sha256": "3c1b05d10747f138c7a88fab5aa49919d41bae4e3efba4ee203a31e66fa4f525"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/warmup-raw.jsonl",
+          "sha256": "c53ee9a0c058dad80862e13c3b0fe351cb0357ca8698652f1097834e0cd05ae3"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-upstream-nccl-screen01/warmup.json",
+          "sha256": "fe0cd7171f3062433ab32ad59cef136e2eb10b0c30030908090a03efdfa5ac4d"
+        }
+      ],
+      "unique_request_identities": 36,
+      "validated_generation_observations": 59,
+      "validation_errors": [],
+      "within_run_divergences": [],
+      "worker_errors": []
+    },
+    {
+      "benchmark_settings": {
+        "concurrent": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 2,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        },
+        "prefill8k": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "prefill",
+          "parameters": {
+            "fixed_words": false,
+            "lengths": "8192",
+            "reps": 2
+          }
+        },
+        "steady": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "sustained",
+          "parameters": {
+            "seconds": 30,
+            "set": "a",
+            "streams": "4",
+            "tokens": 256
+          }
+        },
+        "warmup": {
+          "client_sha256": "f5f24b1e105e6d073e26b780983be3f4654219b986290e1f6a106c1955232bc5",
+          "cmd": "concurrent",
+          "parameters": {
+            "reps": 1,
+            "set": "a",
+            "streams": "1,4,8",
+            "tokens": 256
+          }
+        }
+      },
+      "directory": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01",
+      "draft_verified_observations": {
+        "false": 0,
+        "true": 61
+      },
+      "metrics": {
+        "cold_8k": {
+          "median_prefill_tps": 1685.1834832999511,
+          "median_ttft_s": 4.86120012938045,
+          "validated_requests": 2
+        },
+        "concurrent": {
+          "1": {
+            "median_aggregate_tps": 85.78797914389389,
+            "median_per_request_ttft_s": 0.129,
+            "repetitions": 2
+          },
+          "4": {
+            "median_aggregate_tps": 133.7361672548323,
+            "median_per_request_ttft_s": 0.444,
+            "repetitions": 2
+          },
+          "8": {
+            "median_aggregate_tps": 174.9068126390193,
+            "median_per_request_ttft_s": 1.2285,
+            "repetitions": 2
+          }
+        },
+        "steady": {
+          "median_aggregate_tps": 151.04,
+          "reported_requests": 20,
+          "summary_rows": 1
+        }
+      },
+      "name": "neighbor",
+      "ok": true,
+      "sources": [
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/concurrent-raw.jsonl",
+          "sha256": "4569d2789c634da13c231e45c20f82212999fcbec01f56719b0425e954412a5d"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/concurrent.json",
+          "sha256": "5f9b8b78ac7b9f6eb9e29f901f725d097f4cd16e09f9475e4ffd39162d252dc9"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/prefill8k-raw.jsonl",
+          "sha256": "babca25cf5eb120d44d14894476032565f51b88c68b76785622b5a86dc7e45f4"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/prefill8k.json",
+          "sha256": "523f9127dc76fe8585597f75bc66028226d282ca13d1f413b131ace16f03c27b"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/steady-raw.jsonl",
+          "sha256": "f9088a79fe7300e7f5c8ee1442006883b9c6284ace26edf27f4b2f3883223677"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/steady.json",
+          "sha256": "514bc8af7e8263cadf0095e481351354a76c639cc69c285ce31a1a18eb53c361"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/warmup-raw.jsonl",
+          "sha256": "fb6196263ddfd3a8d3c0b36a5d3b83c86d2f01918e47e053489e2d6110848951"
+        },
+        {
+          "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/bench-neighbor-screen01/warmup.json",
+          "sha256": "708bcd237af64b635f3c27561be64d7b487b51ba29d55a688f1f6883c0181f2c"
+        }
+      ],
+      "unique_request_identities": 38,
+      "validated_generation_observations": 61,
+      "validation_errors": [],
+      "within_run_divergences": [],
+      "worker_errors": []
+    }
+  ],
+  "schema_version": 1
+}

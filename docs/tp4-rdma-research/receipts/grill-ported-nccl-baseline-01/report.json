@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "kind": "performance-capture-comparison-v1",
+  "result": "INVALID",
+  "result_scope": "between these capture periods; not causal attribution",
+  "model": "GLM-5.3-Flash-EXL3",
+  "baseline_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01",
+  "candidate_path": null,
+  "declared_change": null,
+  "baseline_accounting": {
+    "dispatched_requests": 28,
+    "complete_requests": 27,
+    "known_reported_completion_tokens": 10800,
+    "missing_completion_usage_requests": 1,
+    "reported_completion_tokens": null,
+    "request_ceiling": 32,
+    "output_token_ceiling": 12800,
+    "allowance_seconds": 300,
+    "minimum_full_capture_tokens_per_second": 42.666666666666664
+  },
+  "candidate_accounting": null,
+  "baseline_ready": false,
+  "baseline_complete_acquisitions": 6,
+  "candidate_complete_acquisitions": 0,
+  "baseline_acquisition_medians": [
+    154.08457008671493,
+    155.11625769619008,
+    153.78836491057015,
+    154.54326284099972,
+    155.30410096008995,
+    155.55601358159555
+  ],
+  "candidate_acquisition_medians": [],
+  "observed_change_percent": null,
+  "model_based_interval_percent": null,
+  "model_based_confidence_level": null,
+  "log_mean_difference": null,
+  "heteroscedastic_standard_error": null,
+  "critical_value": 2.364624251,
+  "conservative_degrees_of_freedom": 7,
+  "baseline_capture_sha256": "cf8f27b0fd7e5f26e3a8d67189544315b973f632d86fb0b88899c99582df25d2",
+  "candidate_capture_sha256": null,
+  "report_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/report.json",
+  "reasons": [
+    "stopped-after-response-failure"
+  ],
+  "stop_reason": "stopped-after-response-failure",
+  "first_failure": {
+    "acquisition": 6,
+    "acquisition_status": "stopped-after-response-failure",
+    "wave": {
+      "index": 3,
+      "phase": "measured",
+      "cell": "structured-1",
+      "case": "structured",
+      "trial": 2,
+      "concurrency": 1
+    },
+    "lane": 0,
+    "status": "transport_error",
+    "http_status": null,
+    "usage": {
+      "prompt_tokens": null,
+      "completion_tokens": null,
+      "total_tokens": null,
+      "cached_prompt_tokens": null,
+      "reasoning_tokens": null
+    },
+    "expected_completion_tokens": 400,
+    "detail": "connection failed",
+    "eligibility_errors": [
+      "response_not_complete",
+      "completion_usage_unavailable"
+    ],
+    "receipt_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/acquisition-06/wave-000003/wave.json",
+    "response_path": "/home/spark/lab/glm-tp4-ring-20261022/grill-ported-nccl-baseline-01/acquisition-06/wave-000003/response-0000.bin"
+  },
+  "assumptions": "Model-based interval assumes stable, independent acquisition-level variation and an adequate log-scale mean model. Resetting a client does not prove independence. Positive autocorrelation can make the interval narrower than justified, increasing false directional conclusions. Sequential captures cannot remove time or carryover confounding; no causal attribution, equivalence, noninferiority, or guaranteed precision/power is established.",
+  "scope": "One short synthetic structured C1/exact400 workload; not general concurrency, long-context, model quality, tail SLOs, or full serving qualification. Deployment values are operator declarations, not server attestation. A settings fingerprint cannot prove only one internal knob changed."
+}

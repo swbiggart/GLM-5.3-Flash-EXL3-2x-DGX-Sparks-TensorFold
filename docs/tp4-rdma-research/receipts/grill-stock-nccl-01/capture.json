@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "kind": "performance-capture-v1",
+  "metric_contract": "generated-text-arrival-v2",
+  "collector_sha256": "2b48429f5b97cc949a221b8fcef20cbcbb583432ceb766a18d8b1bf3a10b9310",
+  "workload_sha256": "a2eb10e38e7c351c91a3dc78452af3e99b505d718342c3344517375f8567c959",
+  "deployment_sha256": "c207bb8114b4bf377cf010be6cb67f3402261c06473dcaf2b338f4f3d98fc21a",
+  "endpoint": "http://127.0.0.1:40053/v1/chat/completions",
+  "model": "GLM-5.3-Flash-EXL3",
+  "auth_env": null,
+  "local_http": true,
+  "seconds": 300,
+  "request_ceiling": 32,
+  "output_token_ceiling": 12800,
+  "baseline_sha256": null,
+  "change": null,
+  "status": "complete",
+  "stop_reason": null,
+  "acquisitions": [
+    {
+      "directory": "acquisition-00",
+      "plan_sha256": "c831514a21e7f4d46c8e13a48444ec66f638670d2caba03b48bb7143b55a5d17",
+      "evidence_sha256": "cdf2a1a55dbf7f4a97c1b0efdbc94c1f4698109c1aaa891e901633eeaf5e6dcb",
+      "started_unix_ms": 1792660900852,
+      "finished_unix_ms": 1792660911413,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.68085269516638
+    },
+    {
+      "directory": "acquisition-01",
+      "plan_sha256": "1f343be93b4d4efdf43eb8b4e6bb469852b61d5ae15e91e90069fe5c47a040e7",
+      "evidence_sha256": "d7e172a4752f76c7a9acd254453c58b8231ebc4d4d03484557aa217ab551c8b0",
+      "started_unix_ms": 1792660911414,
+      "finished_unix_ms": 1792660921782,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.682912827299
+    },
+    {
+      "directory": "acquisition-02",
+      "plan_sha256": "4d59937bb3f50b83db877a581a4930eb36e6cc40e068d4b8d256d359a68e549d",
+      "evidence_sha256": "513dc0a265b07cf6e3cb1629abec096b1499efaa86eaf76e5f5cb341180f518c",
+      "started_unix_ms": 1792660921783,
+      "finished_unix_ms": 1792660932133,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.76677923827805
+    },
+    {
+      "directory": "acquisition-03",
+      "plan_sha256": "d4a6553c53775503ee4df458461cd41b705f5c2e6abbf9b52be28e57b9585807",
+      "evidence_sha256": "551c4c4aa7e585926914c218b17f828ca161dccd6526b4086288119c406e2343",
+      "started_unix_ms": 1792660932134,
+      "finished_unix_ms": 1792660942533,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.60018687582445
+    },
+    {
+      "directory": "acquisition-04",
+      "plan_sha256": "72877827dd5918f7c2f314af45428f209ddd006d803ca11e3b77c790ea071d94",
+      "evidence_sha256": "b6bcc8ef560cfd30e0c9c216dd5d88517e6ec869d79fed00797fba934328715f",
+      "started_unix_ms": 1792660942534,
+      "finished_unix_ms": 1792660952994,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.3171265089059
+    },
+    {
+      "directory": "acquisition-05",
+      "plan_sha256": "dcc5fa145510189fd8b6193234b2733fda15be407373aafdfadcfe0b2fe4b94f",
+      "evidence_sha256": "ab196161b89edee7d9ee1094d28875a8dafc74dffcc25de6682b655c4a7ee7d1",
+      "started_unix_ms": 1792660952995,
+      "finished_unix_ms": 1792660963460,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.0218154449785
+    },
+    {
+      "directory": "acquisition-06",
+      "plan_sha256": "c0c97b395d5392597908e118f00ad89834e92186704f39326e12f6738ce0b1bd",
+      "evidence_sha256": "2f6aa16f2dbb679fded604ccd271d92ece9c62b2db244e5a85f2b42695b1431f",
+      "started_unix_ms": 1792660963461,
+      "finished_unix_ms": 1792660973897,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 156.03952949400673
+    },
+    {
+      "directory": "acquisition-07",
+      "plan_sha256": "8e7065816ead32a1b06d53e35db63e40ce3863976c8801afc34b271efaa2abac",
+      "evidence_sha256": "c74bcdc8d727252d433f5314dbc22f5b6b8348f23eb8d2b7f3b8ceac198ad985",
+      "started_unix_ms": 1792660973898,
+      "finished_unix_ms": 1792660984347,
+      "status": "completed",
+      "median_achieved_completion_tokens_per_second": 155.35090662789108
+    }
+  ]
+}

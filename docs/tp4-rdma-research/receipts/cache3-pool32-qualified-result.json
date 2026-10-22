@@ -1,0 +1,94 @@
+{
+  "spark": {
+    "health": {
+      "candidate_id": "2de67817f5984e42c672db202dc7a71e1abcc2022acb6241fba0f977e071708f",
+      "running": true,
+      "health_code": 200,
+      "exit_code": 0
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0176-candidate.log",
+      "sha256": "285fea2859dd41926478386fa87a98c93fad723fd2e35b9b13bd1b52d671da7b",
+      "bytes": 9268
+    },
+    "last_lines": [
+      "info: prompt cache: 40 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 35, evicted 0, refused 0, failed 0)",
+      "info: prompt cache: 25 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 36, evicted 0, refused 0, failed 0)",
+      "info: prompt cache: 29 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 37, evicted 0, refused 0, failed 0)",
+      "info: prompt cache: 29 tokens, resumed at 0, kept 0; 8 states, 511 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 38, evicted 0, refused 0, failed 0)",
+      "info: prompt cache: 32752 tokens, resumed at 0, kept 1; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 17, misses 39, evicted 1, refused 0, failed 0)",
+      "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 18, misses 39, evicted 1, refused 0, failed 0)",
+      "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 19, misses 39, evicted 1, refused 0, failed 0)",
+      "info: prompt cache: 32752 tokens, resumed at 32704, kept 0; 8 states, 699 MiB and 0 MiB spare of 3072 MiB (hits 20, misses 39, evicted 1, refused 0, failed 0)"
+    ]
+  },
+  "spark-peer": {
+    "health": {
+      "candidate_id": "a94b018aa29e2aa0e11f951607a12808e12f8ff635e2a5c3bf6adef4de778e25",
+      "running": true,
+      "health_code": null,
+      "exit_code": 0
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0177-candidate.log",
+      "sha256": "b68a30411505835a2243b9bb053f24dd1905283b44dc58fca8a8d42f056b87b5",
+      "bytes": 11625
+    },
+    "last_lines": [
+      "info: rank 1: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 42517 ms (dense MSE quantize 187577 ms, expert stacks 340125 ms, dense reads 221871 ms, pack 464 ms, head 467 ms)",
+      "info: TF_GLM_SIDE=1: the MoE shared expert runs on a second stream in decode windows",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+    ]
+  },
+  "msi-b9dc": {
+    "health": {
+      "candidate_id": "a67158c1fbb2affd45de5d4993df668848e4450fcec764fa482fcdef4a271633",
+      "running": true,
+      "health_code": null,
+      "exit_code": 0
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0178-candidate.log",
+      "sha256": "7107ec3dd29a052886c8c57d7835ec3d1c1d309d61b81d656656ef37d8ef1b3e",
+      "bytes": 12135
+    },
+    "last_lines": [
+      "info: rank 2: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 42235 ms (dense MSE quantize 188036 ms, expert stacks 350368 ms, dense reads 219897 ms, pack 451 ms, head 455 ms)",
+      "info: TF_GLM_SIDE=1: the MoE shared expert runs on a second stream in decode windows",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+    ]
+  },
+  "msi-c21f": {
+    "health": {
+      "candidate_id": "80b9821e1dcb9af60ac100bb18f53e2e9a2df4807f4c359acb6cbd42540df783",
+      "running": true,
+      "health_code": null,
+      "exit_code": 0
+    },
+    "log": {
+      "path": "/var/lib/spark-glm-tp4/glm-tp4-ring-20261022-a3/0190-candidate.log",
+      "sha256": "f4318c7e9cfda2fa8a640272db1dbee53d2284ab6ea6420c6080dac3fad748a4",
+      "bytes": 13314
+    },
+    "last_lines": [
+      "info: rank 3: settings agreed, NCCL joined",
+      "warning: GLM EXL3 upload uses candidateMse; clipping parity against ATen CUDA is unproven",
+      "warning: lm_head uses quant.makeF8; block-FP8 load parity is the P2/P3 qualification limit",
+      "info: experts rotate each row's input once (shared gate/up scale) in 42 MoE layers",
+      "info: weights loaded in 43102 ms (dense MSE quantize 187436 ms, expert stacks 342625 ms, dense reads 225499 ms, pack 451 ms, head 482 ms)",
+      "info: TF_GLM_SIDE=1: the MoE shared expert runs on a second stream in decode windows",
+      "info: L2 prefetch in decode windows (bulk, up to 8.0 MiB a site): a 45 sites 6.5 MiB, f 45 sites 8.0 MiB, o 45 sites 5.4 MiB",
+      "info: GLM KV pool: 5619712 tokens, display 0 MiB (drm)"
+    ]
+  }
+}

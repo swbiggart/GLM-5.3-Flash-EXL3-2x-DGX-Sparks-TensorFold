@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "baseline_tree": "41ff7bacfb517e165b2b9bdb3d8b182d225d5291",
+  "research_tree": "ab121cc989bc99474f19f00aee3370b30971031f",
+  "source_paths": 15,
+  "patch_sha256": "c10e9b29499e2b68ef82b55ceedbd2e6e7f8a680518090a75dd8cc4f8126b739",
+  "production_byte_identical": true,
+  "baseline_blob_identical": true,
+  "baseline_mode_exceptions": [
+    "tools/zig/test_fabric.sh",
+    "tools/zig/test_lanes.sh",
+    "tools/zig/triton_aot_manifest.py",
+    "zig/tests/cuda/nemotron/test_aot_manifest.py",
+    "zig/tests/server/build.sh",
+    "zig/tests/server/zig_test.sh"
+  ],
+  "probe_source": "44cd03144b1701be22449bea3d8f99bf44046056",
+  "network": false,
+  "NVCC": false,
+  "GPU": false
+}

@@ -1,0 +1,6 @@
+Build Summary: 4/4 steps succeeded
+test-glm-transport-host success
++- run test cached
+   +- compile test debug native cached 41ms MaxRSS:32M
+      +- options cached
+

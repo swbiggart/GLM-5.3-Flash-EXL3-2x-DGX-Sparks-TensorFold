@@ -1,0 +1,11 @@
+{
+  "reviewer": "claude/claude-opus-5-5",
+  "thinking": "high",
+  "effective_thinking": "high",
+  "mode": "plan",
+  "fast": false,
+  "verification": "Paseo get_agent_status snapshot confirmed selected model, effective High, Plan mode and Fast off; provider low-level runtime model field was null.",
+  "reviewed_research_commit": "5947fb51e20be1a02f93372a47b132e2c5e57376",
+  "reviewed_focused_commit": "71660a4c0f46d6189f7a455057c317ab6a504a9f",
+  "scope": "Read-only source/evidence/PR text review. No tests, build, GPU or SSH executed by reviewer. Fork push/research PR only; no MiaAI PR authorization."
+}

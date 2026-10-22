@@ -1,0 +1,176 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 473B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/spark/glm-tp4:zig-a6c7e08-rdma-02
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/spark/glm-tp4-build:rdma02
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/2] FROM docker.io/spark/glm-tp4:zig-a6c7e08-rdma-02@sha256:385e1fd4af762b5a0b54df7d0979b2e8e60bd69018969d8e6bb53f0f1b53311e
+#5 resolve docker.io/spark/glm-tp4:zig-a6c7e08-rdma-02@sha256:385e1fd4af762b5a0b54df7d0979b2e8e60bd69018969d8e6bb53f0f1b53311e 0.0s done
+#5 DONE 0.0s
+
+#6 [probe_build 1/3] FROM docker.io/spark/glm-tp4-build:rdma02@sha256:7e5c0ff414177c160d9c7c6b33a146cd2fdacff31a2fe950830d7addfa186b1e
+#6 resolve docker.io/spark/glm-tp4-build:rdma02@sha256:7e5c0ff414177c160d9c7c6b33a146cd2fdacff31a2fe950830d7addfa186b1e 0.0s done
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 21.78kB done
+#7 DONE 0.0s
+
+#8 [probe_build 2/3] COPY glm-probe03-04.patch /tmp/glm-probe03-04.patch
+#8 DONE 0.0s
+
+#9 [probe_build 3/3] RUN cd /tensorfold && git apply /tmp/glm-probe03-04.patch && /opt/zig/zig build -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121 -Doptimize=fast --prefix /opt/tensorfold -j4 glm-transport-probe
+#9 58.15 glm-transport-probe
+#9 58.15 +- install tf-glm-transport-probe
+#9 58.15    +- compile exe tf-glm-transport-probe fast native
+#9 58.15       +- run /usr/local/cuda/bin/nvcc (prefill_attention.fatbin) w
+#9 58.15 ./zig/kernels/cuda/prefill_attention.cu(18): warning #177-D: variable "tf_prefill_attention::SMEM_MAX" was declared but never referenced
+#9 58.15   constexpr int SMEM_MAX = 96 * 1024;
+#9 58.15                 ^
+#9 58.15 
+#9 58.15 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#9 58.15 
+#9 58.15 
+#9 62.32 glm-transport-probe
+#9 62.32 +- install tf-glm-transport-probe
+#9 62.32    +- compile exe tf-glm-transport-probe fast native
+#9 62.32       +- run /usr/local/cuda/bin/nvcc (fp8_experts.fatbin) w
+#9 62.32 ./zig/kernels/cuda/fp8_experts.cu(153): warning #177-D: variable "RW" was declared but never referenced
+#9 62.32     constexpr int RW = PromptCfg<M, RT, CW>::RW;
+#9 62.32                   ^
+#9 62.32 
+#9 62.32 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#9 62.32 
+#9 62.32 
+#9 73.21 glm-transport-probe
+#9 73.21 +- install tf-glm-transport-probe
+#9 73.21    +- compile exe tf-glm-transport-probe fast native
+#9 73.21       +- run /usr/local/cuda/bin/nvcc (glm_qmm.fatbin) w
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(409): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(618): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(827): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(1036): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(1245): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(1454): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(1663): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(1872): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(2081): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(2290): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(2499): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(2708): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(2917): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(3126): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(3335): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(3544): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(3753): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(3962): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(4171): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 ./zig/kernels/cuda/glm_qmm.cu(4380): warning #177-D: variable "E" was declared but never referenced
+#9 73.21               constexpr int E = T::MT * T::NT * 4;
+#9 73.21                             ^
+#9 73.21 
+#9 73.21 
+#9 76.10 glm-transport-probe
+#9 76.10 +- install tf-glm-transport-probe
+#9 76.10    +- compile exe tf-glm-transport-probe fast native
+#9 76.10       +- run /usr/local/cuda/bin/nvcc (glm_kda_chunk.fatbin) w
+#9 76.10 ./zig/kernels/cuda/glm_kda_chunk.cu(22): warning #177-D: variable "tf_glm_kda_chunk::NW" was declared but never referenced
+#9 76.10   constexpr int NT = 256, NW = NT / 32;
+#9 76.10                           ^
+#9 76.10 
+#9 76.10 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#9 76.10 
+#9 76.10 ./zig/kernels/cuda/glm_kda_chunk.cu(29): warning #177-D: variable "tf_glm_kda_chunk::PF_P" was declared but never referenced
+#9 76.10   constexpr int PF_P = ((BT + HALO) * PCH / 8 + NT - 1) / NT;
+#9 76.10                 ^
+#9 76.10 
+#9 76.10 
+#9 DONE 91.4s
+
+#5 [stage-1 1/2] FROM docker.io/spark/glm-tp4:zig-a6c7e08-rdma-02@sha256:385e1fd4af762b5a0b54df7d0979b2e8e60bd69018969d8e6bb53f0f1b53311e
+#5 CACHED
+
+#10 [stage-1 2/2] COPY --from=probe_build /opt/tensorfold/bin/tf-glm-transport-probe /opt/tensorfold/bin/tf-glm-transport-probe
+#10 DONE 0.1s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.2s done
+#11 exporting manifest sha256:e6edf744b688fc0409fe61a1b75494e6b8d7b07d9f4c8ad4db2b831820e7b3d0 0.0s done
+#11 exporting config sha256:916f3f769bf0d222b2bf65883a57ce0b7e01276678270a2ed48e789bd6adf9cc 0.0s done
+#11 exporting attestation manifest sha256:7a18b748ceafb0c9a729faa8e404e584b32a9cfd0fa776739c5d4b52c8d619dd 0.0s done
+#11 exporting manifest list sha256:13391f95793d44523054047551ee19382c3646898a17c61a498b49665d32c4f1
+#11 exporting manifest list sha256:13391f95793d44523054047551ee19382c3646898a17c61a498b49665d32c4f1 0.0s done
+#11 naming to docker.io/spark/glm-tp4:zig-a6c7e08-probe-04 done
+#11 unpacking to docker.io/spark/glm-tp4:zig-a6c7e08-probe-04 0.1s done
+#11 DONE 0.5s

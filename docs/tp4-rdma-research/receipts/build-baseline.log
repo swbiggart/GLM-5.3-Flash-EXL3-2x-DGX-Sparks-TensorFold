@@ -1,0 +1,647 @@
+13.0.2-devel-ubuntu24.04: Pulling from nvidia/cuda
+704ea4a1a75a: Pulling fs layer
+ae673f68565b: Pulling fs layer
+a2e7e61257af: Pulling fs layer
+1fb3a2ad2292: Pulling fs layer
+879ba6afff8c: Pulling fs layer
+c9a23150e219: Pulling fs layer
+ae673f68565b: Download complete
+879ba6afff8c: Download complete
+704ea4a1a75a: Download complete
+1fb3a2ad2292: Download complete
+c9a23150e219: Download complete
+a2e7e61257af: Download complete
+ae673f68565b: Pull complete
+879ba6afff8c: Pull complete
+1fb3a2ad2292: Pull complete
+a2e7e61257af: Pull complete
+704ea4a1a75a: Pull complete
+c9a23150e219: Pull complete
+Digest: sha256:5dc1bca23d05bd37b011be68ec470c03b403a5da07ec3a86e41af9470e9d0cc6
+Status: Downloaded newer image for nvidia/cuda:13.0.2-devel-ubuntu24.04
+docker.io/nvidia/cuda:13.0.2-devel-ubuntu24.04
+13.0.2-runtime-ubuntu24.04: Pulling from nvidia/cuda
+Digest: sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2
+Status: Downloaded newer image for nvidia/cuda:13.0.2-runtime-ubuntu24.04
+docker.io/nvidia/cuda:13.0.2-runtime-ubuntu24.04
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 5.62kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/nvidia/cuda@sha256:5dc1bca23d05bd37b011be68ec470c03b403a5da07ec3a86e41af9470e9d0cc6
+#2 DONE 0.6s
+
+#3 [internal] load metadata for docker.io/nvidia/cuda@sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [stage-1 1/6] FROM docker.io/nvidia/cuda@sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2
+#5 resolve docker.io/nvidia/cuda@sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2 0.0s done
+#5 ...
+
+#6 [internal] load build context
+#6 transferring context: 20.47MB 0.0s done
+#6 DONE 0.1s
+
+#7 [build  1/12] FROM docker.io/nvidia/cuda@sha256:5dc1bca23d05bd37b011be68ec470c03b403a5da07ec3a86e41af9470e9d0cc6
+#7 resolve docker.io/nvidia/cuda@sha256:5dc1bca23d05bd37b011be68ec470c03b403a5da07ec3a86e41af9470e9d0cc6 0.0s done
+#7 DONE 0.5s
+
+#5 [stage-1 1/6] FROM docker.io/nvidia/cuda@sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2
+#5 DONE 0.5s
+
+#8 [stage-1 2/6] RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends       libibverbs1 ibverbs-providers rdma-core libcudnn9-cuda-13 && rm -rf /var/lib/apt/lists/*
+#8 5.230 W: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/sbsa/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+#8 ...
+
+#9 [build  2/12] RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends       ca-certificates curl git xz-utils python3-pip python3-venv libibverbs-dev && rm -rf /var/lib/apt/lists/*
+#9 3.690 W: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/sbsa/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.
+#9 8.624 debconf: delaying package configuration, since apt-utils is not installed
+#9 8.705 Selecting previously unselected package libpython3.12-minimal:arm64.
+#9 8.705 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 14869 files and directories currently installed.)
+#9 8.740 Preparing to unpack .../libpython3.12-minimal_3.12.3-1ubuntu0.17_arm64.deb ...
+#9 8.746 Unpacking libpython3.12-minimal:arm64 (3.12.3-1ubuntu0.17) ...
+#9 8.848 Selecting previously unselected package python3.12-minimal.
+#9 8.850 Preparing to unpack .../python3.12-minimal_3.12.3-1ubuntu0.17_arm64.deb ...
+#9 8.858 Unpacking python3.12-minimal (3.12.3-1ubuntu0.17) ...
+#9 8.939 Setting up libpython3.12-minimal:arm64 (3.12.3-1ubuntu0.17) ...
+#9 8.966 Setting up python3.12-minimal (3.12.3-1ubuntu0.17) ...
+#9 9.371 Selecting previously unselected package python3-minimal.
+#9 9.371 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15180 files and directories currently installed.)
+#9 9.376 Preparing to unpack .../python3-minimal_3.12.3-0ubuntu2.1_arm64.deb ...
+#9 9.381 Unpacking python3-minimal (3.12.3-0ubuntu2.1) ...
+#9 9.420 Selecting previously unselected package media-types.
+#9 9.422 Preparing to unpack .../media-types_10.1.0_all.deb ...
+#9 9.428 Unpacking media-types (10.1.0) ...
+#9 9.473 Selecting previously unselected package netbase.
+#9 9.476 Preparing to unpack .../archives/netbase_6.4_all.deb ...
+#9 9.481 Unpacking netbase (6.4) ...
+#9 9.527 Selecting previously unselected package tzdata.
+#9 9.529 Preparing to unpack .../tzdata_2026e-0ubuntu0.24.04.1_all.deb ...
+#9 9.535 Unpacking tzdata (2026e-0ubuntu0.24.04.1) ...
+#9 9.604 Preparing to unpack .../liblzma5_5.6.1+really5.4.5-1ubuntu0.4_arm64.deb ...
+#9 9.631 Unpacking liblzma5:arm64 (5.6.1+really5.4.5-1ubuntu0.4) over (5.6.1+really5.4.5-1ubuntu0.2) ...
+#9 9.700 Setting up liblzma5:arm64 (5.6.1+really5.4.5-1ubuntu0.4) ...
+#9 9.750 Selecting previously unselected package libpython3.12-stdlib:arm64.
+#9 9.750 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 15743 files and directories currently installed.)
+#9 9.758 Preparing to unpack .../libpython3.12-stdlib_3.12.3-1ubuntu0.17_arm64.deb ...
+#9 9.765 Unpacking libpython3.12-stdlib:arm64 (3.12.3-1ubuntu0.17) ...
+#9 9.871 Selecting previously unselected package python3.12.
+#9 9.873 Preparing to unpack .../python3.12_3.12.3-1ubuntu0.17_arm64.deb ...
+#9 9.879 Unpacking python3.12 (3.12.3-1ubuntu0.17) ...
+#9 9.919 Selecting previously unselected package libpython3-stdlib:arm64.
+#9 9.922 Preparing to unpack .../libpython3-stdlib_3.12.3-0ubuntu2.1_arm64.deb ...
+#9 9.928 Unpacking libpython3-stdlib:arm64 (3.12.3-0ubuntu2.1) ...
+#9 9.968 Setting up python3-minimal (3.12.3-0ubuntu2.1) ...
+#9 10.11 Selecting previously unselected package python3.
+#9 10.11 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 16150 files and directories currently installed.)
+#9 10.12 Preparing to unpack .../00-python3_3.12.3-0ubuntu2.1_arm64.deb ...
+#9 10.13 Unpacking python3 (3.12.3-0ubuntu2.1) ...
+#9 10.19 Preparing to unpack .../01-ca-certificates_20260816ubuntu0.24.04.1_all.deb ...
+#9 10.21 Unpacking ca-certificates (20260816ubuntu0.24.04.1) over (20240203) ...
+#9 10.73 Selecting previously unselected package libkrb5support0:arm64.
+#9 10.74 Preparing to unpack .../02-libkrb5support0_1.20.1-6ubuntu2.10_arm64.deb ...
+#9 10.74 Unpacking libkrb5support0:arm64 (1.20.1-6ubuntu2.10) ...
+#9 10.79 Selecting previously unselected package libk5crypto3:arm64.
+#9 10.79 Preparing to unpack .../03-libk5crypto3_1.20.1-6ubuntu2.10_arm64.deb ...
+#9 10.80 Unpacking libk5crypto3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 10.85 Selecting previously unselected package libkeyutils1:arm64.
+#9 10.85 Preparing to unpack .../04-libkeyutils1_1.6.3-3build1_arm64.deb ...
+#9 10.85 Unpacking libkeyutils1:arm64 (1.6.3-3build1) ...
+#9 10.90 Selecting previously unselected package libkrb5-3:arm64.
+#9 10.90 Preparing to unpack .../05-libkrb5-3_1.20.1-6ubuntu2.10_arm64.deb ...
+#9 10.91 Unpacking libkrb5-3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 10.97 Selecting previously unselected package libgssapi-krb5-2:arm64.
+#9 10.97 Preparing to unpack .../06-libgssapi-krb5-2_1.20.1-6ubuntu2.10_arm64.deb ...
+#9 10.98 Unpacking libgssapi-krb5-2:arm64 (1.20.1-6ubuntu2.10) ...
+#9 11.02 Selecting previously unselected package python3-pkg-resources.
+#9 11.03 Preparing to unpack .../07-python3-pkg-resources_68.1.2-2ubuntu1.2_all.deb ...
+#9 11.03 Unpacking python3-pkg-resources (68.1.2-2ubuntu1.2) ...
+#9 11.09 Selecting previously unselected package libnl-3-200:arm64.
+#9 11.09 Preparing to unpack .../08-libnl-3-200_3.7.0-0.3build1.1_arm64.deb ...
+#9 11.10 Unpacking libnl-3-200:arm64 (3.7.0-0.3build1.1) ...
+#9 11.15 Selecting previously unselected package libnl-route-3-200:arm64.
+#9 11.15 Preparing to unpack .../09-libnl-route-3-200_3.7.0-0.3build1.1_arm64.deb ...
+#9 11.16 Unpacking libnl-route-3-200:arm64 (3.7.0-0.3build1.1) ...
+#9 11.21 Selecting previously unselected package libibverbs1:arm64.
+#9 11.21 Preparing to unpack .../10-libibverbs1_50.0-2ubuntu0.2_arm64.deb ...
+#9 11.22 Unpacking libibverbs1:arm64 (50.0-2ubuntu0.2) ...
+#9 11.28 Selecting previously unselected package ibverbs-providers:arm64.
+#9 11.29 Preparing to unpack .../11-ibverbs-providers_50.0-2ubuntu0.2_arm64.deb ...
+#9 11.30 Unpacking ibverbs-providers:arm64 (50.0-2ubuntu0.2) ...
+#9 11.36 Selecting previously unselected package libnghttp2-14:arm64.
+#9 11.36 Preparing to unpack .../12-libnghttp2-14_1.59.0-1ubuntu0.4_arm64.deb ...
+#9 11.37 Unpacking libnghttp2-14:arm64 (1.59.0-1ubuntu0.4) ...
+#9 11.42 Selecting previously unselected package libpsl5t64:arm64.
+#9 11.42 Preparing to unpack .../13-libpsl5t64_0.21.2-1.1build1_arm64.deb ...
+#9 11.42 Unpacking libpsl5t64:arm64 (0.21.2-1.1build1) ...
+#9 11.47 Preparing to unpack .../14-xz-utils_5.6.1+really5.4.5-1ubuntu0.4_arm64.deb ...
+#9 11.49 Unpacking xz-utils (5.6.1+really5.4.5-1ubuntu0.4) over (5.6.1+really5.4.5-1ubuntu0.2) ...
+#9 11.58 Selecting previously unselected package libbrotli1:arm64.
+#9 11.58 Preparing to unpack .../15-libbrotli1_1.1.0-2build2_arm64.deb ...
+#9 11.59 Unpacking libbrotli1:arm64 (1.1.0-2build2) ...
+#9 11.64 Selecting previously unselected package librtmp1:arm64.
+#9 11.65 Preparing to unpack .../16-librtmp1_2.4+20151223.gitfa8646d.1-2build7_arm64.deb ...
+#9 11.65 Unpacking librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2build7) ...
+#9 11.71 Selecting previously unselected package libssh-4:arm64.
+#9 11.71 Preparing to unpack .../17-libssh-4_0.10.6-2ubuntu0.5_arm64.deb ...
+#9 11.71 Unpacking libssh-4:arm64 (0.10.6-2ubuntu0.5) ...
+#9 11.76 Selecting previously unselected package libcurl4t64:arm64.
+#9 11.76 Preparing to unpack .../18-libcurl4t64_8.5.0-2ubuntu10.16_arm64.deb ...
+#9 11.77 Unpacking libcurl4t64:arm64 (8.5.0-2ubuntu10.16) ...
+#9 11.81 Selecting previously unselected package curl.
+#9 11.81 Preparing to unpack .../19-curl_8.5.0-2ubuntu10.16_arm64.deb ...
+#9 11.82 Unpacking curl (8.5.0-2ubuntu10.16) ...
+#9 11.88 Selecting previously unselected package libcurl3t64-gnutls:arm64.
+#9 11.88 Preparing to unpack .../20-libcurl3t64-gnutls_8.5.0-2ubuntu10.16_arm64.deb ...
+#9 11.89 Unpacking libcurl3t64-gnutls:arm64 (8.5.0-2ubuntu10.16) ...
+#9 11.93 Selecting previously unselected package liberror-perl.
+#9 11.93 Preparing to unpack .../21-liberror-perl_0.17029-2_all.deb ...
+#9 11.94 Unpacking liberror-perl (0.17029-2) ...
+#9 11.99 Selecting previously unselected package git-man.
+#9 11.99 Preparing to unpack .../22-git-man_1%3a2.43.0-1ubuntu7.4_all.deb ...
+#9 12.00 Unpacking git-man (1:2.43.0-1ubuntu7.4) ...
+#9 12.06 Selecting previously unselected package git.
+#9 12.06 Preparing to unpack .../23-git_1%3a2.43.0-1ubuntu7.4_arm64.deb ...
+#9 12.07 Unpacking git (1:2.43.0-1ubuntu7.4) ...
+#9 12.18 Selecting previously unselected package libnl-3-dev:arm64.
+#9 12.18 Preparing to unpack .../24-libnl-3-dev_3.7.0-0.3build1.1_arm64.deb ...
+#9 12.18 Unpacking libnl-3-dev:arm64 (3.7.0-0.3build1.1) ...
+#9 12.23 Selecting previously unselected package libnl-route-3-dev:arm64.
+#9 12.23 Preparing to unpack .../25-libnl-route-3-dev_3.7.0-0.3build1.1_arm64.deb ...
+#9 12.24 Unpacking libnl-route-3-dev:arm64 (3.7.0-0.3build1.1) ...
+#9 12.29 Selecting previously unselected package python3-setuptools.
+#9 12.29 Preparing to unpack .../26-python3-setuptools_68.1.2-2ubuntu1.2_all.deb ...
+#9 12.30 Unpacking python3-setuptools (68.1.2-2ubuntu1.2) ...
+#9 12.37 Selecting previously unselected package python3-wheel.
+#9 12.37 Preparing to unpack .../27-python3-wheel_0.42.0-2_all.deb ...
+#9 12.38 Unpacking python3-wheel (0.42.0-2) ...
+#9 12.43 Selecting previously unselected package python3-pip.
+#9 12.43 Preparing to unpack .../28-python3-pip_24.0+dfsg-1ubuntu1.3_all.deb ...
+#9 12.44 Unpacking python3-pip (24.0+dfsg-1ubuntu1.3) ...
+#9 12.51 Selecting previously unselected package python3-pip-whl.
+#9 12.51 Preparing to unpack .../29-python3-pip-whl_24.0+dfsg-1ubuntu1.3_all.deb ...
+#9 12.52 Unpacking python3-pip-whl (24.0+dfsg-1ubuntu1.3) ...
+#9 12.57 Selecting previously unselected package python3-setuptools-whl.
+#9 12.57 Preparing to unpack .../30-python3-setuptools-whl_68.1.2-2ubuntu1.2_all.deb ...
+#9 12.58 Unpacking python3-setuptools-whl (68.1.2-2ubuntu1.2) ...
+#9 12.63 Selecting previously unselected package python3.12-venv.
+#9 12.63 Preparing to unpack .../31-python3.12-venv_3.12.3-1ubuntu0.17_arm64.deb ...
+#9 12.64 Unpacking python3.12-venv (3.12.3-1ubuntu0.17) ...
+#9 12.67 Selecting previously unselected package python3-venv.
+#9 12.67 Preparing to unpack .../32-python3-venv_3.12.3-0ubuntu2.1_arm64.deb ...
+#9 12.68 Unpacking python3-venv (3.12.3-0ubuntu2.1) ...
+#9 12.72 Selecting previously unselected package libibverbs-dev:arm64.
+#9 12.72 Preparing to unpack .../33-libibverbs-dev_50.0-2ubuntu0.2_arm64.deb ...
+#9 12.73 Unpacking libibverbs-dev:arm64 (50.0-2ubuntu0.2) ...
+#9 12.79 Setting up media-types (10.1.0) ...
+#9 12.81 Setting up python3-setuptools-whl (68.1.2-2ubuntu1.2) ...
+#9 12.83 Setting up libkeyutils1:arm64 (1.6.3-3build1) ...
+#9 12.85 Setting up libbrotli1:arm64 (1.1.0-2build2) ...
+#9 12.87 Setting up libpsl5t64:arm64 (0.21.2-1.1build1) ...
+#9 12.89 Setting up libnghttp2-14:arm64 (1.59.0-1ubuntu0.4) ...
+#9 12.91 Setting up libkrb5support0:arm64 (1.20.1-6ubuntu2.10) ...
+#9 12.93 Setting up tzdata (2026e-0ubuntu0.24.04.1) ...
+#9 13.00 
+#9 13.00 Current default time zone: 'Etc/UTC'
+#9 13.00 Local time is now:      Thu Oct 22 07:22:58 UTC 2026.
+#9 13.00 Universal Time is now:  Thu Oct 22 07:22:58 UTC 2026.
+#9 13.00 Run 'dpkg-reconfigure tzdata' if you wish to change it.
+#9 13.00 
+#9 13.02 Setting up liberror-perl (0.17029-2) ...
+#9 13.04 Setting up ca-certificates (20260816ubuntu0.24.04.1) ...
+#9 14.10 Updating certificates in /etc/ssl/certs...
+#9 14.67 rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
+#9 14.68 17 added, 43 removed; done.
+#9 14.71 Setting up librtmp1:arm64 (2.4+20151223.gitfa8646d.1-2build7) ...
+#9 14.73 Setting up xz-utils (5.6.1+really5.4.5-1ubuntu0.4) ...
+#9 14.77 Setting up libk5crypto3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 14.79 Setting up libnl-3-200:arm64 (3.7.0-0.3build1.1) ...
+#9 14.82 Setting up git-man (1:2.43.0-1ubuntu7.4) ...
+#9 14.84 Setting up netbase (6.4) ...
+#9 14.89 Setting up libkrb5-3:arm64 (1.20.1-6ubuntu2.10) ...
+#9 14.91 Setting up libpython3.12-stdlib:arm64 (3.12.3-1ubuntu0.17) ...
+#9 14.93 Setting up python3-pip-whl (24.0+dfsg-1ubuntu1.3) ...
+#9 14.95 Setting up python3.12 (3.12.3-1ubuntu0.17) ...
+#9 15.40 Setting up libnl-route-3-200:arm64 (3.7.0-0.3build1.1) ...
+#9 15.42 Setting up libgssapi-krb5-2:arm64 (1.20.1-6ubuntu2.10) ...
+#9 15.44 Setting up libssh-4:arm64 (0.10.6-2ubuntu0.5) ...
+#9 15.46 Setting up libnl-3-dev:arm64 (3.7.0-0.3build1.1) ...
+#9 15.48 Setting up libpython3-stdlib:arm64 (3.12.3-0ubuntu2.1) ...
+#9 15.50 Setting up libibverbs1:arm64 (50.0-2ubuntu0.2) ...
+#9 15.60 Setting up libcurl4t64:arm64 (8.5.0-2ubuntu10.16) ...
+#9 15.62 Setting up ibverbs-providers:arm64 (50.0-2ubuntu0.2) ...
+#9 15.76 Setting up python3.12-venv (3.12.3-1ubuntu0.17) ...
+#9 15.80 Setting up libcurl3t64-gnutls:arm64 (8.5.0-2ubuntu10.16) ...
+#9 15.82 Setting up python3 (3.12.3-0ubuntu2.1) ...
+#9 15.88 Setting up python3-wheel (0.42.0-2) ...
+#9 15.99 Setting up libnl-route-3-dev:arm64 (3.7.0-0.3build1.1) ...
+#9 16.01 Setting up python3-venv (3.12.3-0ubuntu2.1) ...
+#9 16.03 Setting up git (1:2.43.0-1ubuntu7.4) ...
+#9 16.06 Setting up curl (8.5.0-2ubuntu10.16) ...
+#9 16.08 Setting up python3-pkg-resources (68.1.2-2ubuntu1.2) ...
+#9 16.22 Setting up python3-setuptools (68.1.2-2ubuntu1.2) ...
+#9 16.47 Setting up libibverbs-dev:arm64 (50.0-2ubuntu0.2) ...
+#9 16.49 Setting up python3-pip (24.0+dfsg-1ubuntu1.3) ...
+#9 17.04 Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+#9 17.11 Processing triggers for ca-certificates (20260816ubuntu0.24.04.1) ...
+#9 17.11 Updating certificates in /etc/ssl/certs...
+#9 17.48 0 added, 0 removed; done.
+#9 17.48 Running hooks in /etc/ca-certificates/update.d...
+#9 17.49 done.
+#9 DONE 17.7s
+
+#8 [stage-1 2/6] RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends       libibverbs1 ibverbs-providers rdma-core libcudnn9-cuda-13 && rm -rf /var/lib/apt/lists/*
+#8 ...
+
+#10 [build  3/12] RUN curl -fsSL -o /tmp/zig.tar.xz "https://ziglang.org/download/0.17.0/zig-aarch64-linux-0.17.0.tar.xz" &&     echo "9e8d11661d4ae3bd57702a3832781e23ad151dde5798e16a5ccd503f65234ff8  /tmp/zig.tar.xz" | sha256sum -c - &&     mkdir -p /opt/zig && tar -xJf /tmp/zig.tar.xz -C /opt/zig --strip-components=1 && rm /tmp/zig.tar.xz &&     /opt/zig/zig version
+#10 ...
+
+#8 [stage-1 2/6] RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends       libibverbs1 ibverbs-providers rdma-core libcudnn9-cuda-13 && rm -rf /var/lib/apt/lists/*
+#8 21.37 debconf: delaying package configuration, since apt-utils is not installed
+#8 21.43 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5305 files and directories currently installed.)
+#8 21.43 Preparing to unpack .../bsdutils_1%3a2.39.3-9ubuntu6.6_arm64.deb ...
+#8 21.45 Unpacking bsdutils (1:2.39.3-9ubuntu6.6) over (1:2.39.3-9ubuntu6.3) ...
+#8 21.60 Setting up bsdutils (1:2.39.3-9ubuntu6.6) ...
+#8 21.66 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5305 files and directories currently installed.)
+#8 21.66 Preparing to unpack .../util-linux_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 21.68 Unpacking util-linux (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 22.39 Setting up util-linux (2.39.3-9ubuntu6.6) ...
+#8 22.53 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5305 files and directories currently installed.)
+#8 22.53 Preparing to unpack .../mount_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 22.55 Unpacking mount (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 22.65 Selecting previously unselected package libapparmor1:arm64.
+#8 22.66 Preparing to unpack .../libapparmor1_4.0.1really4.0.1-0ubuntu0.24.04.9_arm64.deb ...
+#8 22.67 Unpacking libapparmor1:arm64 (4.0.1really4.0.1-0ubuntu0.24.04.9) ...
+#8 22.72 Selecting previously unselected package libargon2-1:arm64.
+#8 22.72 Preparing to unpack .../libargon2-1_0~20190702+dfsg-4build1_arm64.deb ...
+#8 22.73 Unpacking libargon2-1:arm64 (0~20190702+dfsg-4build1) ...
+#8 22.77 Preparing to unpack .../libblkid1_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 22.79 Unpacking libblkid1:arm64 (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 22.85 Setting up libblkid1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 22.91 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5314 files and directories currently installed.)
+#8 22.91 Preparing to unpack .../libudev1_255.4-1ubuntu8.18_arm64.deb ...
+#8 22.93 Unpacking libudev1:arm64 (255.4-1ubuntu8.18) over (255.4-1ubuntu8.10) ...
+#8 22.99 Setting up libudev1:arm64 (255.4-1ubuntu8.18) ...
+#8 23.05 Selecting previously unselected package libdevmapper1.02.1:arm64.
+#8 23.05 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5314 files and directories currently installed.)
+#8 23.05 Preparing to unpack .../libdevmapper1.02.1_2%3a1.02.185-3ubuntu3.2_arm64.deb ...
+#8 23.05 Unpacking libdevmapper1.02.1:arm64 (2:1.02.185-3ubuntu3.2) ...
+#8 23.10 Selecting previously unselected package libjson-c5:arm64.
+#8 23.10 Preparing to unpack .../libjson-c5_0.17-1build1_arm64.deb ...
+#8 23.11 Unpacking libjson-c5:arm64 (0.17-1build1) ...
+#8 23.15 Preparing to unpack .../libuuid1_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 23.17 Unpacking libuuid1:arm64 (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 23.23 Setting up libuuid1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 23.28 Selecting previously unselected package libcryptsetup12:arm64.
+#8 23.28 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5325 files and directories currently installed.)
+#8 23.28 Preparing to unpack .../libcryptsetup12_2%3a2.7.0-1ubuntu4.2_arm64.deb ...
+#8 23.29 Unpacking libcryptsetup12:arm64 (2:2.7.0-1ubuntu4.2) ...
+#8 23.34 Selecting previously unselected package libfdisk1:arm64.
+#8 23.34 Preparing to unpack .../libfdisk1_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 23.35 Unpacking libfdisk1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 23.40 Selecting previously unselected package libkmod2:arm64.
+#8 23.40 Preparing to unpack .../libkmod2_31+20240202-2ubuntu7.2_arm64.deb ...
+#8 23.41 Unpacking libkmod2:arm64 (31+20240202-2ubuntu7.2) ...
+#8 23.46 Preparing to unpack .../libmount1_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 23.48 Unpacking libmount1:arm64 (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 23.54 Setting up libmount1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 23.59 Selecting previously unselected package libsystemd-shared:arm64.
+#8 23.59 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5345 files and directories currently installed.)
+#8 23.59 Preparing to unpack .../libsystemd-shared_255.4-1ubuntu8.18_arm64.deb ...
+#8 23.60 Unpacking libsystemd-shared:arm64 (255.4-1ubuntu8.18) ...
+#8 23.67 Preparing to unpack .../libsystemd0_255.4-1ubuntu8.18_arm64.deb ...
+#8 23.69 Unpacking libsystemd0:arm64 (255.4-1ubuntu8.18) over (255.4-1ubuntu8.10) ...
+#8 23.75 Setting up libsystemd0:arm64 (255.4-1ubuntu8.18) ...
+#8 23.79 Selecting previously unselected package systemd-dev.
+#8 23.79 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5353 files and directories currently installed.)
+#8 23.80 Preparing to unpack .../0-systemd-dev_255.4-1ubuntu8.18_all.deb ...
+#8 23.80 Unpacking systemd-dev (255.4-1ubuntu8.18) ...
+#8 23.87 Selecting previously unselected package systemd.
+#8 23.87 Preparing to unpack .../1-systemd_255.4-1ubuntu8.18_arm64.deb ...
+#8 23.88 Unpacking systemd (255.4-1ubuntu8.18) ...
+#8 24.06 Selecting previously unselected package udev.
+#8 24.06 Preparing to unpack .../2-udev_255.4-1ubuntu8.18_arm64.deb ...
+#8 24.08 Unpacking udev (255.4-1ubuntu8.18) ...
+#8 24.19 Selecting previously unselected package libnl-3-200:arm64.
+#8 24.19 Preparing to unpack .../3-libnl-3-200_3.7.0-0.3build1.1_arm64.deb ...
+#8 24.19 Unpacking libnl-3-200:arm64 (3.7.0-0.3build1.1) ...
+#8 24.25 Selecting previously unselected package rdma-core.
+#8 24.25 Preparing to unpack .../4-rdma-core_50.0-2ubuntu0.2_arm64.deb ...
+#8 24.26 Unpacking rdma-core (50.0-2ubuntu0.2) ...
+#8 24.33 Preparing to unpack .../5-libsmartcols1_2.39.3-9ubuntu6.6_arm64.deb ...
+#8 24.35 Unpacking libsmartcols1:arm64 (2.39.3-9ubuntu6.6) over (2.39.3-9ubuntu6.3) ...
+#8 24.42 Setting up libsmartcols1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 24.47 Selecting previously unselected package libnl-route-3-200:arm64.
+#8 24.47 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6521 files and directories currently installed.)
+#8 24.47 Preparing to unpack .../libnl-route-3-200_3.7.0-0.3build1.1_arm64.deb ...
+#8 24.48 Unpacking libnl-route-3-200:arm64 (3.7.0-0.3build1.1) ...
+#8 24.54 Selecting previously unselected package libibverbs1:arm64.
+#8 24.54 Preparing to unpack .../libibverbs1_50.0-2ubuntu0.2_arm64.deb ...
+#8 24.55 Unpacking libibverbs1:arm64 (50.0-2ubuntu0.2) ...
+#8 24.62 Selecting previously unselected package ibverbs-providers:arm64.
+#8 24.62 Preparing to unpack .../ibverbs-providers_50.0-2ubuntu0.2_arm64.deb ...
+#8 24.63 Unpacking ibverbs-providers:arm64 (50.0-2ubuntu0.2) ...
+#8 24.68 Selecting previously unselected package libcudnn9-cuda-13.
+#8 24.68 Preparing to unpack .../libcudnn9-cuda-13_9.27.0.42-1_arm64.deb ...
+#8 24.69 Unpacking libcudnn9-cuda-13 (9.27.0.42-1) ...
+#8 ...
+
+#10 [build  3/12] RUN curl -fsSL -o /tmp/zig.tar.xz "https://ziglang.org/download/0.17.0/zig-aarch64-linux-0.17.0.tar.xz" &&     echo "9e8d11661d4ae3bd57702a3832781e23ad151dde5798e16a5ccd503f65234ff8  /tmp/zig.tar.xz" | sha256sum -c - &&     mkdir -p /opt/zig && tar -xJf /tmp/zig.tar.xz -C /opt/zig --strip-components=1 && rm /tmp/zig.tar.xz &&     /opt/zig/zig version
+#10 6.351 /tmp/zig.tar.xz: OK
+#10 8.705 0.17.0
+#10 DONE 9.0s
+
+#11 [build  4/12] RUN git init -q /tensorfold && cd /tensorfold && git remote add origin "https://github.com/ashhart/TensorFold.git" &&     git fetch -q --depth 1 origin "e7c523ebfa16b8094cf9e35e3773a7d25befcc5b" && git checkout -q --detach FETCH_HEAD &&     test "$(git rev-parse HEAD)" = "e7c523ebfa16b8094cf9e35e3773a7d25befcc5b"
+#11 ...
+
+#8 [stage-1 2/6] RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends       libibverbs1 ibverbs-providers rdma-core libcudnn9-cuda-13 && rm -rf /var/lib/apt/lists/*
+#8 26.97 Setting up libapparmor1:arm64 (4.0.1really4.0.1-0ubuntu0.24.04.9) ...
+#8 26.99 Setting up libargon2-1:arm64 (0~20190702+dfsg-4build1) ...
+#8 27.01 Setting up systemd-dev (255.4-1ubuntu8.18) ...
+#8 27.03 Setting up libfdisk1:arm64 (2.39.3-9ubuntu6.6) ...
+#8 27.05 Setting up libdevmapper1.02.1:arm64 (2:1.02.185-3ubuntu3.2) ...
+#8 27.07 Setting up mount (2.39.3-9ubuntu6.6) ...
+#8 27.09 Setting up libnl-3-200:arm64 (3.7.0-0.3build1.1) ...
+#8 27.13 Setting up libcudnn9-cuda-13 (9.27.0.42-1) ...
+#8 27.15 Setting up libjson-c5:arm64 (0.17-1build1) ...
+#8 27.17 Setting up libkmod2:arm64 (31+20240202-2ubuntu7.2) ...
+#8 27.19 Setting up libnl-route-3-200:arm64 (3.7.0-0.3build1.1) ...
+#8 27.21 Setting up libsystemd-shared:arm64 (255.4-1ubuntu8.18) ...
+#8 27.23 Setting up libcryptsetup12:arm64 (2:2.7.0-1ubuntu4.2) ...
+#8 27.25 Setting up libibverbs1:arm64 (50.0-2ubuntu0.2) ...
+#8 27.34 Setting up ibverbs-providers:arm64 (50.0-2ubuntu0.2) ...
+#8 27.48 Setting up systemd (255.4-1ubuntu8.18) ...
+#8 27.55 Created symlink /etc/systemd/system/getty.target.wants/getty@tty1.service → /usr/lib/systemd/system/getty@.service.
+#8 27.55 Created symlink /etc/systemd/system/multi-user.target.wants/remote-fs.target → /usr/lib/systemd/system/remote-fs.target.
+#8 27.56 Created symlink /etc/systemd/system/sysinit.target.wants/systemd-pstore.service → /usr/lib/systemd/system/systemd-pstore.service.
+#8 27.56 Initializing machine ID from random generator.
+#8 27.59 /usr/lib/tmpfiles.d/static-nodes-permissions.conf:18: Failed to resolve group 'kvm': No such process
+#8 27.59 /usr/lib/tmpfiles.d/static-nodes-permissions.conf:19: Failed to resolve group 'kvm': No such process
+#8 27.59 /usr/lib/tmpfiles.d/static-nodes-permissions.conf:20: Failed to resolve group 'kvm': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd-network.conf:10: Failed to resolve user 'systemd-network': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd-network.conf:11: Failed to resolve user 'systemd-network': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd-network.conf:12: Failed to resolve user 'systemd-network': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd-network.conf:13: Failed to resolve user 'systemd-network': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd.conf:22: Failed to resolve group 'systemd-journal': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd.conf:23: Failed to resolve group 'systemd-journal': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd.conf:28: Failed to resolve group 'systemd-journal': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd.conf:29: Failed to resolve group 'systemd-journal': No such process
+#8 27.59 /usr/lib/tmpfiles.d/systemd.conf:30: Failed to resolve group 'systemd-journal': No such process
+#8 27.60 Creating group 'systemd-journal' with GID 999.
+#8 27.60 Creating group 'systemd-network' with GID 998.
+#8 27.60 Creating user 'systemd-network' (systemd Network Management) with UID 998 and GID 998.
+#8 27.64 Setting up udev (255.4-1ubuntu8.18) ...
+#8 27.83 Creating group 'input' with GID 997.
+#8 27.83 Creating group 'sgx' with GID 996.
+#8 27.83 Creating group 'kvm' with GID 995.
+#8 27.83 Creating group 'render' with GID 994.
+#8 27.87 Setting up rdma-core (50.0-2ubuntu0.2) ...
+#8 27.98 invoke-rc.d: could not determine current runlevel
+#8 27.98 invoke-rc.d: policy-rc.d denied execution of start.
+#8 27.98 rocep1s0f0: Failed to write 'change' to '/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0/infiniband/rocep1s0f0/uevent': Read-only file system
+#8 27.98 eth0: Failed to write 'change' to '/sys/devices/virtual/net/eth0/uevent': Read-only file system
+#8 27.99 umad0: Failed to write 'change' to '/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0/infiniband_mad/umad0/uevent': Read-only file system
+#8 27.99 Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+#8 DONE 28.1s
+
+#11 [build  4/12] RUN git init -q /tensorfold && cd /tensorfold && git remote add origin "https://github.com/ashhart/TensorFold.git" &&     git fetch -q --depth 1 origin "e7c523ebfa16b8094cf9e35e3773a7d25befcc5b" && git checkout -q --detach FETCH_HEAD &&     test "$(git rev-parse HEAD)" = "e7c523ebfa16b8094cf9e35e3773a7d25befcc5b"
+#11 DONE 2.4s
+
+#12 [build  5/12] COPY zig/patches /opt/tf-patches
+#12 DONE 0.1s
+
+#13 [build  6/12] RUN cd /tensorfold &&     for p in /opt/tf-patches/*.patch; do echo "applying $p"; git apply --check "$p" && git apply "$p" || exit 1; done
+#13 0.163 applying /opt/tf-patches/0001-zig-shared-engine.patch
+#13 0.212 applying /opt/tf-patches/0002-zig-flashnext-cuda.patch
+#13 0.282 applying /opt/tf-patches/0003-zig-glm-kernels.patch
+#13 0.285 /opt/tf-patches/0003-zig-glm-kernels.patch:3673: new blank line at EOF.
+#13 0.285 +
+#13 0.286 warning: 1 line adds whitespace errors.
+#13 0.287 applying /opt/tf-patches/0004-zig-glm-engine.patch
+#13 0.318 applying /opt/tf-patches/0005-zig-glm-tests.patch
+#13 0.353 /opt/tf-patches/0005-zig-glm-tests.patch:6453: trailing whitespace.
+#13 0.353 // 
+#13 0.369 /opt/tf-patches/0005-zig-glm-tests.patch:21620: new blank line at EOF.
+#13 0.369 +
+#13 0.400 warning: 2 lines add whitespace errors.
+#13 0.401 applying /opt/tf-patches/0006-zig-glm-scores-rows-g128.patch
+#13 0.403 applying /opt/tf-patches/0007-zig-flashnext-record-before-long-batch.patch
+#13 0.405 applying /opt/tf-patches/0008-zig-aot-log-missing-variant.patch
+#13 0.407 applying /opt/tf-patches/0009-zig-glm-tpn-pool.patch
+#13 0.409 applying /opt/tf-patches/0010-zig-glm-tpn-roce-probe.patch
+#13 0.411 applying /opt/tf-patches/0011-zig-glm-greedy-draft-probs.patch
+#13 0.412 applying /opt/tf-patches/0012-zig-glm-cache-reserve.patch
+#13 0.415 applying /opt/tf-patches/0013-zig-glm-round-batching.patch
+#13 DONE 0.4s
+
+#14 [build  7/12] RUN cd /tensorfold && /opt/zig/zig build -Dnvcc=/usr/local/cuda/bin/nvcc -Dsm=121 -Doptimize=fast --prefix /opt/tensorfold       -j4 install native &&     test -x /opt/tensorfold/native/bin/tensorfold-native && test -x /opt/tensorfold/bin/tensorfold
+#14 59.14 install
+#14 59.14 +- install tensorfold
+#14 59.14    +- compile exe tensorfold fast native
+#14 59.14       +- run /usr/local/cuda/bin/nvcc (fp8_experts.fatbin) w
+#14 59.14 ./zig/kernels/cuda/fp8_experts.cu(153): warning #177-D: variable "RW" was declared but never referenced
+#14 59.14     constexpr int RW = PromptCfg<M, RT, CW>::RW;
+#14 59.14                   ^
+#14 59.14 
+#14 59.14 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#14 59.14 
+#14 59.14 
+#14 60.41 install
+#14 60.41 +- install tensorfold
+#14 60.41    +- compile exe tensorfold fast native
+#14 60.41       +- run /usr/local/cuda/bin/nvcc (prefill_attention.fatbin) w
+#14 60.41 ./zig/kernels/cuda/prefill_attention.cu(18): warning #177-D: variable "tf_prefill_attention::SMEM_MAX" was declared but never referenced
+#14 60.41   constexpr int SMEM_MAX = 96 * 1024;
+#14 60.41                 ^
+#14 60.41 
+#14 60.41 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#14 60.41 
+#14 60.41 
+#14 62.19 install
+#14 62.19 +- install tensorfold
+#14 62.19    +- compile exe tensorfold fast native
+#14 62.19       +- run /usr/local/cuda/bin/nvcc (glm_qmm.fatbin) w
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(409): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(618): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(827): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(1036): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(1245): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(1454): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(1663): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(1872): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(2081): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(2290): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(2499): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(2708): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(2917): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(3126): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(3335): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(3544): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(3753): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(3962): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(4171): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 ./zig/kernels/cuda/glm_qmm.cu(4380): warning #177-D: variable "E" was declared but never referenced
+#14 62.19               constexpr int E = T::MT * T::NT * 4;
+#14 62.19                             ^
+#14 62.19 
+#14 62.19 
+#14 70.57 install
+#14 70.57 +- install tensorfold
+#14 70.57    +- compile exe tensorfold fast native
+#14 70.57       +- run /usr/local/cuda/bin/nvcc (glm_kda_chunk.fatbin) w
+#14 70.57 ./zig/kernels/cuda/glm_kda_chunk.cu(22): warning #177-D: variable "tf_glm_kda_chunk::NW" was declared but never referenced
+#14 70.57   constexpr int NT = 256, NW = NT / 32;
+#14 70.57                           ^
+#14 70.57 
+#14 70.57 Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+#14 70.57 
+#14 70.57 ./zig/kernels/cuda/glm_kda_chunk.cu(29): warning #177-D: variable "tf_glm_kda_chunk::PF_P" was declared but never referenced
+#14 70.57   constexpr int PF_P = ((BT + HALO) * PCH / 8 + NT - 1) / NT;
+#14 70.57                 ^
+#14 70.57 
+#14 70.57 
+#14 DONE 176.9s
+
+#15 [build  8/12] RUN mkdir -p /opt/tensorfold/share/doc/tensorfold && cd /tensorfold &&     for f in LICENSE LICENSE.md LICENSES NOTICE THIRD_PARTY_NOTICES.md; do       if [ -e "$f" ]; then cp -a "$f" /opt/tensorfold/share/doc/tensorfold/ || exit 1; fi; done
+#15 DONE 0.2s
+
+#16 [build  9/12] RUN git clone -q --depth 1 --branch v0.2.8 --recurse-submodules --shallow-submodules https://github.com/mlc-ai/xgrammar /xgrammar &&     test "$(git -C /xgrammar rev-parse HEAD)" = "97787376faee5ed8466cfad57c99855e4ce2f6aa" &&     cd /tensorfold && /opt/zig/zig build grammar -Dxgrammar=/xgrammar -Doptimize=fast --prefix /opt/tensorfold -j4 &&     mkdir -p /opt/tensorfold/native/lib && cp /opt/tensorfold/lib/libtfgrammar.so /opt/tensorfold/native/lib/ &&     mkdir -p /opt/tensorfold/share/doc/tensorfold/LICENSES &&     cp /xgrammar/LICENSE /opt/tensorfold/share/doc/tensorfold/LICENSES/xgrammar-Apache-2.0.txt &&     cp /xgrammar/NOTICE /opt/tensorfold/share/doc/tensorfold/LICENSES/xgrammar-NOTICE.txt
+#16 1.291 Note: switching to '97787376faee5ed8466cfad57c99855e4ce2f6aa'.
+#16 1.291 
+#16 1.291 You are in 'detached HEAD' state. You can look around, make experimental
+#16 1.291 changes and commit them, and you can discard any commits you make in this
+#16 1.291 state without impacting any branches by switching back to a branch.
+#16 1.291 
+#16 1.291 If you want to create a new branch to retain commits you create, you may
+#16 1.291 do so (now or later) by using -c with the switch command. Example:
+#16 1.291 
+#16 1.291   git switch -c <new-branch-name>
+#16 1.291 
+#16 1.291 Or undo this operation with:
+#16 1.291 
+#16 1.291   git switch -
+#16 1.291 
+#16 1.291 Turn off this advice by setting config variable advice.detachedHead to false
+#16 1.291 
+#16 DONE 72.3s
+
+#17 [build 10/12] COPY zig/aot/glm-aot-sm121.tar.xz /tmp/glm-aot-sm121.tar.xz
+#17 DONE 0.1s
+
+#18 [build 11/12] RUN echo "29ad991945a30f3398ae79ba781cb975f499b752a5b5dbc473d1c152e6bdb681  /tmp/glm-aot-sm121.tar.xz" | sha256sum -c - &&     mkdir -p /opt/tensorfold/share/tensorfold/cuda/sm121 &&     tar -xJf /tmp/glm-aot-sm121.tar.xz -C /opt/tensorfold/share/tensorfold/cuda/sm121 &&     test -f /opt/tensorfold/share/tensorfold/cuda/sm121/aot.json
+#18 0.165 /tmp/glm-aot-sm121.tar.xz: OK
+#18 DONE 0.3s
+
+#19 [build 12/12] RUN python3 -m venv /tmp/nv && /tmp/nv/bin/pip install -q --no-cache-dir "nvidia-nccl-cu13==2.30.7" &&     mkdir -p /opt/nccl && cp -a "$(find /tmp/nv -name 'libnccl.so.2' | head -1)" /opt/nccl/ && ls -l /opt/nccl
+#19 4.528 total 247820
+#19 4.528 -rw-r--r-- 1 root root 253766464 Oct 22 07:27 libnccl.so.2
+#19 DONE 4.7s
+
+#20 [stage-1 3/6] COPY --from=build /opt/nccl/libnccl.so.2 /tmp/libnccl.so.new
+#20 DONE 0.3s
+
+#21 [stage-1 4/6] COPY --from=build /opt/tensorfold /opt/tensorfold
+#21 DONE 0.2s
+
+#22 [stage-1 5/6] RUN cd /lib/aarch64-linux-gnu && rm -f libnccl.so.2 libnccl.so.2.[0-9]*.[0-9]* && mv /tmp/libnccl.so.new libnccl.so.2.30.7 &&     ln -s libnccl.so.2.30.7 libnccl.so.2 &&     ldconfig && ln -s /opt/tensorfold/native/bin/tensorfold-native /usr/local/bin/tensorfold-native &&     ln -s /opt/tensorfold/bin/tensorfold /usr/local/bin/tensorfold && tensorfold-native --version
+#22 0.358 tensorfold-native 1.0.7
+#22 DONE 0.4s
+
+#23 [stage-1 6/6] WORKDIR /workspace
+#23 DONE 0.0s
+
+#24 exporting to image
+#24 exporting layers
+#24 exporting layers 26.7s done
+#24 exporting manifest sha256:591036dd3f08fb57ad1215173bf1407b06ae7dae6e59f48accfc062e4a114ec2 0.0s done
+#24 exporting config sha256:b484f981bab2e29d5854e3ae093b7e0112896b2487d011df1cbbbb676e1cd311 0.0s done
+#24 exporting attestation manifest sha256:7dfd5a885a7460ee68700ac71bbbac768a3ce5d4406011be4f0856986c429e32 0.0s done
+#24 exporting manifest list sha256:59d7a7a7e24c1f05edb97bcad4bdb8cb3b0cd0ee01685bf47d91bda40bc3b7e8
+#24 exporting manifest list sha256:59d7a7a7e24c1f05edb97bcad4bdb8cb3b0cd0ee01685bf47d91bda40bc3b7e8 0.0s done
+#24 naming to docker.io/spark/glm-tp4:zig-a6c7e08-baseline done
+#24 unpacking to docker.io/spark/glm-tp4:zig-a6c7e08-baseline
+#24 ...
+
+#5 [stage-1 1/6] FROM docker.io/nvidia/cuda@sha256:6a0e31b59e70890446f2c17356d6efc0d54260090a8c63d6ca7c2ad049db95d2
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 0B / 28.86MB 0.2s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 3.15MB / 28.86MB 1.2s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 7.34MB / 28.86MB 1.4s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 11.53MB / 28.86MB 1.5s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 17.83MB / 28.86MB 1.7s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 22.02MB / 28.86MB 1.8s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 28.86MB / 28.86MB 2.0s
+#5 sha256:b8a35db46e38ce87d4e743e1265ff436ed36e01d23246b24a1cbbeaae18ec432 28.86MB / 28.86MB 2.0s done
+#5 DONE 2.5s
+
+#24 exporting to image
+#24 unpacking to docker.io/spark/glm-tp4:zig-a6c7e08-baseline 7.9s done
+#24 DONE 34.8s
+BASELINE_IMAGE_READY sha256:59d7a7a7e24c1f05edb97bcad4bdb8cb3b0cd0ee01685bf47d91bda40bc3b7e8

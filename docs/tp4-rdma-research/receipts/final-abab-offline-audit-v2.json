@@ -1,0 +1,1908 @@
+{
+  "B2_qualification_vs_stock": {
+    "B2_cached_histogram": {
+      "0": 23,
+      "1472": 6,
+      "1984": 3,
+      "2048": 2,
+      "960": 6
+    },
+    "B2_sha256": "d2d686585e90edb14d8c430882aeb3ef1e4df82c7bc5fb5ac543ece800ff934a",
+    "cross_cache_details": [
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1023-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1024-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1024-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1025-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1025-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-1535-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 960,
+        "case": "boundary-1535-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-1536-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-1536-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-1537-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-1537-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1984,
+        "case": "boundary-2050-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1472,
+        "case": "boundary-2050-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 2048,
+        "case": "boundary-2051-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1984,
+        "case": "boundary-2051-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 2048,
+        "case": "boundary-2052-draft",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      },
+      {
+        "B2_cached_tokens": 1984,
+        "case": "boundary-2052-serial-1",
+        "key": "hermes",
+        "stock_cached_tokens": 0
+      }
+    ],
+    "cross_cache_output_parity_cases": 17,
+    "exact_present_token_array_text_count_finish_matches": 40,
+    "matched_recorded_fixture_cases": 40,
+    "native_ID_digest_and_UTF8_sha_independently_verified": true,
+    "same_observed_cache_state_cases": 23,
+    "scope": "Matching recorded fixture signatures include case/key/path/promptSHA/max/draft/prompttokens/thinking; full canonical requestJSON is not retained in qualification rows.",
+    "stock_sha256": "3ea020687656165c987c81c0e15c1d5ed1d059a4c2e4a8862eb97d79ef99cd28",
+    "unmatched_B2": 0,
+    "unmatched_stock": 0
+  },
+  "all_final_cached_tokens_zero": true,
+  "all_final_output_utf8_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+  "all_final_reported_native_token_sha": "279e2fb5849f",
+  "analyzed_unix_s": 1792667274.282197,
+  "captures": {
+    "A1": {
+      "acquisition_medians_tps": [
+        155.80819854950357,
+        155.4248518898302,
+        156.80770866695806,
+        157.44461098585518,
+        156.45657156714725,
+        155.87559412956924,
+        156.07807025073942,
+        156.79768942924858
+      ],
+      "acquisition_windows_unix_ms": [
+        [
+          1792665968322,
+          1792665978775
+        ],
+        [
+          1792665978776,
+          1792665989218
+        ],
+        [
+          1792665989219,
+          1792665999583
+        ],
+        [
+          1792665999583,
+          1792666009931
+        ],
+        [
+          1792666009932,
+          1792666020306
+        ],
+        [
+          1792666020306,
+          1792666030688
+        ],
+        [
+          1792666030689,
+          1792666041071
+        ],
+        [
+          1792666041072,
+          1792666051443
+        ]
+      ],
+      "all_cached_tokens_zero": true,
+      "baseline_sha256": null,
+      "capture_sha256": "774d01b79d3c165cf035020c13b7e0af938ea3a2fa3affc8cd55e2d4e8385dac",
+      "complete_acquisitions": 8,
+      "complete_requests": 32,
+      "completion_tokens": 12800,
+      "declared_change": null,
+      "deployment": {
+        "hardware": "spark,spark-peer,msi-b9dc,msi-c21f; 4xGB10; unchanged dual-domain neighbor ring; GID3",
+        "model_revision": "Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold@078455ffe6472f9a52fbc1139f58b9db2881b25c",
+        "runtime": "Mia zig-engine a6c7e08 + RDMA candidates c8b5f94; engine sha256:a2c4b936bab2da7b4cfa4318ea4bb0619621340152e0182f4634550b128d6f7f",
+        "settings": "{\"cache_gib\":32,\"context\":131072,\"drafter\":\"DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a\",\"eager\":false,\"hc_split\":0,\"l2pf\":1,\"max_tokens\":32768,\"memory_reserve_gib\":24,\"mtp\":0,\"nccl\":\"2.30.7+fleet-patches\",\"parallel\":8,\"prefill_overlap\":0,\"prefill_rows\":2048,\"prompt_cache_gib\":3,\"ring\":\"spark,spark-peer,msi-b9dc,msi-c21f\",\"side\":1,\"transport\":\"nccl\"}"
+      },
+      "geometric_mean_of_acquisition_medians_tps": 156.33543693080603,
+      "measured_requests": 24,
+      "median_measured_ttft_s": 0.104182,
+      "median_measured_wave_tps": 156.15103680009102,
+      "median_of_acquisition_medians_tps": 156.26732090894333,
+      "name": "grill-final-control-nccl-01",
+      "raw_and_native_fingerprint_checks_passed": true,
+      "records": [
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "fcda9d0c3cbd9b6bcf4ab60ce91d28ef1a2088c170421256c2ad31d3e7c0ef28",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.66086012743176,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "52c534a809a45e1d7f2dda63d6814b2c325d6cea8c2019a11a71b6e7966dc728",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.7882187590938,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "6fd44a1ebfa1c95735005ac74fbaa1d6bafa90fe44884835b0bb255a9129a91e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.80819854950357,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "c01cf862075b6551ff48f164c498edcacf6a7cfba8b8a65eb1501c6ac101e4eb",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.47266794113654,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "9601f8d3ab14b5c671a3f44bd54e764ba272ea314f767fa24e8d835d40b27ad6",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.77528176840045,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "2c4a49486cbb94f67bd8e82402678e7f85fadbb72327e5240e98f0bca4742e2c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.3036185743128,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "cac2b3b1bf8c83ae2dade5217fc9b125d53f16a5120b6974a053d5c71f54fee3",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.4248518898302,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "786b8ee7a0835669b71f37d9aeae172ed477893331012ec1063866f74067ffce",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.65007838927073,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "1f94f2c3ab8f8cd7f91487338a7e9e13c0cf435b6bce9edb046cee6f4eed5a4d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.62952067059362,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f0fddb5c207bfb987b569aaba3a1b7754ff107fe6a5f84c90cf01e042499368a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.16629175957488,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "de1e20314523885f783d58cca0f6bbe46bee7a37221f233fb17f25d3eaab571d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.80770866695806,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "bf586f0cd7c043bf440f846bedc6831026cabbcaef554da6909bc3be606a4d17",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.39013412499426,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "9d956ce053e605156aad25ea367016ba56d9bd6a0e8092b394600bd800c96b97",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.17465792869456,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "2672afcb91c582f7662041459ff093dbfa170e36c7240eedcf6eab4b10007b3c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.70830901996902,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "48e8d9e2165d78195525b855bec5d77410aca5f538841cdf1b506f8c21e18220",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.86775867618394,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "73fabc097bf35a6696ff2d3e1fe4ca065b7ae202408054414c511c36cf749c5e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.44461098585518,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "0d4907368ec6632783b2dbe0c4600ad84bd20d441c2fa0a7b57637701522053a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.28360220689055,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "b1b01665592a5eaa88f866d72fa27bc1a0230e41bd5b788b65c7aab1c7c43d8e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.80820044165029,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "9909b2c8187828a7f3a22715c5727aa9c27114066fe2fcb915464859a07a5fac",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.32455948716165,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "2cc9d795ffed71b9b36740da122cc1acb95f118b4880d0c389d2c8f950a01711",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.45657156714725,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "6144dc66f994d12cb37f526955b014ffae1977b16a8498cf023af0ce704826b9",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.80750847377598,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "062e79c608e71cbc2f076e0b4a104571eb846338f843d7a813d020384e55ca00",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.09977762569383,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "930235871af69350aa33b272f7e5ba657ea5c8e02a714b97e73122153fd4f0cf",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 158.2815686653144,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "cd22a9145f70022de4cb4ed37aed3107d1c9915ff00b0c7e7326a8c97e74e324",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.87559412956924,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "479c12fc0a2855c4b239cc99b82a7b6f4dbb1e9072d67cc0f69e90912484c161",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.66921254137046,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "e16e36e1a65ccb0381bbf848af546a82ca2f3df5d651f87b8a0f02b389788cef",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.07807025073942,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "0fee0ddd93e90d0d9e6fc6063a673349e80f1afc95bf3540792e7a92d36024fb",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.22400334944263,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8b0fa0f05da95e2b0106e5f4c21d120bb604a51177e41c64aea939c2c19164bc",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.37269053061715,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "9423ee6276458f58ad425eb2e5a6573d0db0512ea8a97b2dcafb9039d4b9fa09",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.58705329012162,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "7e44e240f08701a0bf5028b2bcff5eeb784289ac69859c453d1e1a2219c8ba03",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.64005208276953,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "e54373f817838f4287bb45f7d0a4abdc26ab307af792f3f4700469e6a98f2f56",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.79768942924858,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "1a67ef78f627afee3770cbe8cd11fda85954b9aea0e4ace9d1434fc80424ee44",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 158.83068847147302,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        }
+      ],
+      "warmup_requests": 8
+    },
+    "A2": {
+      "acquisition_medians_tps": [
+        156.73557415571443,
+        154.6530262697497,
+        154.64913976416005,
+        155.8574948167642,
+        156.8646520800841,
+        155.31881516595038,
+        157.22596791253835,
+        156.41515240505893
+      ],
+      "acquisition_windows_unix_ms": [
+        [
+          1792666861034,
+          1792666871435
+        ],
+        [
+          1792666871436,
+          1792666881859
+        ],
+        [
+          1792666881860,
+          1792666892340
+        ],
+        [
+          1792666892341,
+          1792666902747
+        ],
+        [
+          1792666902747,
+          1792666913130
+        ],
+        [
+          1792666913131,
+          1792666923535
+        ],
+        [
+          1792666923535,
+          1792666933885
+        ],
+        [
+          1792666933886,
+          1792666944239
+        ]
+      ],
+      "all_cached_tokens_zero": true,
+      "baseline_sha256": "774d01b79d3c165cf035020c13b7e0af938ea3a2fa3affc8cd55e2d4e8385dac",
+      "capture_sha256": "78d7497a5f023903fc345598aad2902d665419a863249e59ce320cfb29ae6329",
+      "complete_acquisitions": 8,
+      "complete_requests": 32,
+      "completion_tokens": 12800,
+      "declared_change": "none",
+      "deployment": {
+        "hardware": "spark,spark-peer,msi-b9dc,msi-c21f; 4xGB10; unchanged dual-domain neighbor ring; GID3",
+        "model_revision": "Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold@078455ffe6472f9a52fbc1139f58b9db2881b25c",
+        "runtime": "Mia zig-engine a6c7e08 + RDMA candidates c8b5f94; engine sha256:a2c4b936bab2da7b4cfa4318ea4bb0619621340152e0182f4634550b128d6f7f",
+        "settings": "{\"cache_gib\":32,\"context\":131072,\"drafter\":\"DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a\",\"eager\":false,\"hc_split\":0,\"l2pf\":1,\"max_tokens\":32768,\"memory_reserve_gib\":24,\"mtp\":0,\"nccl\":\"2.30.7+fleet-patches\",\"parallel\":8,\"prefill_overlap\":0,\"prefill_rows\":2048,\"prompt_cache_gib\":3,\"ring\":\"spark,spark-peer,msi-b9dc,msi-c21f\",\"side\":1,\"transport\":\"nccl\"}"
+      },
+      "geometric_mean_of_acquisition_medians_tps": 155.96213889598764,
+      "measured_requests": 24,
+      "median_measured_ttft_s": 0.1038215,
+      "median_measured_wave_tps": 156.1634715788612,
+      "median_of_acquisition_medians_tps": 156.13632361091157,
+      "name": "grill-final-control-nccl-02",
+      "raw_and_native_fingerprint_checks_passed": true,
+      "records": [
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "93e07aeb738332a047e77f86bbf4b02aab48e4983384b629bbd867cb943f1e6a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.3324196854088,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "28a3f3ebab2165ed4d8320f6ad49e695a09cec64223e7c750fc2f64964e1007c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.3736940353209,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "d30201096f457b2cdd391b2c567d1ff5d47bd3ecd7b006c9f03299f950a12948",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.73557415571443,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8066927bf309ce5a7add126ad693f2e53bebfca7bce8d2da01fed55c317bb02f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.24018320053744,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "1f1dcde574011b0772ff1625f09d68a8085770eb24ed6c99385ff8f817930749",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.69916346151587,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "7478fe702a567fc4891fd58004699d9242b63a216cf14259734f6b1b2da7846a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.6530262697497,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "ccef651fe4bd68070850a5fbe349087c0c4759caf239d65c8bc11c0dbbfd95fb",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.45143121769277,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f373018d12cb18872b51b7f409d63e353369cd77fc03e670dcf4e48b8ea0cfa5",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 153.99386950405506,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "112d16bf0642bf7d3e5130351cf6e3c8d3a643f8fa905824ed22d3e48a18f3ff",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.64005208276953,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f9b107e6c8bce9be7350250163c6e12d018a34078a89a9e0851b0b7ba99d95f7",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.13569181493236,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "287b23b65f5de20b8bd3084b2d7335f66abbde5af29545d47d63fe9154647b6f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.64913976416005,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "01652c04fbee23ae94dcd6f1becae526f4eb1f811b379b423cb778359204bd42",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.28794266769157,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "a39470eae6b2e65ca19bd6733365141e2c655a87cd63c941a96197bb4bb6bcd1",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.63463524299624,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "68e339ae9974eac3024a6cabacd3250bda3831c8f3b391c9e26b0e41fed790a7",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.56049125550948,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "c2eca2fd02a63c0e3db540ca8a08061675b7b24e808eef5125590b827bb70613",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.8574948167642,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "6a737092bf76eb2a1b82377595ad288803b0c3a2bd87d77590171d5fddfa5f22",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.66970469067846,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "3254be02b5357eb2d4fdf00ff98f452888797d36b5d698432d8951b1e4c21ecc",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.40691747271055,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "1057e8d819eb9160c116ae291466eeae63678bdf7b5e4b7648b82990f82d79c3",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.8646520800841,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "d1564dd32de9a74b7c92b746fd0ebe1b327935c9f58c908adda4d21aed4e65fd",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.2200782204237,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "de6f4eb5ca1d92783658ac2147bb60081df50cb6668224d5d309bc7936cfc4ad",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.19723615819387,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "530892d1afea839b8a745d800ebf466ba2e5b5325c9cbfd7c14fbcaa35ae17c9",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.82633678769477,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "096d56c2635c9f6baf4aa4644500ae21976215130c223d5a7233b1b750743d9d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 154.92190773935627,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8ef6473bc5dca7e96791d62901e73ce6522a0af2c1fd1d6c19aeaf2058f8ca2b",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.26263529902613,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "33f2be079329a00a1e001483c2772b07615eb33bbb14d64dfbac93a2544a0d2f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.31881516595038,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "63b3ac2cdef7988b9107e544d6a53fcfe73a3cd7e58209667ef586e71fe1eece",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.52020926799358,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "4f54c34011994270901103b6c48ce9e7d9dabd317260abebbd3f54d7bde65cca",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.22596791253835,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "b16d285ed6aa47145357e6887eab0bde6e639e622b2846d1ba936abf32008a0f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.06430785869625,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "b8d11e6a785186a711c440a0691a7bf28d4dcee3a6aaab542cb7297b92150a6a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.4669860622034,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "ae6a41e3870a65db0e5901f8c11f6a97ff45c2230a8460581995510b5746e286",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.16301232204248,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "fb1ac73d293ba1783f42a8e7497a48a56eca78cb8d593a8c52735f264535002e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 157.32664275563909,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "21b34c8a0f5873c29b9f56bc183859f7b59e5d376afae40f923b9f5c3cd18d9c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 156.41515240505893,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "b368ea2879af60bc9091f23e7ab489deb91405fef6352360b1e538b3475f949b",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 155.82264422457004,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        }
+      ],
+      "warmup_requests": 8
+    },
+    "B1": {
+      "acquisition_medians_tps": [
+        183.65127194575308,
+        184.10874567171845,
+        184.29850460193367,
+        182.29413523308128,
+        181.21687129071717,
+        180.49108013081994,
+        179.86679065484103,
+        182.02204651027333
+      ],
+      "acquisition_windows_unix_ms": [
+        [
+          1792666169403,
+          1792666178262
+        ],
+        [
+          1792666178262,
+          1792666187052
+        ],
+        [
+          1792666187052,
+          1792666195832
+        ],
+        [
+          1792666195833,
+          1792666204688
+        ],
+        [
+          1792666204688,
+          1792666213625
+        ],
+        [
+          1792666213626,
+          1792666222603
+        ],
+        [
+          1792666222603,
+          1792666231620
+        ],
+        [
+          1792666231620,
+          1792666240572
+        ]
+      ],
+      "all_cached_tokens_zero": true,
+      "baseline_sha256": "774d01b79d3c165cf035020c13b7e0af938ea3a2fa3affc8cd55e2d4e8385dac",
+      "capture_sha256": "2649c94c27699ef9572c45259dbda04f6d3086294cf877de19eeb4b572b32094",
+      "complete_acquisitions": 8,
+      "complete_requests": 32,
+      "completion_tokens": 12800,
+      "declared_change": "settings",
+      "deployment": {
+        "hardware": "spark,spark-peer,msi-b9dc,msi-c21f; 4xGB10; unchanged dual-domain neighbor ring; GID3",
+        "model_revision": "Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold@078455ffe6472f9a52fbc1139f58b9db2881b25c",
+        "runtime": "Mia zig-engine a6c7e08 + RDMA candidates c8b5f94; engine sha256:a2c4b936bab2da7b4cfa4318ea4bb0619621340152e0182f4634550b128d6f7f",
+        "settings": "{\"cache_gib\":32,\"context\":131072,\"drafter\":\"DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a\",\"eager\":false,\"hc_split\":0,\"l2pf\":1,\"max_tokens\":32768,\"memory_reserve_gib\":24,\"mtp\":0,\"nccl\":\"2.30.7+fleet-patches\",\"parallel\":8,\"prefill_overlap\":0,\"prefill_rows\":2048,\"prompt_cache_gib\":3,\"ring\":\"spark,spark-peer,msi-b9dc,msi-c21f\",\"side\":1,\"transport\":\"relay-registered\"}"
+      },
+      "geometric_mean_of_acquisition_medians_tps": 182.23698736876972,
+      "measured_requests": 24,
+      "median_measured_ttft_s": 0.09902050000000001,
+      "median_measured_wave_tps": 182.45788461551018,
+      "median_of_acquisition_medians_tps": 182.1580908716773,
+      "name": "grill-final-relay-registered-512-01",
+      "raw_and_native_fingerprint_checks_passed": true,
+      "records": [
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "b3095c67fa4717f9be2dbcabb3ba56b5dcec7cb6629c8023097db0ea2bf063e8",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 185.43371787650577,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "a8c9804db4515c64a16ce00701041f4dcb536aa06713c1871ecf5b6faa9309f5",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.65127194575308,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f0f498c660543a24b27d09bd260d3d55215669f3a4cd386805995569e7c1c44b",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.63922816662176,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "3acfe2cd2798cb0139e79a1d50c9d469fe8c0469d07a1d03987ea90793af537c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 184.45989910965818,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "f6b7dcf50b7b4b60cb68d54de58f2c11ea8986b268a739f752e921af2de69e43",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 186.18420133959532,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "81fe86615dbcf729b2c718691ca035851fb78c56283ec55d89d1c1eac3952fed",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 184.10874567171845,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "2152315c5344c00d6a89e9472058a7f10b12c682bb594c15d0e163c819c28243",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.98273873945146,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8b20c9c82304b9f98053057de9707bb4ac3d0708f7e4fa4cec1c91ad5cd1a57a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 184.66530106676527,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "66a2167051d3bc23d5a5a0db866b8c4965dcce91357f8dc6cc662d9b5d94f503",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 185.56189300965153,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "a4bdd79b4e7a2a69bb6652a84d936bff98d389cf37db944ca23d0ae086bc6cde",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 184.29850460193367,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "5ac80056d6fdbb27fa198bd13437f47c424289dda5ad913691a940838087bb2c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.54660684270928,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "53a6ca31c9bda156027b47ecf499ed46e41ae94c811a8f04816a6a4c6462a5a6",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 186.31758204494724,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "1d6200b86b2da927eaff318dfa7f9e1f551697570e7181dd0a3bca3226171c45",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.42523701979846,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "913cbc3a0ad6face641ba9b691197caeba91caa49cdb5db5c12eba8072f76479",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.37406269285165,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "4967de1d7c15fedbc62cdf61e2307cfd52ce12f20481a78240a9e2f69332925c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.29413523308128,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "a689f9a9c308df121a6db05d3fa141682024fe89ab1323ddbc72a60be132ef2f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 186.34431584616158,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "95e353c37280aecddc30aab3651f4b0118a1c7cc29f4b709cbd816ef58739b52",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.22921333285694,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "fa549bdc39a9a6f74bd3efef5f5a1c73814b5f24119aff08456b284da7564e41",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.46160975501323,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "a1fdaaf16454455c9ca8f261aed792741191903cfe33f946f2fb54044d8f6031",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.55731724326893,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f2d3c0cd89dd6b26f389a5f016eb8238650d327217f227af36c1ca347dc82cdf",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.21687129071717,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "f36d9ef7f4cb5a194daabbd4630e1af5dd67d714d5f10a4035f4fb1767bc71d0",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.33155386635138,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "10e132bc61e20d5007bd8c3023c69617be1f2a9d747fe7d1a5b26e5eaced6fa8",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.49108013081994,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "e518ee232759d24fa31a8f0ba6c04988e744534723f338bdf5aee3092c72a63e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.82086245682052,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "99055ae1cdb3973262b170e4018cd26398bb2f756c7b18c1c9b7a89d15fd3908",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.6216339979391,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "b68279b61ca646df189640ae43e3a2d6cd32cc3c2de3f90012cbc43badb27895",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.3927334070997,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "506657b22b6fe04b8d5b3de577d1f4d1a0c8b84a8402a152ed113f413a5d3865",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.86679065484103,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "cca795136de43cc359071ca03561435725a65d68f399dab5ed097aab1500670d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 178.23898104339318,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "d15bd8d07425f3159c038f4ebc1e4b90fc8aca209b71b4b536e6820ab22ba641",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.09807003786761,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "02b9b6039025333f89600f0c84a3a0d39d125840fce081250054162e106da607",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.27023409441924,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "070e400181b00a767c5765cc4166e34cc78beab3d945e5be8fbcd7f54546d72e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.38648706786725,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "9a38aba0277e666873a85334ff2fa6d7d323ea3c2f6814311320a9ab3f4d8701",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.02204651027333,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "397db7c598cfb9bf9d7ab50e5e0cd19c4c34c15429d532ca8fbad66740b9e616",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.9670485493915,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        }
+      ],
+      "warmup_requests": 8
+    },
+    "B2": {
+      "acquisition_medians_tps": [
+        181.26359760206387,
+        182.06487973021626,
+        180.58291261276838,
+        181.41132569047417,
+        180.4949894590926,
+        182.53388056990727,
+        181.99993357002424,
+        182.67567805786527
+      ],
+      "acquisition_windows_unix_ms": [
+        [
+          1792667103927,
+          1792667112915
+        ],
+        [
+          1792667112916,
+          1792667121819
+        ],
+        [
+          1792667121820,
+          1792667130792
+        ],
+        [
+          1792667130793,
+          1792667139761
+        ],
+        [
+          1792667139762,
+          1792667148726
+        ],
+        [
+          1792667148727,
+          1792667157625
+        ],
+        [
+          1792667157625,
+          1792667166539
+        ],
+        [
+          1792667166540,
+          1792667175461
+        ]
+      ],
+      "all_cached_tokens_zero": true,
+      "baseline_sha256": "774d01b79d3c165cf035020c13b7e0af938ea3a2fa3affc8cd55e2d4e8385dac",
+      "capture_sha256": "1e5d2b87a04ea18b61846ac67f027b480f94a8ec20febb68facbc84bbabbc8a4",
+      "complete_acquisitions": 8,
+      "complete_requests": 32,
+      "completion_tokens": 12800,
+      "declared_change": "settings",
+      "deployment": {
+        "hardware": "spark,spark-peer,msi-b9dc,msi-c21f; 4xGB10; unchanged dual-domain neighbor ring; GID3",
+        "model_revision": "Mia-AiLab/GLM-5.3-Flash-EXL3-4bpw-TensorFold@078455ffe6472f9a52fbc1139f58b9db2881b25c",
+        "runtime": "Mia zig-engine a6c7e08 + RDMA candidates c8b5f94; engine sha256:a2c4b936bab2da7b4cfa4318ea4bb0619621340152e0182f4634550b128d6f7f",
+        "settings": "{\"cache_gib\":32,\"context\":131072,\"drafter\":\"DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a\",\"eager\":false,\"hc_split\":0,\"l2pf\":1,\"max_tokens\":32768,\"memory_reserve_gib\":24,\"mtp\":0,\"nccl\":\"2.30.7+fleet-patches\",\"parallel\":8,\"prefill_overlap\":0,\"prefill_rows\":2048,\"prompt_cache_gib\":3,\"ring\":\"spark,spark-peer,msi-b9dc,msi-c21f\",\"side\":1,\"transport\":\"relay-registered\"}"
+      },
+      "geometric_mean_of_acquisition_medians_tps": 181.62674605370407,
+      "measured_requests": 24,
+      "median_measured_ttft_s": 0.09948950000000001,
+      "median_measured_wave_tps": 181.7996757502162,
+      "median_of_acquisition_medians_tps": 181.7056296302492,
+      "name": "grill-final-relay-registered-512-02",
+      "raw_and_native_fingerprint_checks_passed": true,
+      "records": [
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "2513c6cd36eb2ac3787fb289730fa98992152ac9eccf254c0bb631282b800268",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.71306055796,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "d23bdef7a3686583c4af6fb37edef50f318dacdfb7a33ac3fe12238a321091ab",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.77285699518657,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "f5f49d67e54c43f27f9986fb2d563afd7959ef9687543c24c5c896c1df8413c9",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.9724151760685,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 0,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "4afebdf3e588f40b6efe7d1117050aea810c45bd9990fd742d5d173ab9687fc0",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.26359760206387,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "e33822908eabfd3898e8278cfe280a48d55a549436e8d3049518e54260aaedd7",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.33551740893935,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "94077eb5c90ee5e16295a4965fe58f850ec96acdf2fbbee220e5fb01d9666556",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.75842015535855,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "7eea8e04cdbb090dcc60529456c124e85e5ede4747c6a5214f77ed0a194722a4",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.06487973021626,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 1,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "b9117de57cf56600cb30c52a8908d033ffeefad5a50aa4ebbb6c4d421b535f68",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.59927215011723,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "9e5ab9dc734f08a17578cecbacae65c58b0deff34501b989b05422733b7736d1",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.39824488128164,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "4e788d5e0a69cea60999a4f055b7fff1aa4dfe640e7eac310562389d4d0b9841",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.54454315033547,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "0f9544298a4af9a917f92c2f908344ee1a7a6e0b39412727d195abff56cc7f5e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.8417213010829,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 2,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "4a0bc2b61e076bf3acea5b0e9a210403c5eb0d543c21d721f8a513532af6f030",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.58291261276838,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "ec2fdcb8e7ea03f34ab4bdc9d8617d08b53a52c0c09fc7cf8165b3785583f74f",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.11004155569904,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "85968774b3db36ddf81601f963d32f2ed9ace07be7c2cefc99c8b6368a245bff",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.77125178590254,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "1700f09d1a14475e585302d705629a703f337165dd8c9e523af194409891ec09",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.41132569047417,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 3,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "d6c02065f624cdf4426903f6f17e925a3bb71415c56f15e611c3fd19abcffc3d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.71147322972968,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "67d37df9de9592d32bb81a70bc9ebc82e855929e99b8903e0ee74fef0bd56524",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.61014622648963,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "3f324d423bf36f8265e5efb90352a828b7721966ca5a401b99010d467625c70d",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.00019672521148,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8e5ab07cf627d9970e40914ef436661bcc3f43a44f1cbf0a7d42490b511b4794",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 179.79742224435728,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 4,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "54c63676aa527b3bdc1378c1f108022094425eef82cda1445a502e1edcb23e1c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.4949894590926,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "d86f85051f54807312257ecbf9bf615dd0a547e2d01217857d0075c0e019e175",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.186695816538,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "62acac71da1cbc8710a44114903cfe463859bd6ca4c9d5084de2891fb7d54c64",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 183.58013387581263,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "8f97bd649ef5e4e3f4dac708f7458a19647ac706f4e9f4d9899c2c62ff43c0bb",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.53388056990727,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 5,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "42bd059d24089409058269ab1e1037bc21194f79b498809da31eaa1f08a6e84c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 180.99056134222602,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "3368eb45caef106bf6fd5fc83fc4b1148f3280620c255c0ae51d9df6a8ab4a45",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.03307429009013,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "982db2843c4ba6a41ad16528fd464cfbc5c49778e8f2da94372480fca1602fe4",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 184.43123711863078,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "02df94a2753c40211afb37b5f7c4cadd45099b239773a2edcf671e2c353cc8db",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.82809971452988,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 6,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "3408b7f17616e505c77f6e5694f308ebefa66326d7213004ee6e98d2b1d3f8df",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.99993357002424,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "warmup",
+          "raw_sha256": "07bd0a1100b47b03179ef1bdceffd2d0eb34981d54843da7092a683156bdb3e7",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.8486001294762,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 0
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "804eb4c99fa349fe220122fe7d09b9eac4e7cb33f7e8ffec93b584a81a47887c",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.67567805786527,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 1
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "fc6c01d0371d7a67d7f38ad6255914a5c1500dbb6781247cf0c568975abc9b0e",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 181.67787694866556,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 2
+        },
+        {
+          "acquisition": 7,
+          "cached_tokens": 0,
+          "completion_tokens": 400,
+          "phase": "measured",
+          "raw_sha256": "5879aab270e7dab5574d25e2abf988d2dd06e49651e3093ee5d7f26b34a61c5a",
+          "reported_token_sha": "279e2fb5849f",
+          "tps": 182.68268611141178,
+          "utf8_output_sha256": "0436adfad85df21cc0d591e5d2d3ab0092539d2a0e3de326b3944c66bfa6193a",
+          "wave": 3
+        }
+      ],
+      "warmup_requests": 8
+    }
+  },
+  "complete_ABAB": true,
+  "declared_final02_candidate_ids_sha256": "058efc9151b96b1b05f0622a39c1dfb13db17a8fbdd617785a6965d91e5b066a",
+  "descriptive_ABAB": {
+    "A2_over_A1_capture_median_percent": -0.08382897797811761,
+    "A_capture_medians_tps": [
+      156.26732090894333,
+      156.13632361091157
+    ],
+    "B2_over_A2_capture_median_percent": 16.376270061959318,
+    "B2_over_B1_capture_median_percent": -0.24838931900468264,
+    "B_capture_medians_tps": [
+      182.1580908716773,
+      181.7056296302492
+    ],
+    "geometric_mean_A_acquisition_medians_tps": 156.14867635995935,
+    "geometric_mean_B_acquisition_medians_tps": 181.9316108498455,
+    "mean_log_A_acquisition_medians": 5.050808606971798,
+    "mean_log_B_acquisition_medians": 5.203630851898313,
+    "mean_of_two_A_capture_medians_tps": 156.20182225992744,
+    "mean_of_two_B_capture_medians_tps": 181.93186025096327,
+    "median_of16_A_acquisition_medians_tps": 156.2466113278992,
+    "median_of16_B_acquisition_medians_tps": 182.01099004014878,
+    "new_interval": null,
+    "new_statistical_verdict": null,
+    "per_capture_median_tps": {
+      "A1": 156.26732090894333,
+      "A2": 156.13632361091157,
+      "B1": 182.1580908716773,
+      "B2": 181.7056296302492
+    },
+    "pooled_log_gain_definition": "100 * expm1(mean(log(B1+B2 acquisition medians)) - mean(log(A1+A2 acquisition medians))); equal 16 observations per group; descriptive only, no new interval or verdict.",
+    "pooled_log_gain_percent": 16.511785492469,
+    "pooled_log_mean_difference": 0.15282224492651508,
+    "ratio_of_descriptive_pooled_medians_percent": 16.489559993195925,
+    "ratio_of_mean_capture_medians_percent": 16.472303343695827
+  },
+  "kind": "offline-final-ABAB-audit",
+  "limits": [
+    "No SSH/GPU/lifecycle activity; only retained artifacts were read.",
+    "All official check results reference original A1. A2 is a check result and is not an eligible check baseline.",
+    "Descriptive aggregation below has no new official pooled verdict or interval; sequential captures and within-capture acquisitions are not asserted independent.",
+    "INCONCLUSIVE control is not equivalence or proof of stationarity.",
+    "Scope remains structured C1/exact400 dispatch-to-settlement throughput; not general serving capacity or causality.",
+    "Grill responses retain12hex reportedtoken digests, not complete token arrays; qualification records retain actual arrays."
+  ],
+  "official_checks_against_original_A1": {
+    "A2": {
+      "arithmetic_independently_verified": true,
+      "declared_change": "none",
+      "model_based_interval_percent": [
+        -0.880201414699685,
+        0.40679180535567505
+      ],
+      "observed_change_percent": -0.2387801781522085,
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/grill-final-control-nccl-02/report.json",
+      "result": "INCONCLUSIVE",
+      "sha256": "a3b420e18bc775f6ea065d6ba44195657ed7586de24687efb65151a93014b85c"
+    },
+    "B1": {
+      "arithmetic_independently_verified": true,
+      "declared_change": "settings",
+      "model_based_interval_percent": [
+        15.588459469507828,
+        17.555706383348575
+      ],
+      "observed_change_percent": 16.567932994889507,
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/grill-final-relay-registered-512-01/report.json",
+      "result": "IMPROVED",
+      "sha256": "77adf4f455b37f11c6966485b0a84ca19ebd60a8886539ec860462e6182a1753"
+    },
+    "B2": {
+      "arithmetic_independently_verified": true,
+      "declared_change": "settings",
+      "model_based_interval_percent": [
+        15.574794668491506,
+        16.783533290076775
+      ],
+      "observed_change_percent": 16.17759199028686,
+      "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/grill-final-relay-registered-512-02/report.json",
+      "result": "IMPROVED",
+      "sha256": "e1f8f76adb2bad7ba027da08312ac682e4f7437eb18efda75614870e0be09f05"
+    }
+  },
+  "official_separate_B2_comparison": {
+    "agrees_with_B2_report_and_A1_B2_lineage": true,
+    "path": "/Users/swb/.paseo/worktrees/29swv8y1/grateful-bat/docs/experiments/glm-tp4-ring-20261022/grill-final02-comparison.json",
+    "sha256": "b275fcc7c038a4c35fbea7f6346ee73c3bf19c37a1b8f8171522282ab25d2022"
+  },
+  "pooled_official_interval": null,
+  "stock_reference_capture_sha256": "2885c26e4372c25992e4a5810b4fd824f2c60a1cf6b32aef7ad03600d7182908",
+  "stock_reference_requests": 32,
+  "supersedes_report_sha256": "322eb0c6eab14b6600245cf931a732a68be80e864752ba8b0cdd559fd04cf478",
+  "verified_final_requests": 128
+}

@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "kind": "C++ preprocessor comment-prefix parity",
+  "compiler": "/usr/bin/clang++",
+  "command": [
+    "/usr/bin/clang++",
+    "-E",
+    "-P",
+    "-nostdinc",
+    "-I",
+    "/var/folders/n1/zh2yt7650fx9vl00jtxt57kw0000gn/T/glm-notice-cpp-ovf1aa0e",
+    "-x",
+    "c++",
+    "-"
+  ],
+  "preprocessed_sha256": "ec52c503813372204a0badab2d0a528e64593528fa95e376811ba7994932e7ae",
+  "limits": [
+    "Empty stand-ins for cstdint and cuda_runtime.h used only to isolate preprocessing",
+    "No NVCC, CUDA semantic compilation or GPU qualification"
+  ]
+}

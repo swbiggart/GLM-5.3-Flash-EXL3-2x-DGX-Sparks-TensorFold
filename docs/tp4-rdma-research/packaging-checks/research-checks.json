@@ -1,0 +1,124 @@
+{
+  "checks": [
+    {
+      "name": "source-verification",
+      "command": [
+        "python3",
+        "tools/verify-zig-transport.py",
+        "--upstream-repo",
+        "/tmp/spark-tensorfold-engine-20261019",
+        "--production-repo",
+        "/tmp/glm-tp4-rdma-candidates-20261022",
+        "--probe-repo",
+        "/tmp/glm-probe04-worktree",
+        "--neighbor-repo",
+        "/tmp/spark-v031-engine-20261021"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/source-verification.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/source-verification.stderr"
+    },
+    {
+      "name": "launcher-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_zig_transport_launcher.py",
+        "-v"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/launcher-tests.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/launcher-tests.stderr"
+    },
+    {
+      "name": "shell-syntax",
+      "command": [
+        "/opt/homebrew/bin/bash",
+        "-n",
+        "start.sh",
+        "scripts/nodes.sh"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/shell-syntax.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/shell-syntax.stderr"
+    },
+    {
+      "name": "python-syntax",
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "tools/verify-zig-transport.py",
+        "tests/test_zig_transport_launcher.py"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/python-syntax.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/python-syntax.stderr"
+    },
+    {
+      "name": "host-transport",
+      "command": [
+        "/tmp/zig-aarch64-macos-0.17.0/zig",
+        "build",
+        "test-glm-transport-host",
+        "--summary",
+        "all"
+      ],
+      "cwd": "/tmp/glm-tp4-research-assembled-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/host-transport.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/host-transport.stderr"
+    },
+    {
+      "name": "host-probe",
+      "command": [
+        "/tmp/zig-aarch64-macos-0.17.0/zig",
+        "build",
+        "test-glm-transport-probe-host",
+        "glm-transport-probe-host-build",
+        "--summary",
+        "all"
+      ],
+      "cwd": "/tmp/glm-tp4-research-assembled-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/host-probe.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/host-probe.stderr"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "HEAD^",
+        "HEAD",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)zig/patches/*.patch"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-checks-20261022/diff-check.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-checks-20261022/diff-check.stderr"
+    }
+  ],
+  "requested_runtime": "gpt-6.1-sol High Fast off",
+  "actual_runtime_evidence": "model/effort/Fast not exposed through available runtime metadata",
+  "limits": [
+    "No NVCC build",
+    "No GPU execution",
+    "No SSH/live audit or mutation",
+    "No GitHub mutation/push"
+  ],
+  "commit": "02de5d67553f1f37203abe6cede521571da4f2d0",
+  "whitespace_note": "New unified patch payload contains expected single-space blank context markers; source-correct patch retained. Non-patch diff --check passes. git apply reports inherited blank-at-EOF source warnings; exact tested source bytes retained."
+}

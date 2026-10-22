@@ -1,0 +1,6 @@
+{"streams": 4, "seconds": 90, "max_tokens": 256, "set": "a", "requests": 57, "aggregate_tps": 156.46, "per_stream_tps_p50": 40.142, "per_stream_tps_p95": 76.426, "per_stream_tps_p05": 26.533, "ttft_s_p50": 0.181, "ttft_s_p95": 0.323}
+{"stage": "steady", "complete": true, "out": "/home/spark/lab/glm-tp4-ring-20261022/bench-final-90s-01/steady.json"}
+{"ok": true, "evidence_dir": "/home/spark/lab/glm-tp4-ring-20261022/accept-final-01", "error": null}
+{"key_label": "hermes-api-key", "discovery": "PASS", "text": "PASS", "stream": "PASS", "forced_tools": "PASS", "required_tools": "PASS", "auto_tools": "PASS"}
+{"key_label": "omp-api-key", "discovery": "PASS", "text": "PASS", "stream": "PASS", "forced_tools": "PASS", "required_tools": "PASS", "auto_tools": "PASS"}
+{"model": "GLM-5.3-Flash-EXL3", "authentication_negative": "PASS", "pass": true, "auto_tools_pass": true, "keys": [{"key_label": "hermes-api-key", "discovery": "PASS", "text": "PASS", "stream": "PASS", "forced_tools": "PASS", "required_tools": "PASS", "auto_tools": "PASS"}, {"key_label": "omp-api-key", "discovery": "PASS", "text": "PASS", "stream": "PASS", "forced_tools": "PASS", "required_tools": "PASS", "auto_tools": "PASS"}]}

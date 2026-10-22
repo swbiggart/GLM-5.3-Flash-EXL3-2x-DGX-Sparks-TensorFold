@@ -161,3 +161,17 @@ Third-party software in the image
   work only (as described above), not the software in the image.
 
 See CREDITS.md for everyone this project builds on.
+
+TP4 transport additions (research and selected registered-relay branches)
+  bertholomus/TensorFold, by BertholomusAI (Albert Lee), Apache License, Version 2.0.
+  https://github.com/bertholomus/TensorFold/tree/b8b115e7ed6c86d81b7575caa6f3d4ade52b323c
+  Research: imports the DeepSeek v4.1 neighbor CUDA kernel, sequence helper and RDMA proxy;
+  integration changes include GLM imports/rank-major output placement, registration cleanup,
+  diagnostics and sticky error handling. Exact imported file hashes and changes are retained
+  with the source provenance. Selected branch: adapts its registered-host-memory approach
+  (anonymous mmap plus CUDA host registration) to GLM's existing RoCEnante-based ring relay;
+  the neighbor schedule and its research selectors are omitted.
+  The public mixed-workload client on the research branch is retained from
+  https://github.com/bertholomus/deepseek-v4.1-tensorfold-tp4-4xgb10
+  at 9af1f4567ee49ec2a31f68975982093277e7090d, Apache-2.0. Its license is retained beside it.
+  Existing TensorFold MIT/Apache-2.0 and b12x/RoCEnante notices continue to apply.

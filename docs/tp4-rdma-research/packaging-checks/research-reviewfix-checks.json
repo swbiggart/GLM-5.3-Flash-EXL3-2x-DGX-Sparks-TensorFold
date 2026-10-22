@@ -1,0 +1,127 @@
+{
+  "checks": [
+    {
+      "name": "source-verification",
+      "command": [
+        "python3",
+        "tools/verify-zig-transport.py",
+        "--upstream-repo",
+        "/tmp/spark-tensorfold-engine-20261019",
+        "--production-repo",
+        "/tmp/glm-tp4-rdma-candidates-20261022",
+        "--probe-repo",
+        "/tmp/glm-probe04-worktree",
+        "--neighbor-repo",
+        "/tmp/spark-v031-engine-20261021"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/source-verification.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/source-verification.stderr"
+    },
+    {
+      "name": "launcher-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_zig_transport_launcher.py",
+        "-v"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/launcher-tests.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/launcher-tests.stderr"
+    },
+    {
+      "name": "shell-syntax",
+      "command": [
+        "/opt/homebrew/bin/bash",
+        "-n",
+        "start.sh",
+        "scripts/nodes.sh"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/shell-syntax.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/shell-syntax.stderr"
+    },
+    {
+      "name": "python-syntax",
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "tools/verify-zig-transport.py",
+        "tests/test_zig_transport_launcher.py"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/python-syntax.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/python-syntax.stderr"
+    },
+    {
+      "name": "host-compiler-tests",
+      "command": [
+        "/tmp/zig-aarch64-macos-0.17.0/zig",
+        "build",
+        "test-glm-transport-host",
+        "test-glm-transport-probe-host",
+        "glm-transport-probe-host-build",
+        "--summary",
+        "all"
+      ],
+      "cwd": "/tmp/glm-tp4-research-reviewfix-source-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/host-compiler-tests.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/host-compiler-tests.stderr"
+    },
+    {
+      "name": "cpp-prefix-parity",
+      "command": [
+        "python3",
+        "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/cpp-prefix-parity.py"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/cpp-prefix-parity.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/cpp-prefix-parity.stderr"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)zig/patches/*.patch"
+      ],
+      "cwd": "/tmp/glm-tp4-research-packaging-20261022",
+      "exit_code": 0,
+      "stdout": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/diff-check.stdout",
+      "stderr": "/tmp/glm-tp4-research-packaging-reviewfix-checks-20261022/diff-check.stderr"
+    }
+  ],
+  "patch_sha256": "9e57a723f1377609ef8e3b1d9b965c3e833afb4b8ff095cacd15c88a1f346eae",
+  "frozen_production_commit": "c8b5f94b24524fbf776181efc6ba4937c62c1c05",
+  "frozen_probe_commit": "44cd03144b1701be22449bea3d8f99bf44046056",
+  "production_byte_identical": false,
+  "production_matches_after_declared_prefix_removal": true,
+  "requested_runtime": "gpt-6.1-sol High Fast off",
+  "actual_runtime_evidence": "model/effort/Fast not exposed through available runtime metadata",
+  "limits": [
+    "Annotation-only source update after GPU qualification",
+    "No NVCC build",
+    "No GPU execution",
+    "No SSH/live audit or mutation",
+    "No GitHub mutation/push",
+    "Fresh independent review remains required before push"
+  ],
+  "whitespace_note": "New unified patch payload retains expected single-space blank context markers and frozen-source EOF whitespace; non-patch diff --check passes.",
+  "commit": "a3019be7baedfcc12a1b54defa48b3bc8e617c55"
+}

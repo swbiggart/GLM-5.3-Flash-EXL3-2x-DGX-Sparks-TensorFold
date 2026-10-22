@@ -1,0 +1,44 @@
+{
+  "pass": true,
+  "baseline_tree": "41ff7bacfb517e165b2b9bdb3d8b182d225d5291",
+  "research_tree": "a28774291f0868dae153ccfbebaa5363bc60a546",
+  "source_paths": 15,
+  "patch_sha256": "9e57a723f1377609ef8e3b1d9b965c3e833afb4b8ff095cacd15c88a1f346eae",
+  "production_byte_identical": false,
+  "production_matches_after_declared_prefix_removal": true,
+  "source_annotation_paths": [
+    "zig/kernels/cuda/glm_neighbor_rdma.cu",
+    "zig/src/families/glm_cuda/neighbor_rdma.zig",
+    "zig/src/families/glm_cuda/neighbor_rdma_seq.zig"
+  ],
+  "source_annotation_hashes": {
+    "zig/kernels/cuda/glm_neighbor_rdma.cu": {
+      "tested_sha256": "dfc5febd149af95dc52f93388774d47953e52ba81276e7fbf6265783835131e4",
+      "annotated_sha256": "c441d4c4e708560a4a87ba6548d72e9e4af85924772a4509926268526633e7e2",
+      "prefix_sha256": "01443df854d2bc1b0a28bb41d31fdd3bb5263171bfbae8abd2b0c8d9067b0628"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma.zig": {
+      "tested_sha256": "6f09f1e1d00f06b116f55c7ae51ad0ba7f1875798543775c0cfc69a066e2f6cd",
+      "annotated_sha256": "ddf5e07d113f86c69b4147e13088f5035546bd4a51e499ec59ec62c4141779a1",
+      "prefix_sha256": "621d0ab6e330b8a38ad2a7d23709388677183f8582707ce2864d35bddda7ed38"
+    },
+    "zig/src/families/glm_cuda/neighbor_rdma_seq.zig": {
+      "tested_sha256": "92a2ee7d6805bcf60fbb43139ab75e96e4d0edf877ff2aa94e783aa27a8084d6",
+      "annotated_sha256": "9119743445085b9434e26d0f66ffe532b46c8f85aee6a0dd3f968c031969019c",
+      "prefix_sha256": "e32889df0484e28df226d1be8cde7a87ec8eccb442931f4d0e54b352fd3f5581"
+    }
+  },
+  "baseline_blob_identical": true,
+  "baseline_mode_exceptions": [
+    "tools/zig/test_fabric.sh",
+    "tools/zig/test_lanes.sh",
+    "tools/zig/triton_aot_manifest.py",
+    "zig/tests/cuda/nemotron/test_aot_manifest.py",
+    "zig/tests/server/build.sh",
+    "zig/tests/server/zig_test.sh"
+  ],
+  "probe_source": "44cd03144b1701be22449bea3d8f99bf44046056",
+  "network": false,
+  "NVCC": false,
+  "GPU": false
+}

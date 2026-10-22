@@ -1,0 +1,216 @@
+diff --git a/zig/tests/cuda/glm_transport_probe.zig b/zig/tests/cuda/glm_transport_probe.zig
+index 4035317..b315f95 100644
+--- a/zig/tests/cuda/glm_transport_probe.zig
++++ b/zig/tests/cuda/glm_transport_probe.zig
+@@ -42,38 +42,35 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+         break :blk l;
+     };
+     defer link.close();
+-    const agreement = try std.fmt.allocPrint(gpa, "glm-transport-probe-v1 replays={d}", .{replays});
++    const agreement = try std.fmt.allocPrint(gpa, "glm-transport-probe-v2 replays={d}", .{replays});
+     defer gpa.free(agreement);
+     try link.agreeRanks(gpa, rank, agreement);
+     var comm = try Comm.init(gpa, link, rank, 4);
+     defer comm.deinit();
+     var stream = try cuda.Stream.init(&driver, true);
+     defer stream.deinit();
+-    errdefer die(error.ProbeOperationFailed, rank);
+     for ([_]usize{ 8, 16, 68, 4096, 16384, 98304, 262144, 524288, 524304, 1048576 }) |bytes| {
+-        var c = try Case.init(&driver, bytes, 0, false, rank);
++        var c = checked(rank, Case.init(&driver, bytes, 0, false, rank));
+         defer c.deinit();
+-        errdefer die(error.ProbeOperationFailed, rank);
+         for (0..3) |seed| {
+-            try c.prepare(gpa, rank, @intCast(seed));
+-            try c.enqueue(&comm, stream);
++            checked(rank, c.prepare(gpa, rank, @intCast(seed)));
++            checked(rank, c.enqueue(&comm, stream));
+             c.check(gpa, &comm, stream, rank, @intCast(seed)) catch |e| die(e, rank);
+         }
+-        std.debug.print("PASS rank={d} eager bytes={d} backend={s} guard=true oracle=nccl changing=3\n", .{ rank, bytes, @tagName(try comm.gatherBackend(c.src(), c.dst(), bytes, .u8)) });
++        std.debug.print("PASS rank={d} eager bytes={d} backend={s} guard=true oracle=nccl changing=3\n", .{ rank, bytes, @tagName(checked(rank, comm.gatherBackend(c.src(), c.dst(), bytes, .u8))) });
+     }
+     // Four-byte alignment is accepted by the relay and rejected before enqueue
+     // by neighbor. In-place rank slices exercise the production general API.
+     for ([_]bool{ false, true }) |alias| {
+-        var c = try Case.init(&driver, 16384, if (alias) 0 else 4, alias, rank);
++        var c = checked(rank, Case.init(&driver, 16384, if (alias) 0 else 4, alias, rank));
+         defer c.deinit();
+-        errdefer die(error.ProbeOperationFailed, rank);
+-        try c.prepare(gpa, rank, 17);
+-        try c.enqueue(&comm, stream);
++        checked(rank, c.prepare(gpa, rank, 17));
++        checked(rank, c.enqueue(&comm, stream));
+         c.check(gpa, &comm, stream, rank, 17) catch |e| die(e, rank);
+-        std.debug.print("PASS rank={d} layout alias={} offset={d} backend={s}\n", .{ rank, alias, c.offset, @tagName(try comm.gatherBackend(c.src(), c.dst(), c.bytes, .u8)) });
++        std.debug.print("PASS rank={d} layout alias={} offset={d} backend={s}\n", .{ rank, alias, c.offset, @tagName(checked(rank, comm.gatherBackend(c.src(), c.dst(), c.bytes, .u8))) });
+         if (alias) {
+-            try c.prepare(gpa, rank, 18);
+-            try comm.allGatherInPlace(c.src(), c.dst(), c.bytes, .u8, stream.handle);
++            checked(rank, c.prepare(gpa, rank, 18));
++            checked(rank, comm.allGatherInPlace(c.src(), c.dst(), c.bytes, .u8, stream.handle));
+             c.check(gpa, &comm, stream, rank, 18) catch |e| die(e, rank);
+             std.debug.print("PASS rank={d} explicit-in-place backend=nccl\n", .{rank});
+         }
+@@ -81,56 +78,64 @@ fn run(gpa: std.mem.Allocator, io: std.Io, rank: u32, master: std.Io.net.IpAddre
+     var mixed: [3]Case = undefined;
+     var opened: usize = 0;
+     defer for (mixed[0..opened]) |*c| c.deinit();
+-    errdefer die(error.ProbeOperationFailed, rank);
+     for ([_]usize{ 16384, 524304, 32768 }, 0..) |bytes, i| {
+-        mixed[i] = try Case.init(&driver, bytes, 0, false, rank);
++        mixed[i] = checked(rank, Case.init(&driver, bytes, 0, false, rank));
+         opened += 1;
+-        try mixed[i].prepare(gpa, rank, 0);
++        checked(rank, mixed[i].prepare(gpa, rank, 0));
+         // Warm all collective shapes before entering capture.
+-        try mixed[i].enqueue(&comm, stream);
++        checked(rank, mixed[i].enqueue(&comm, stream));
+     }
+-    try stream.synchronize();
+-    try comm.check();
+-    const first_backend = try comm.gatherBackend(mixed[0].src(), mixed[0].dst(), mixed[0].bytes, .u8);
+-    const middle_backend = try comm.gatherBackend(mixed[1].src(), mixed[1].dst(), mixed[1].bytes, .u8);
+-    const last_backend = try comm.gatherBackend(mixed[2].src(), mixed[2].dst(), mixed[2].bytes, .u8);
++    checked(rank, stream.synchronize());
++    checked(rank, comm.check());
++    const first_backend = checked(rank, comm.gatherBackend(mixed[0].src(), mixed[0].dst(), mixed[0].bytes, .u8));
++    const middle_backend = checked(rank, comm.gatherBackend(mixed[1].src(), mixed[1].dst(), mixed[1].bytes, .u8));
++    const last_backend = checked(rank, comm.gatherBackend(mixed[2].src(), mixed[2].dst(), mixed[2].bytes, .u8));
+     const requested_profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
+-    if (middle_backend != .nccl) return error.ProbeRequiresFallbackMiddle;
+-    if (!std.mem.eql(u8, requested_profile, "nccl") and (first_backend == .nccl or last_backend == .nccl)) return error.ProbeRequiresCustomGraph;
++    if (middle_backend != .nccl) die(error.ProbeRequiresFallbackMiddle, rank);
++    if (!std.mem.eql(u8, requested_profile, "nccl") and (first_backend == .nccl or last_backend == .nccl)) die(error.ProbeRequiresCustomGraph, rank);
+     std.debug.print("GRAPH rank={d} backends={s},{s},{s}\n", .{ rank, @tagName(first_backend), @tagName(middle_backend), @tagName(last_backend) });
+     const ring = if (std.c.getenv("TF_ROCE_RING")) |v| std.mem.eql(u8, std.mem.span(v), "1") else false;
+     // Every GPU is done with eager work, then wait for the proxies' trailing
+     // completion polls. Counts for captured calls are deliberately excluded.
+-    try link.agreeRanks(gpa, rank, "glm-transport-probe eager synchronized");
+-    const drained = waitCounters(&comm, io, try eagerTarget(comm.stats(), ring)) catch |e| die(e, rank);
+-    try cuda.graph.beginCapture(stream, .global);
+-    for (&mixed) |*c| try c.enqueue(&comm, stream);
+-    var graph = try cuda.graph.endCapture(stream);
++    phase(rank, "eager_barrier");
++    checked(rank, link.agreeRanks(gpa, rank, "glm-transport-probe eager synchronized"));
++    phase(rank, "eager_counter_drain");
++    const drained = waitCounters(&comm, io, checked(rank, eagerTarget(comm.stats(), ring))) catch |e| die(e, rank);
++    snapshot(rank, "eager_drained", drained);
++    phase(rank, "capture_begin");
++    checked(rank, cuda.graph.beginCapture(stream, .global));
++    for (&mixed) |*c| checked(rank, c.enqueue(&comm, stream));
++    phase(rank, "capture_end");
++    var graph = checked(rank, cuda.graph.endCapture(stream));
+     defer graph.deinit();
+-    errdefer die(error.ProbeOperationFailed, rank);
+-    var exec = try graph.instantiate();
++    phase(rank, "graph_instantiate");
++    var exec = checked(rank, graph.instantiate());
+     defer exec.deinit(); // graphs die before buffers, stream and Comm
+-    errdefer die(error.ProbeOperationFailed, rank);
+     const before_replay = comm.stats(); // includes capture enqueues, no replay
+-    if (!sameExecutionCounts(drained, before_replay)) return error.CaptureExecutedTransport;
++    checked(rank, captureReady(gpa, link, rank, drained, before_replay));
++    phase(rank, "replay_begin");
+     const t0 = std.Io.Clock.awake.now(io).toNanoseconds();
+     for (0..replays) |iteration| {
++        if (iteration % 8 == 0) std.debug.print("PHASE rank={d} stage=replay iteration={d}/{d}\n", .{ rank, iteration, replays });
+         const seed: u32 = @intCast(iteration + 100);
+-        for (&mixed) |*c| try c.prepare(gpa, rank, seed);
+-        try exec.launchOn(stream);
++        for (&mixed) |*c| checked(rank, c.prepare(gpa, rank, seed));
++        checked(rank, exec.launchOn(stream));
+         for (&mixed) |*c| c.check(gpa, &comm, stream, rank, seed) catch |e| die(e, rank);
+     }
+     const elapsed = std.Io.Clock.awake.now(io).toNanoseconds() - t0;
+-    try link.agreeRanks(gpa, rank, "glm-transport-probe graph synchronized");
+-    const counts = waitCounters(&comm, io, try replayTarget(before_replay, first_backend, replays, ring)) catch |e| die(e, rank);
++    phase(rank, "replay_barrier");
++    checked(rank, link.agreeRanks(gpa, rank, "glm-transport-probe graph synchronized"));
++    phase(rank, "replay_counter_drain");
++    const counts = waitCounters(&comm, io, checked(rank, replayTarget(before_replay, first_backend, replays, ring))) catch |e| die(e, rank);
++    snapshot(rank, "replay_drained", counts);
+     validateReplayCounts(before_replay, counts, first_backend, replays, ring) catch |e| die(e, rank);
+     std.debug.print("GRAPH_COUNTERS rank={d} replays={d} neighbor_first_delta={d} neighbor_second_delta={d} roce_ops_delta={d} relay_stripes_delta={d} enqueue_counts_unchanged=true\n", .{ rank, replays, counts.neighbor_first_completed - before_replay.neighbor_first_completed, counts.neighbor_second_completed - before_replay.neighbor_second_completed, counts.roce_ops - before_replay.roce_ops, counts.relayed_stripes - before_replay.relayed_stripes });
+     std.debug.print("COUNTERS rank={d} nccl_enqueues={d} roce_enqueues={d} neighbor_enqueues={d} roce_gpu_ops={d} relayed_stripes={d} neighbor_first_completed={d} neighbor_second_completed={d} registered_host_bytes={d}\n", .{ rank, counts.nccl_enqueues, counts.roce_enqueues, counts.neighbor_enqueues, counts.roce_ops, counts.relayed_stripes, counts.neighbor_first_completed, counts.neighbor_second_completed, counts.registered_host_bytes });
+     const profile = std.mem.span(std.c.getenv("TF_GLM_TRANSPORT").?);
+-    if (std.mem.eql(u8, profile, "roce") and (counts.roce_ops == 0 or counts.roce_enqueues == 0)) return error.NoRoceExecution;
+-    if (std.mem.eql(u8, profile, "roce") and std.c.getenv("TF_ROCE_RING") != null and std.mem.eql(u8, std.mem.span(std.c.getenv("TF_ROCE_RING").?), "1") and counts.relayed_stripes == 0) return error.NoRelayExecution;
+-    if (std.mem.eql(u8, profile, "neighbor") and (counts.neighbor_enqueues == 0 or counts.neighbor_first_completed == 0 or counts.neighbor_second_completed == 0)) return error.NoNeighborExecution;
+-    try link.agreeRanks(gpa, rank, "glm-transport-probe-v1 passed");
++    if (std.mem.eql(u8, profile, "roce") and (counts.roce_ops == 0 or counts.roce_enqueues == 0)) die(error.NoRoceExecution, rank);
++    if (std.mem.eql(u8, profile, "roce") and std.c.getenv("TF_ROCE_RING") != null and std.mem.eql(u8, std.mem.span(std.c.getenv("TF_ROCE_RING").?), "1") and counts.relayed_stripes == 0) die(error.NoRelayExecution, rank);
++    if (std.mem.eql(u8, profile, "neighbor") and (counts.neighbor_enqueues == 0 or counts.neighbor_first_completed == 0 or counts.neighbor_second_completed == 0)) die(error.NoNeighborExecution, rank);
++    checked(rank, link.agreeRanks(gpa, rank, "glm-transport-probe-v2 passed"));
+     std.debug.print("PASS rank={d} mixed-graph=true replays={d} slot-reuse=true guards=true exact=true elapsed_ns={d} (includes host checks; not a benchmark)\n", .{ rank, replays, elapsed });
+ }
+ 
+@@ -209,11 +214,39 @@ fn pattern(out: []u8, rank: u32, seed: u32) void {
+     };
+ }
+ 
++// Fail at the call site, before any CUDA/transport resource defers can block.
++// Keep the original error; Zig 0.17 does not support errdefer error capture.
++fn checked(rank: u32, result: anytype) @typeInfo(@TypeOf(result)).error_union.payload {
++    return result catch |e| die(e, rank);
++}
++
+ fn die(e: anyerror, rank: u32) noreturn {
+     std.debug.print("FAIL rank={d} error={t} (fleet supervisor must stop peers)\n", .{ rank, e });
+     std.c._exit(1);
+ }
+ 
++fn phase(rank: u32, name: []const u8) void {
++    if (@import("builtin").is_test) return;
++    std.debug.print("PHASE rank={d} stage={s}\n", .{ rank, name });
++}
++fn snapshot(rank: u32, name: []const u8, s: Comm.Stats) void {
++    if (@import("builtin").is_test) return;
++    std.debug.print("SNAPSHOT rank={d} stage={s} nccl_enqueues={d} roce_enqueues={d} neighbor_enqueues={d} first={d} second={d} roce_ops={d} relay_stripes={d}\n", .{ rank, name, s.nccl_enqueues, s.roce_enqueues, s.neighbor_enqueues, s.neighbor_first_completed, s.neighbor_second_completed, s.roce_ops, s.relayed_stripes });
++}
++
++// Snapshot BEFORE the barrier: a fast rank must not replay until every peer has
++// sampled its counters. A peer's relay proxy can forward remote stripes before
++// its own GPU launches anything, so a barrier before sampling is insufficient.
++fn captureReady(gpa: std.mem.Allocator, link: anytype, rank: u32, drained: Comm.Stats, before: Comm.Stats) !void {
++    snapshot(rank, "capture_snapshot", before);
++    if (!sameExecutionCounts(drained, before)) {
++        snapshot(rank, "capture_expected", drained);
++        return error.CaptureExecutedTransport;
++    }
++    phase(rank, "capture_snapshot_barrier");
++    try link.agreeRanks(gpa, rank, "glm-transport-probe capture snapshots complete");
++}
++
+ // Proxy polls can lag GPU synchronization. Bound each drain independently, and
+ // include transport failure checks rather than accepting partial abort output.
+ fn waitCounters(comm: *const Comm, io: std.Io, target: Comm.Stats) !Comm.Stats {
+@@ -310,3 +343,28 @@ test "graph counter drain waits for trailing completion polls and all relay stri
+     trailing.relayed_stripes = 20;
+     try std.testing.expect(reachedCounters(trailing, target));
+ }
++
++test "graph counter capture gate rejects execution and propagates a closed peer barrier" {
++    const Gate = struct {
++        calls: usize = 0,
++        closed: bool = true,
++        fn agreeRanks(self: *@This(), _: std.mem.Allocator, _: u32, text: []const u8) !void {
++            try std.testing.expectEqualStrings("glm-transport-probe capture snapshots complete", text);
++            self.calls += 1;
++            if (self.closed) return error.TestPeerStillCapturing;
++        }
++    };
++    const drained: Comm.Stats = .{ .roce_enqueues = 28, .roce_ops = 28, .relayed_stripes = 112 };
++    var captured = drained;
++    captured.roce_enqueues += 2; // Capture records host enqueues, not GPU execution.
++    captured.nccl_enqueues += 1;
++    var gate: Gate = .{};
++    try std.testing.expectError(error.TestPeerStillCapturing, captureReady(std.testing.allocator, &gate, 3, drained, captured));
++    try std.testing.expectEqual(@as(usize, 1), gate.calls);
++    gate.closed = false;
++    try captureReady(std.testing.allocator, &gate, 3, drained, captured);
++    try std.testing.expectEqual(@as(usize, 2), gate.calls);
++    captured.relayed_stripes += 1; // Remote progress is not evidence of local capture execution.
++    try std.testing.expectError(error.CaptureExecutedTransport, captureReady(std.testing.allocator, &gate, 3, drained, captured));
++    try std.testing.expectEqual(@as(usize, 2), gate.calls); // A mismatched rank never releases peers.
++}

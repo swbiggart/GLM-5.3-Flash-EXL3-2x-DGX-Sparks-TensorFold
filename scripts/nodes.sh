@@ -600,4 +600,32 @@ nccl_env_n() {
 rank_nccl_env() {
   if (( TP == 2 )); then nccl_env "${NODE_DEV[$1]}" "${NODE_HCAS[$1]}" "${NODE_GID[$1]}"
   else nccl_env_n "${NODE_DEV[$1]}" "${NODE_HCAS[$1]}" "${NODE_GID[$1]}" "${NODE_GRAPH[$1]:-}"; fi
+  if [[ "${ENGINE:-}" == zig && "${TF_GLM_TRANSPORT:-}" == neighbor ]]; then neighbor_rank_env "$1"; fi
+}
+
+# Research neighbor transport uses the existing ring discovery, in the protocol's
+# xor1 then xor3 order. It needs two distinct rails per edge; relay RoCE does not.
+# No device names, GID, addressing or ports are chosen here.
+neighbor_rank_env() {
+  local r=$1 first second a b
+  local -a one=() two=()
+  first=${TOWARD["$r $((r ^ 1))"]:-}
+  second=${TOWARD["$r $((r ^ 3))"]:-}
+  IFS=, read -r -a one <<<"$first"
+  IFS=, read -r -a two <<<"$second"
+  [[ ${#one[@]} == 2 && ${#two[@]} == 2 && "${one[0]}" != "${one[1]}" && "${two[0]}" != "${two[1]}" ]] ||
+    die "research neighbor rank $r needs exactly two distinct discovered rails on each edge; use the qualified relay transport for one-rail edges"
+  for a in "${one[@]}" "${two[@]}"; do
+    [[ "$a" =~ ^[a-zA-Z0-9_.-]+$ ]] || die "research neighbor rank $r has an invalid discovered rail name"
+  done
+  for a in "${one[@]}"; do for b in "${two[@]}"; do
+    [[ "$a" != "$b" ]] || die "research neighbor rank $r has overlapping edge rails"
+  done; done
+  printf '%s\n' "-e TF_GLM_NEIGHBOR_FIRST=$first -e TF_GLM_NEIGHBOR_SECOND=$second"
+}
+check_neighbor_links() {
+  [[ "${ENGINE:-}" == zig && "${TF_GLM_TRANSPORT:-}" == neighbor ]] || return 0
+  [[ "$TP" == 4 && "$FABRIC" == ring ]] || die "research neighbor needs a discovered four-rank ring"
+  local r
+  for r in 0 $(worker_ids); do neighbor_rank_env "$r" >/dev/null || return; done
 }
