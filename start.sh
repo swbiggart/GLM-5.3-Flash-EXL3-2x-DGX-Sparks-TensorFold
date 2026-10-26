@@ -23,7 +23,7 @@
 # Settings, from the environment, scripts/local.sh or ./.env (defaults and measured effects in scripts/config.sh):
 #   serving  CONTEXT, PARALLEL, KV, DENSE, DRAFTER, DRAFT_POLICY, COPY, COPY_MAX, COPY_CODE, SPLIT, KDA_CHUNKED,
 #            SHARED_PREFIX, MULTI_PREFILL, STREAM_SMOOTH, STREAM_SMOOTH_MS, FILL_BUDGET_MS, FILL_DRAFTS, KV_POOL_GIB,
-#            MEMORY_RESERVE_GIB, MAX_TOKENS, THINKING, VISION, VISION_URLS, COMM, SERVED_NAME, HOST, PORT
+#            MEMORY_RESERVE_GIB, PROMPT_CACHE_GIB (zig), MAX_TOKENS, THINKING, VISION, VISION_URLS, COMM, SERVED_NAME, HOST, PORT
 #   nodes    WORKER, FABRIC_PEER, WORKER_HF_CACHE, MASTER_PORT, NCCL_RAILS (1: one RoCE device), NCCL_CHANNELS,
 #            NCCL_DEBUG; TP (2), WORKER2, FABRIC_PEER2, WORKER_HF_CACHE2, MASTER_ADDR, SOCKET_IFNAME (3 Sparks),
 #            WORKER3, FABRIC_PEER3, WORKER_HF_CACHE3 (4 Sparks), NCCL_ALGO (on a ring of 4: Ring)
@@ -33,6 +33,7 @@
 #            WORKER_WEIGHTS2, NFS_SERVER2, WORKER_WEIGHTS3, NFS_SERVER3,
 #            STATE_DIR, HF_HUB_OFFLINE=0 (let TensorFold reach the Hub; default serves from the local cache only)
 #   engine   ENGINE (python | zig), ZIG_TF_REF, ZIG_VERSION, ZIG_NCCL_VERSION, ZIG_BUILD_IMAGE, ZIG_RUN_IMAGE (zig/Dockerfile)
+#   transport TP4_NETWORK (upstream | registered-rdma; physical ring only)
 #   image    IMAGE, TF_VERSION, TF_REPO, BASE_IMAGE, GHCR_IMAGE, IMAGE_TAG / IMAGE_DIGEST (the pinned published
 #            image), CONTAINER_NAME
 #   setup    PREPARE (auto | 1 | 0), PULL, MIN_FREE_GB, IMAGE_FREE_GB, RSYNC_OPTS, HF_TOKEN (prepare.sh's downloads;
@@ -47,7 +48,7 @@
 #            TENSORFOLD_GLM_IMAGE_TOKENS, TENSORFOLD_MEMORY_RESERVE_GIB, TF_GLM_KEEP_REASONING=0
 set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
-source ./scripts/config.sh
+source ./scripts/config.sh --validate-tp4-network
 source ./scripts/nodes.sh
 
 usage() { awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "$0"; }
@@ -111,8 +112,12 @@ if [[ "$ENGINE" == zig ]]; then
   # The Zig engine serves one fixed configuration so far (docs/zig-engine.md lists every setting and its status): what it
   # cannot do yet is refused here, before anything is stopped, never silently dropped
   zig_unsupported() { die "ENGINE=zig does not serve $1 yet (docs/zig-engine.md); set ENGINE=python"; }
-  # mtp and displaykv are in zig/patches (r107-int). ZIG_HAS can still drop one for a narrower image.
-  ZIG_HAS="${ZIG_HAS:-mtp displaykv}"
+  # mtp and displaykv are in zig/patches (r107-int). ZIG_HAS can still drop one for a narrower image. parked: the
+  # engine's startup budget counts the pages parked on the per-CPU free lists (zig/patches' parked-pages patch), so the
+  # memory check below counts them too. spill2 (spill v2, 0018/0019/0021), kvshard (KV sharding, 0020/0022) and
+  # spillshard (the two together, 0023) say the image carries them; their engine switches stay off (TF_GLM_SPILL_V2,
+  # TF_GLM_KV_SHARD: docs/zig-engine.md), and nothing here reads these three names yet
+  ZIG_HAS="${ZIG_HAS:-mtp displaykv parked spill2 kvshard spillshard}"
   [[ "$DRAFTER" == dflash2 || " $ZIG_HAS " == *" mtp "* ]] || zig_unsupported "DRAFTER=$DRAFTER (set ZIG_HAS=mtp)"
   [[ "$KV" == fp8 ]]                     || zig_unsupported "KV=$KV (its KV cache is the FP8 one)"
   [[ "$DENSE" == q4 ]]                   || zig_unsupported "DENSE=$DENSE (its dense weights are the 4-bit ones)"
@@ -126,13 +131,17 @@ if [[ "$ENGINE" == zig ]]; then
     warn "ENGINE=zig: TP=3 is experimental (unsplit prefill, COMM=$COMM)"
   fi
   if (( TP == 4 )); then
-    # four Sparks cabled as a ring (./start-tp4-switchless.sh): unsplit prefill over NCCL, whose ring channels run over
-    # the cables (the ring's graph files); the kernel set holds the TP=4 shapes (16 heads a rank), captured from the
-    # Python engine at TP=4 on a ring. A switch (./start-tp4.sh) is not tested, and the RoCE ring relay is not ported.
-    [[ "${FABRIC_EXPECT:-}" == ring ]] || die "ENGINE=zig at TP=4 runs on a ring of four (./start-tp4-switchless.sh)"
+    # The default path retains the captured ring/NCCL recipe. Registered RDMA
+    # opts into registered relay on a physical ring only.
     [[ "$SPLIT" == 0 ]] || die "ENGINE=zig at TP=4 needs SPLIT=0 (split prefill is two ranks)"
-    [[ "$COMM" == nccl ]] || die "ENGINE=zig at TP=4 needs COMM=nccl (the RoCE ring relay, TF_ROCE_RING, is not ported)"
-    warn "ENGINE=zig: TP=4 is experimental (a ring of four, unsplit prefill, COMM=nccl)"
+    if [[ "$TP4_NETWORK" == upstream ]]; then
+      [[ "${FABRIC_EXPECT:-}" == ring ]] || die "ENGINE=zig at TP=4 runs on a ring of four (./start-tp4-switchless.sh)"
+      [[ "$COMM" == nccl ]] || die "ENGINE=zig at TP=4 needs COMM=nccl unless TP4_NETWORK=registered-rdma"
+    else
+      [[ "$COMM" == roce ]] || die "TP4_NETWORK=registered-rdma requires COMM=roce"
+      warn "TP4_NETWORK=registered-rdma requires a known-working NCCL library for fallback collectives. The tested dual-PCI-domain fleet used separately patched NCCL 2.30.7; version alone cannot establish compatibility. This flag does not install that library."
+    fi
+    warn "ENGINE=zig: TP=4 is experimental (unsplit prefill, COMM=$COMM, TP4_NETWORK=$TP4_NETWORK)"
   fi
   [[ "$CONTEXT" == 131072 && "$PARALLEL" == 8 ]] ||
     warn "ENGINE=zig: the captured kernel set is keyed on the 8-stream, 131072-token arena; other CONTEXT / PARALLEL can fail with MissingTritonVariant"
@@ -144,8 +153,9 @@ if [[ "$ENGINE" == zig ]]; then
     SERVE_ARGS+=(--spill-gib "$SPILL_GIB" --snapshot-dir /spill --spill-highwater "$SPILL_HIGHWATER"
                  --spill-min-tokens "$SPILL_MIN_TOKENS" --spill-min-free-gib "$SPILL_MIN_FREE_GIB")
   fi
-  # 0 is the qualified path. The engine keeps prompt states when this is raised.
-  SERVE_ARGS+=(--backend cuda --prompt-cache-gib 0)
+  # 0 is the qualified path. The engine keeps prompt states when this is raised (scripts/config.sh: PROMPT_CACHE_GIB).
+  [[ "$PROMPT_CACHE_GIB" =~ ^[0-9]+([.][0-9]+)?$ ]] || die "PROMPT_CACHE_GIB is a size in GiB (0: no kept prompt states), not $PROMPT_CACHE_GIB"
+  SERVE_ARGS+=(--backend cuda --prompt-cache-gib "$PROMPT_CACHE_GIB")
 else
   [[ "$VISION" == 1 ]] && SERVE_ARGS+=(--vision)
   [[ "$VISION" == 1 && "$VISION_URLS" == 1 ]] && SERVE_ARGS+=(--vision-urls)
@@ -232,6 +242,7 @@ for i in $(worker_ids); do
 done
 # Compiled kernels are kept per image (its patches hash): a build is found by its extension's name, so another image's
 # build of the same name, older or newer, must never be the one loaded
+require_tp4_image_profile
 KCACHE=$(docker image inspect -f '{{index .Config.Labels "tf.patches"}}' "$IMAGE" 2>/dev/null || true)
 [[ "$KCACHE" =~ ^[0-9a-f]{12}$ ]] || KCACHE=$(docker image inspect -f '{{.Id}}' "$IMAGE" | cut -d: -f2 | cut -c1-12)
 # (docker creates the folder at the mount: the cache is the containers', so it may not be writable from here)
@@ -342,15 +353,24 @@ if ss -ltn "sport = :$PORT" 2>/dev/null | grep -q LISTEN; then
 fi
 # TensorFold budgets each Spark's free memory minus MEMORY_RESERVE_GIB (14.5); the defaults want ~110 GiB free at start on each.
 # With less, rank 0 refuses the window and names one that fits, which the load below then starts again with.
-here_gb=$(free -g | awk '/^Mem:/ {print $7}')
+# Memory freed in bulk a moment ago (prepare.sh's image copy) can still sit on the kernel's per-CPU free lists, outside
+# MemAvailable for a minute or two. An engine that counts it in its budget (parked_counted: ENGINE=zig with `parked` in
+# ZIG_HAS, ENGINE=python with patches/'s 0119) has it, and then this check counts it too: mem_avail_gb
+# (scripts/memavail.sh), here and on each worker. Otherwise both read MemAvailable alone, as `free -g` shows it.
+parked_note() { awk -v p="${1:-0}" 'BEGIN { if (p + 0 >= 0.1) printf " (%.1f of it parked on the per-CPU free lists)", p }'; }
+PARKED=0; ! parked_counted || PARKED=1
+read -r here_gb here_parked <<<"$(mem_avail_gb "$PARKED")"
+here_gb=${here_gb:-0}
 low=0; (( here_gb >= 110 )) || low=1
+declare -a there_parked=()
 for i in $(worker_ids); do
-  there_gb[i]=$(worker "$i" "free -g | awk '/^Mem:/ {print \$7}'" 2>/dev/null || echo 0)
+  read -r there_gb[i] there_parked[i] <<<"$(worker "$i" "$(declare -f mem_counting mem_avail_gb); mem_avail_gb $PARKED" 2>/dev/null || echo 0)"
+  there_gb[i]=${there_gb[i]:-0}
   (( there_gb[i] >= 110 )) || low=1
 done
 if (( ! low )); then
-  if (( TP == 2 )); then log "Arguments OK, port $PORT free, ${here_gb} GiB memory available here, ${there_gb[1]} GiB on the worker"
-  else log "Arguments OK, port $PORT free, ${here_gb} GiB memory available here, $(for i in $(worker_ids); do printf '%s on rank %s, ' "${there_gb[i]}" "$i"; done | sed 's/, $//')"; fi
+  if (( TP == 2 )); then log "Arguments OK, port $PORT free, ${here_gb} GiB memory available here$(parked_note "$here_parked"), ${there_gb[1]} GiB on the worker$(parked_note "${there_parked[1]:-}")"
+  else log "Arguments OK, port $PORT free, ${here_gb} GiB memory available here$(parked_note "$here_parked"), $(for i in $(worker_ids); do printf '%s on rank %s%s, ' "${there_gb[i]}" "$i" "$(parked_note "${there_parked[i]:-}")"; done | sed 's/, $//')"; fi
 else
   (( here_gb >= 110 )) ||
     warn "only ${here_gb} GiB memory available here (the default needs ~110): stop other GPU workloads (docker ps), or lower CONTEXT"
@@ -384,6 +404,8 @@ env_args() {
   local _skip='^$' name
   ENV_ARGS=(-e HF_HUB_OFFLINE="${HF_HUB_OFFLINE:-1}")
   (( TP == 2 )) || _skip='^TF_ROCE_HCA='
+  # Newline-separated grep patterns preserve the existing forwarding pipeline.
+  [[ "$TP4_NETWORK" != registered-rdma ]] || _skip=$'^TF_ROCE_HCA=\n^TF_ROCE_RING='
   if [[ "$ENGINE" == zig ]]; then
     # the Zig engine reads few of them (docs/zig-engine.md): the settings it maps, then any TENSORFOLD_ / TF_ variable you
     # set yourself that it reads, by name; the Python engine's own switches (TF_GLM_*) stay out of its environment
